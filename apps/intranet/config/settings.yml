@@ -1,0 +1,67 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/04-Settings
+
+prod:
+  .settings:
+    no_script_name:         true
+    logging_enabled:        false
+
+dev:
+  .settings:
+    error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
+    web_debug:              true
+    cache:                  false
+    no_script_name:         false
+    etag:                   false
+
+dev_loc:
+  .settings:
+    error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
+    web_debug:              true
+    cache:                  false
+    no_script_name:         false
+    etag:                   false
+    webroot:                /intranet/
+    websysroot:             C:\Documents and Settings\casacultura\Escritorio\htdocs\trunk\intranet\web\
+    webappdocuments:        appsupload/documents/
+    webrooturl:             http://localhost/intranet/
+    timeout:                86400
+    webdomain:              http://servidor.casadecultura.org
+
+test:
+  .settings:
+    error_reporting:        <?php echo ((E_ALL | E_STRICT) ^ E_NOTICE)."\n" ?>
+    cache:                  false
+    web_debug:              false
+    no_script_name:         false
+    etag:                   false
+
+all:
+  .settings:
+    # Form security secret (CSRF protection)
+    csrf_secret:            false #2f808bd1c0e918dd823260cb2900ca2dbd122796
+
+    # Output escaping settings
+    escaping_strategy:      false
+    escaping_method:        ESC_SPECIALCHARS
+
+    # Enable the database manager
+    use_database:           true    
+    
+    webroot:                /
+    # websysroot:             /home/informatica/www/intranet/beta/web/
+    websysroot:             C:\Documents and Settings\casacultura\Escritorio\htdocs\trunk\intranet\web\
+    webappdocuments:        appsupload/documents/
+    webrooturl:             http://www.casadecultura.org/
+    timeout:                84600
+    webdomain:              http://www.casadecultura.org
+    
+  .actions:
+    login_module: gestio
+    login_action: uLogin
+        
+    error_404_module: web
+    error_404_action: notfound
+    
+    secure_module: gestio
+    secure_action: uLogin

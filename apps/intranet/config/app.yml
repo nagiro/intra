@@ -1,0 +1,11 @@
+# default values
+all:
+  sfImageTransformPlugin: 
+    mime_type: 
+      auto_detect: true 
+      library: Fileinfo #gd_mime_type # Fileinfo (PECL), MIME_Type (PEAR), gd_mime_type (GD)
+  sf_tiny_doc_plugin:
+    zip_method:    shell             # the method to zip/unzip : shell | ziparchive
+    zip_bin:       c:\zip.exe               # the binary to zip   for 'shell' method
+    unzip_bin:     c:\unzip.exe             # the binary to unzip for 'shell' method
+    process_dir:   %SF_WEB_DIR%/tmp  # the process directory        

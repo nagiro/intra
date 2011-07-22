@@ -1,0 +1,116 @@
+# default rules
+
+#####################################################
+# HOSPICI                                           #
+#####################################################
+
+hospici_cercador_cursos_inici:
+  url:  /cercador_cursos/inici
+  param: { module: web, action:cursos, accio:inici  }
+
+hospici_login:
+  url:  /login
+  param: { module: web, action:login, accio:login  }
+  
+hospici_usuaris_alta:
+  url:  /alta
+  param: { module: web, action:alta }
+  
+hospici_usuaris_remember:
+  url:  /recorda
+  param: { module: web, action:remember }    
+  
+hospici_cercador_espais:
+  url: /cercador_espais
+  param: { module: web, action:espais, accio:cerca_espais  }  
+    
+hospici_cercador_cursos:
+  url: /cercador_cursos
+  param: { module: web, action:cursos, accio:cerca_cursos  }
+
+hospici_cercador_activitats:
+  url: /cercador_activitats/*
+  param: { module: web, action:index, accio:cerca_activitat  }
+
+hospici_detall_activitat:
+  url: /detall_activitat/:idA/:titol
+  param: { module: web, action:index, accio:detall_activitat  }
+  
+hospici_detall_curs:
+  url:  /detall_curs/:idC/:titol
+  param: { module: web, action:cursos, accio:detall_curs }
+
+hospici_usuaris:
+  url: /usuaris
+  param: { module: web, action:usuaris, accio: inici }
+
+hospici_usuaris_modifica:
+  url: /usuaris/modifica
+  param: { module: web, action:usuaris , accio: update }
+
+hospici_compra_entrada:
+  url: /usuaris/compra_entrada
+  param: { module: web, action:usuaris, accio:compra_entrada  }
+
+hospici_anula_entrada:
+  url: /usuaris/anula_entrada/:idER
+  param: { module: web, action:usuaris, accio:anula_entrada  }
+  
+hospici_nova_matricula:
+  url: /usuaris/matricula/:idC
+  param: { module: web, action:usuaris, accio:nova_matricula  }
+
+hospici_espai_detall:
+  url: /espais/detall/:idE/:titol
+  param: { module: web, action:espais, accio:detall_espai }
+
+hospici_espai_detall_canvi_mes:
+  url: /espais/detall/:idE/:titol/:data
+  param: { module: web, action:espais, accio:detall_espai }
+  
+hospici_nova_reserva_espai:
+  url: /usuaris/espais/:idE/reserva
+  param: { module: web, action:usuaris, accio:nova_reserva  }
+
+hospici_reserva_espai:
+  url: /usuaris/espais/:idR/reserva/edita
+  param: { module: web, action:usuaris, accio:edita_reserva  }
+  
+hospici_nova_reserva_espai_save:  
+  url: /usuaris/espais/reserva/guarda
+  param: { module: web, action:usuaris, accio:save_nova_reserva }
+
+hospici_llista_reserves:
+  url: /usuaris/espais
+  param: { module: web, action:usuaris, accio:llista_reserves  }
+
+hospici_cercador_entitats:
+  url: /entitats
+  param: { module: web, action:entitats, accio:cerca_entitats  }
+  
+hospici_cercador_entitats_activitats:
+  url: /activitats_entitat/:SITE
+  param: { module: web, action:index, accio:cerca_activitat  }  
+
+hospici_cercador_entitats_espais:
+  url: /espais_entitat/:SITE
+  param: { module: web, action:espais, accio:cerca_espais }
+  
+hospici_cercador_entitats_cursos:
+  url: /cursos_entitat/:SITE
+  param: { module: web, action:cursos, accio:cerca_cursos }
+  
+#####################################################
+# DEFAULT                                           #
+#####################################################
+
+homepage:
+  url:   /
+  param: { module: web, action:index, accio:cerca_activitat  }
+
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

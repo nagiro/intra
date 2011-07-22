@@ -1,0 +1,20 @@
+all:
+  is_secure: true
+  credentials: admin
+  
+uLogin:
+  is_secure: false
+
+uRemember:
+  is_secure: false
+  
+uGestio:
+  is_secure: true
+  credentials: [] 
+
+uFormularis:
+  is_secure: true
+  credentials: []
+  
+GetTPV:
+  is_secure: false  

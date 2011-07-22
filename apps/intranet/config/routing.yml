@@ -1,0 +1,157 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+homepage:
+  url:   /
+  param: { module: web, action: index }
+
+
+#####################################################
+# GESTIÓ                                            #
+#####################################################
+
+gAdmin:
+  url: /gestio/main
+  param: { module:gestio, action:main  }
+  
+gUser:
+  url: /gestio/uGestio
+  param: { module:gestio, action:uGestio  }
+  
+uLogin:
+  url: /gestio/uLogin
+  param: { module:gestio, action:uLogin  }
+
+#####################################################
+# FACEBOOK                                          #
+#####################################################
+  
+gConfig:
+  url: /gestio/gConfig
+  param: { module:gestio, action:gConfig }
+
+fb_login:
+  url: /gestio/fb_login
+  param: { module:gestio, action:uLogin, accio:FB_LOGIN }
+
+fb_link:
+  url: /gestio/fb_link
+  param: { module:gestio, action:gConfig, accio:FB_LINK }
+  
+fb_unlink:
+  url: /gestio/fb_unlink
+  param: { module:gestio, action:gConfig, accio:FB_UNLINK }  
+  
+fb_user_link:
+  url: /gestio/fb_user_link
+  param: { module:gestio, action:uGestio, accio:FB_LINK }
+  
+fb_user_unlink:
+  url: /gestio/fb_user_unlink
+  param: { module:gestio, action:uGestio, accio:FB_UNLINK }  
+
+#####################################################
+# NOTICIES CULTURALS                                #
+#####################################################
+
+noticies_culturals:
+  url:  /noticiesculturals
+  param: { module:blogs, action:noticiesculturals }
+
+#####################################################
+# HOSPICI                                           #
+#####################################################
+
+#hospici_cercador_cursos_inici:
+#  url:  /hospici/cercador_cursos/inici
+#  param: { module:hospici, action:cursos, accio:inici  }
+
+#hospici_login:
+#  url:  /hospici/login
+#  param: { module:hospici, action:login, accio:login  }
+  
+#hospici_usuaris_alta:
+#  url:  /hospici/alta
+#  param: { module:hospici, action:alta }
+  
+#hospici_usuaris_remember:
+#  url:  /hospici/recorda
+#  param: { module:hospici, action:remember }  
+  
+#hospici_cercador_entitats:
+#  url: /hospici/entitats
+#  param: { module:hospici, action:entitats, accio:cerca_entitats  }  
+  
+#hospici_cercador_espais:
+#  url:  /hospici/cercador_espais
+#  param: { module:hospici, action:espais, accio:cerca_espais  }  
+    
+#hospici_cercador_cursos:
+#  url:  /hospici/cercador_cursos
+#  param: { module:hospici, action:cursos, accio:cerca_cursos  }
+
+#hospici_cercador_activitats:
+#  url:  /hospici/cercador_activitats/*
+#  param: { module:hospici, action:index, accio:cerca_activitat  }
+
+#hospici_detall_activitat:
+#  url:  /hospici/detall_activitat/:idA/:titol
+#  param: { module:hospici, action:index, accio:detall_activitat  }
+  
+#hospici_detall_curs:
+#  url:  /hospici/detall_curs/:idC/:titol
+#  param: { module:hospici, action:cursos, accio:detall_curs }
+
+#hospici_usuaris:
+#  url: /hospici/usuaris
+#  param: { module:hospici, action:usuaris, accio: inici }
+
+#hospici_usuaris_modifica:
+#  url: /hospici/usuaris/modifica
+#  param: { module:hospici, action:usuaris , accio: update }
+
+#hospici_compra_entrada:
+#  url:  /hospici/usuaris/compra_entrada
+#  param: { module:hospici, action:usuaris, accio:compra_entrada  }
+
+#hospici_anula_entrada:
+#  url:  /hospici/usuaris/anula_entrada/:idER
+#  param: { module:hospici, action:usuaris, accio:anula_entrada  }
+
+
+#####################################################
+# WEB CCG                                           #
+#####################################################
+
+web_contingut_auto:
+  url: /web/cicles/:node/:titol
+  param: { module:web, action:index, accio:ac }
+
+web_contingut_man:
+  url: /web/contingut/:node/:titol
+  param: { module:web, action:index, accio:mc }
+  
+web_noticia:
+  url: /web/noticies/:idN/:p/:titol
+  param: { module:web, action:index }
+
+web_activitat:
+  url: /web/activitat/:idA/:titol
+  param: { module:web, action:index, accio:caa }
+
+web_cicle:
+  url: /web/cicle/:idC/:titol
+  param: { module:web, action:index, accio:cc  }
+
+#####################################################
+# GENERIQUES                                        #
+# please, remove them by adding more specific rules #
+#####################################################
+
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

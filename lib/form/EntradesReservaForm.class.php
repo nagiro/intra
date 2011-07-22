@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * EntradesReserva form.
+ *
+ * @package    intranet
+ * @subpackage form
+ * @author     Albert Johé i Martí
+ */
+class EntradesReservaForm extends BaseEntradesReservaForm
+{
+  public function configure()
+  {
+  }
+}

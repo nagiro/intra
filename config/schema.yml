@@ -1,0 +1,781 @@
+propel:
+  _attributes:
+    package: lib.model
+    defaultIdMethod: native
+  activitats:
+    _attributes: { phpName: Activitats }
+    ActivitatID: { phpName: Activitatid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Cicles_CicleID: { phpName: CiclesCicleid, type: INTEGER, size: '11', required: false, foreignTable: cicles, foreignReference: CicleID, onDelete: 'SET NULL', onUpdate: 'SET NULL' }
+    TipusActivitat_idTipusActivitat: { phpName: TipusactivitatIdtipusactivitat, type: INTEGER, size: '11', required: false, foreignTable: tipusactivitat, foreignReference: idTipusActivitat, onDelete: 'SET NULL', onUpdate: 'SET NULL' }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: false }
+    Preu: { phpName: Preu, type: DOUBLE, required: false }
+    PreuReduit: { phpName: Preureduit, type: DOUBLE, required: false }
+    Publicable: { phpName: Publicable, type: TINYINT, size: '4', required: false }
+    Estat: { phpName: Estat, type: CHAR, size: '1', required: false }
+    Descripcio: { phpName: Descripcio, type: LONGVARCHAR, required: true }
+    Imatge: { phpName: Imatge, type: LONGVARCHAR, required: true }
+    PDF: { phpName: Pdf, type: LONGVARCHAR, required: true }
+    PublicaWEB: { phpName: Publicaweb, type: TINYINT, size: '1', required: true }
+    tCurt: { phpName: Tcurt, type: LONGVARCHAR, required: true }
+    dCurt: { phpName: Dcurt, type: LONGVARCHAR, required: true }
+    tMig: { phpName: Tmig, type: LONGVARCHAR, required: true }
+    dMig: { phpName: Dmig, type: LONGVARCHAR, required: true }
+    tComplet: { phpName: Tcomplet, type: LONGVARCHAR, required: true }
+    dComplet: { phpName: Dcomplet, type: LONGVARCHAR, required: true }
+    tipusEnviament: { phpName: Tipusenviament, type: TINYINT, size: '4', required: true }
+    Organitzador: { phpName: Organitzador, type: VARCHAR, size: '250', required: true }
+    Categories: { phpName: Categories, type: VARCHAR, size: '100', required: true }
+    Responsable: { phpName: Responsable, type: LONGVARCHAR, required: true }
+    InfoPractica: { phpName: Infopractica, type: LONGVARCHAR, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    isEntrada: { phpName: Isentrada, type: TINYINT, size: '1', required: true, defaultValue: '0' }
+    _indexes: { Activitats_FKIndex1: [Cicles_CicleID], TipusActivitat_idTipusActivitat: [TipusActivitat_idTipusActivitat] }
+  agendatelefonica:
+    _attributes: { phpName: Agendatelefonica }
+    AgendaTelefonicaID: { phpName: Agendatelefonicaid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Nom: { phpName: Nom, type: VARCHAR, size: '30', required: false }
+    NIF: { phpName: Nif, type: VARCHAR, size: '15', required: false }
+    DataAlta: { phpName: Dataalta, type: DATE, required: false }
+    Notes: { phpName: Notes, type: LONGVARCHAR, required: false }
+    Tags: { phpName: Tags, type: VARCHAR, size: '100', required: false }
+    Entitat: { phpName: Entitat, type: VARCHAR, size: '50', required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  agendatelefonicadades:
+    _attributes: { phpName: Agendatelefonicadades }
+    AgendaTelefonicaDadesID: { phpName: Agendatelefonicadadesid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    AgendaTelefonica_AgendaTelefonicaID: { phpName: AgendatelefonicaAgendatelefonicaid, type: INTEGER, size: '11', required: true, foreignTable: agendatelefonica, foreignReference: AgendaTelefonicaID, onDelete: CASCADE, onUpdate: CASCADE }
+    Tipus: { phpName: Tipus, type: LONGVARCHAR, required: false }
+    Dada: { phpName: Dada, type: LONGVARCHAR, required: false }
+    Notes: { phpName: Notes, type: LONGVARCHAR, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { AgendaTelefonicaDades_FKIndex1: [AgendaTelefonica_AgendaTelefonicaID] }
+  app_blog_multimedia_entries:
+    _attributes: { phpName: AppBlogMultimediaEntries }
+    entries_id: { phpName: EntriesId, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: app_blogs_entries, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    multimedia_id: { phpName: MultimediaId, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: app_blogs_multimedia, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { multimedia_id: [multimedia_id] }
+  app_blogs_blogs:
+    _attributes: { phpName: AppBlogsBlogs }
+    id: { phpName: Id, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    name: { phpName: Name, type: VARCHAR, size: '50', required: true }
+    date: { phpName: Date, type: DATE, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  app_blogs_entries:
+    _attributes: { phpName: AppBlogsEntries }
+    id: { phpName: Id, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    page_id: { phpName: PageId, type: INTEGER, size: '11', required: true, foreignTable: app_blogs_pages, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    lang: { phpName: Lang, type: VARCHAR, size: '4', required: true }
+    title: { phpName: Title, type: VARCHAR, size: '255', required: true }
+    subtitle1: { phpName: Subtitle1, type: VARCHAR, size: '100', required: true }
+    subtitle2: { phpName: Subtitle2, type: VARCHAR, size: '100', required: true }
+    body: { phpName: Body, type: LONGVARCHAR, required: true }
+    date: { phpName: Date, type: TIMESTAMP, required: true }
+    tags: { phpName: Tags, type: VARCHAR, size: '150', required: true }
+    url: { phpName: Url, type: LONGVARCHAR, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { page_id: [page_id] }
+  app_blogs_forms:
+    _attributes: { phpName: AppBlogsForms }
+    id: { phpName: Id, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    name: { phpName: Name, type: VARCHAR, size: '30', required: true }
+    blog_id: { phpName: BlogId, type: INTEGER, size: '11', required: true, foreignTable: app_blogs_blogs, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    view_fields: { phpName: ViewFields, type: LONGVARCHAR, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { blog_id: [blog_id] }
+  app_blogs_forms_entries:
+    _attributes: { phpName: AppBlogsFormsEntries }
+    id: { phpName: Id, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    dades: { phpName: Dades, type: LONGVARCHAR, required: true }
+    date: { phpName: Date, type: TIMESTAMP, required: true }
+    form_id: { phpName: FormId, type: INTEGER, size: '11', required: true, foreignTable: app_blogs_forms, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    estat: { phpName: Estat, type: TINYINT, size: '2', required: true, defaultValue: '0' }
+    objeccions: { phpName: Objeccions, type: LONGVARCHAR, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { form_id: [form_id] }
+  app_blogs_menu:
+    _attributes: { phpName: AppBlogsMenu }
+    id: { phpName: Id, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    name: { phpName: Name, type: VARCHAR, size: '50', required: true }
+    page_id: { phpName: PageId, type: INTEGER, size: '11', required: false, foreignTable: app_blogs_pages, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    order: { phpName: Order, type: INTEGER, size: '11', required: true }
+    blog_id: { phpName: BlogId, type: INTEGER, size: '11', required: true, foreignTable: app_blogs_blogs, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    father_id: { phpName: FatherId, type: INTEGER, size: '11', required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { page_id: [page_id], blog_id: [blog_id] }
+  app_blogs_multimedia:
+    _attributes: { phpName: AppBlogsMultimedia }
+    id: { phpName: Id, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    name: { phpName: Name, type: VARCHAR, size: '50', required: true }
+    desc: { phpName: Desc, type: LONGVARCHAR, required: true }
+    url: { phpName: Url, type: VARCHAR, size: '255', required: true }
+    date: { phpName: Date, type: DATE, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  app_blogs_pages:
+    _attributes: { phpName: AppBlogsPages }
+    id: { phpName: Id, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    name: { phpName: Name, type: VARCHAR, size: '40', required: true }
+    visible: { phpName: Visible, type: TINYINT, size: '1', required: true }
+    date: { phpName: Date, type: DATE, required: true }
+    type: { phpName: Type, type: CHAR, size: '1', required: true }
+    blog_id: { phpName: BlogId, type: INTEGER, size: '11', required: true, foreignTable: app_blogs_blogs, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { blog_id: [blog_id] }
+  app_documents_arxius:
+    _attributes: { phpName: AppDocumentsArxius }
+    idDocument: { phpName: Iddocument, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    idDirectori: { phpName: Iddirectori, type: INTEGER, size: '11', required: false, foreignTable: app_documents_directoris, foreignReference: idDirectori, onDelete: 'SET NULL', onUpdate: 'SET NULL' }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    url: { phpName: Url, type: LONGVARCHAR, required: true }
+    DataCreacio: { phpName: Datacreacio, type: DATE, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { idDirectori: [idDirectori] }
+  app_documents_directoris:
+    _attributes: { phpName: AppDocumentsDirectoris }
+    idDirectori: { phpName: Iddirectori, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    Pare: { phpName: Pare, type: INTEGER, size: '11', required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { Pare: [Pare] }
+  app_documents_permisos:
+    _attributes: { phpName: AppDocumentsPermisos }
+    idUsuari: { phpName: Idusuari, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: usuaris, foreignReference: UsuariID, onDelete: CASCADE, onUpdate: CASCADE }
+    idArxiu: { phpName: Idarxiu, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: app_documents_arxius, foreignReference: idDocument, onDelete: CASCADE, onUpdate: CASCADE }
+    idNivell: { phpName: Idnivell, type: INTEGER, size: '11', required: false, foreignTable: nivells, foreignReference: idNivells, onDelete: 'SET NULL', onUpdate: 'SET NULL' }
+    DataModificacio: { phpName: Datamodificacio, type: DATE, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { idNivell: [idNivell], idNivell_2: [idNivell], idArxiu: [idArxiu] }
+  app_documents_permisos_dir:
+    _attributes: { phpName: AppDocumentsPermisosDir }
+    idUsuari: { phpName: Idusuari, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: usuaris, foreignReference: UsuariID, onDelete: CASCADE, onUpdate: CASCADE }
+    idDirectori: { phpName: Iddirectori, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: app_documents_directoris, foreignReference: idDirectori, onDelete: CASCADE, onUpdate: CASCADE }
+    idNivell: { phpName: Idnivell, type: INTEGER, size: '11', required: false, foreignTable: nivells, foreignReference: idNivells, onDelete: 'SET NULL', onUpdate: 'SET NULL' }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { idNivell: [idNivell], idDirectori: [idDirectori] }
+  apps:
+    _attributes: { phpName: Apps }
+    app_id: { phpName: AppId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    Url: { phpName: Url, type: LONGVARCHAR, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  arxiu_dvd:
+    _attributes: { phpName: ArxiuDvd }
+    id: { phpName: Id, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    tipus: { phpName: Tipus, type: VARCHAR, size: '30', required: true }
+    volum: { phpName: Volum, type: VARCHAR, size: '30', required: false }
+    url: { phpName: Url, type: LONGVARCHAR, required: false }
+    nom: { phpName: Nom, type: LONGVARCHAR, required: false }
+    data_creacio: { phpName: DataCreacio, type: TIMESTAMP, required: false }
+    comentari: { phpName: Comentari, type: LONGVARCHAR, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+  cessio:
+    _attributes: { phpName: Cessio }
+    cessio_id: { phpName: CessioId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    usuari_id: { phpName: UsuariId, type: INTEGER, size: '11', required: false, foreignTable: usuaris, foreignReference: UsuariID, onDelete: CASCADE, onUpdate: CASCADE }
+    nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    dni: { phpName: Dni, type: VARCHAR, size: '10', required: true }
+    representant: { phpName: Representant, type: VARCHAR, size: '100', required: true }
+    motiu: { phpName: Motiu, type: LONGVARCHAR, required: true }
+    condicions: { phpName: Condicions, type: LONGVARCHAR, required: true }
+    material_no_inventariat: { phpName: MaterialNoInventariat, type: LONGVARCHAR, required: true }
+    data_cessio: { phpName: DataCessio, type: DATE, required: true }
+    data_retorn: { phpName: DataRetorn, type: DATE, required: true }
+    estat: { phpName: Estat, type: LONGVARCHAR, required: true }
+    retornat: { phpName: Retornat, type: TINYINT, size: '1', required: true }
+    estat_retornat: { phpName: EstatRetornat, type: LONGVARCHAR, required: true }
+    data_retornat: { phpName: DataRetornat, type: DATE, required: true }
+    _indexes: { usuari_id: [usuari_id] }
+  cessiomaterial:
+    _attributes: { phpName: Cessiomaterial }
+    idCessioMaterial: { phpName: Idcessiomaterial, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Material_idMaterial: { phpName: MaterialIdmaterial, type: INTEGER, size: '11', required: true, foreignTable: material, foreignReference: idMaterial, onDelete: CASCADE, onUpdate: CASCADE }
+    cessio_id: { phpName: CessioId, type: INTEGER, size: '11', required: true, foreignTable: cessio, foreignReference: cessio_id, onDelete: CASCADE, onUpdate: CASCADE }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { CessioMaterial_FKIndex1: [Material_idMaterial], cessio_id: [cessio_id] }
+  chat:
+    _attributes: { phpName: Chat }
+    id: { phpName: Id, type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
+    from: { phpName: From, type: VARCHAR, size: '255', required: true, defaultValue: '' }
+    to: { phpName: To, type: VARCHAR, size: '255', required: true, defaultValue: '' }
+    message: { phpName: Message, type: LONGVARCHAR, required: true }
+    sent: { phpName: Sent, type: TIMESTAMP, required: true, defaultValue: '0000-00-00 00:00:00' }
+    recd: { phpName: Recd, type: INTEGER, size: '10', required: true, defaultValue: '0' }
+    _indexes: { to: [to], from: [from] }
+  cicles:
+    _attributes: { phpName: Cicles }
+    CicleID: { phpName: Cicleid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: false }
+    Imatge: { phpName: Imatge, type: VARCHAR, size: '255', required: true }
+    PDF: { phpName: Pdf, type: VARCHAR, size: '255', required: true }
+    tCurt: { phpName: Tcurt, type: LONGVARCHAR, required: true }
+    dCurt: { phpName: Dcurt, type: LONGVARCHAR, required: true }
+    tMig: { phpName: Tmig, type: LONGVARCHAR, required: true }
+    dMig: { phpName: Dmig, type: LONGVARCHAR, required: true }
+    tComplet: { phpName: Tcomplet, type: LONGVARCHAR, required: true }
+    dComplet: { phpName: Dcomplet, type: LONGVARCHAR, required: true }
+    extingit: { phpName: Extingit, type: TINYINT, size: '1', required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  conceptes:
+    _attributes: { phpName: Conceptes }
+    ConcepteID: { phpName: Concepteid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Any: { phpName: Any, type: INTEGER, size: '11', required: false }
+    Capitol: { phpName: Capitol, type: LONGVARCHAR, required: false }
+    Apartat: { phpName: Apartat, type: LONGVARCHAR, required: false }
+    Concepte: { phpName: Concepte, type: LONGVARCHAR, required: false }
+    Quantitat: { phpName: Quantitat, type: DOUBLE, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+  cursos:
+    _attributes: { phpName: Cursos }
+    idCursos: { phpName: Idcursos, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    TitolCurs: { phpName: Titolcurs, type: LONGVARCHAR, required: false }
+    isActiu: { phpName: Isactiu, type: TINYINT, size: '1', required: false, defaultValue: '1' }
+    Places: { phpName: Places, type: INTEGER, size: '11', required: false }
+    Codi: { phpName: Codi, type: LONGVARCHAR, required: false }
+    Descripcio: { phpName: Descripcio, type: LONGVARCHAR, required: false }
+    Preu: { phpName: Preu, type: INTEGER, size: '11', required: false }
+    Preur: { phpName: Preur, type: INTEGER, size: '11', required: false }
+    Horaris: { phpName: Horaris, type: LONGVARCHAR, required: false }
+    Categoria: { phpName: Categoria, type: LONGVARCHAR, required: false }
+    OrdreSortida: { phpName: Ordresortida, type: INTEGER, size: '11', required: false }
+    DataAparicio: { phpName: Dataaparicio, type: DATE, required: false }
+    DataDesaparicio: { phpName: Datadesaparicio, type: DATE, required: false }
+    DataFiMatricula: { phpName: Datafimatricula, type: DATE, required: false }
+    DataInici: { phpName: Datainici, type: DATE, required: false }
+    VisibleWEB: { phpName: Visibleweb, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    activitat_id: { phpName: ActivitatId, type: INTEGER, size: '11', required: false }
+    isEntrada: { phpName: Isentrada, type: TINYINT, size: '1', required: true }
+    PDF: { phpName: Pdf, type: LONGVARCHAR, required: true }
+  entrades:
+    _attributes: { phpName: Entrades }
+    idEntrada: { phpName: Identrada, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    titol: { phpName: Titol, type: VARCHAR, size: '50', required: true }
+    subtitol: { phpName: Subtitol, type: VARCHAR, size: '50', required: true }
+    data: { phpName: Data, type: VARCHAR, size: '50', required: true }
+    lloc: { phpName: Lloc, type: VARCHAR, size: '50', required: true }
+    preu: { phpName: Preu, type: VARCHAR, size: '50', required: true }
+    venudes: { phpName: Venudes, type: INTEGER, size: '11', required: true }
+    recaptat: { phpName: Recaptat, type: INTEGER, size: '11', required: true }
+    localitats: { phpName: Localitats, type: INTEGER, size: '11', required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: true }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  entrades_reserva:
+    _attributes: { phpName: EntradesReserva }
+    entrades_reserva_id: { phpName: EntradesReservaId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    usuari_id: { phpName: UsuariId, type: INTEGER, size: '11', required: false }
+    horaris_id: { phpName: HorarisId, type: INTEGER, size: '11', required: false }
+    quantes: { phpName: Quantes, type: SMALLINT, size: '6', required: false }
+    data: { phpName: Data, type: TIMESTAMP, required: false }
+    estat: { phpName: Estat, type: SMALLINT, size: '6', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { usuari_id: [usuari_id], activitat_id: [horaris_id] }
+  equipament:
+    _attributes: { phpName: Equipament }
+    EquipamentID: { phpName: Equipamentid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Factures_FacturaID: { phpName: FacturesFacturaid, type: INTEGER, size: '11', required: true, foreignTable: factures, foreignReference: FacturaID, onDelete: CASCADE, onUpdate: CASCADE }
+    Tipus: { phpName: Tipus, type: VARCHAR, size: '100', required: false }
+    DataCompra: { phpName: Datacompra, type: DATE, required: false }
+    Dades: { phpName: Dades, type: LONGVARCHAR, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    _indexes: { Equipament_FKIndex1: [Factures_FacturaID] }
+  espais:
+    _attributes: { phpName: Espais }
+    EspaiID: { phpName: Espaiid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Nom: { phpName: Nom, type: VARCHAR, size: '50', required: false }
+    Ordre: { phpName: Ordre, type: SMALLINT, size: '6', required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    isLlogable: { phpName: Isllogable, type: TINYINT, size: '1', required: true, defaultValue: '0' }
+    descripcio: { phpName: Descripcio, type: LONGVARCHAR, required: false }
+  espais_externs:
+    _attributes: { phpName: EspaisExterns }
+    idEspaiextern: { phpName: Idespaiextern, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Poble: { phpName: Poble, type: INTEGER, size: '11', required: true, foreignTable: poblacions, foreignReference: idPoblacio, onDelete: CASCADE, onUpdate: CASCADE }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    Adreca: { phpName: Adreca, type: LONGVARCHAR, required: true }
+    Contacte: { phpName: Contacte, type: LONGVARCHAR, required: true }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { Poble: [Poble] }
+  factures:
+    _attributes: { phpName: Factures }
+    FacturaID: { phpName: Facturaid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Proveidors_ProveidorID: { phpName: ProveidorsProveidorid, type: INTEGER, size: '11', required: true, foreignTable: proveidors, foreignReference: ProveidorID, onDelete: CASCADE, onUpdate: CASCADE }
+    Conceptes_ConcepteID: { phpName: ConceptesConcepteid, type: INTEGER, size: '11', required: true, foreignTable: conceptes, foreignReference: ConcepteID, onDelete: CASCADE, onUpdate: CASCADE }
+    DataFactura: { phpName: Datafactura, type: DATE, required: false }
+    Quantitat: { phpName: Quantitat, type: DOUBLE, required: false }
+    NumFactura: { phpName: Numfactura, type: LONGVARCHAR, required: false }
+    DataPagament: { phpName: Datapagament, type: DATE, required: false }
+    ModalitatPagament: { phpName: Modalitatpagament, type: LONGVARCHAR, required: false }
+    SubConcepte: { phpName: Subconcepte, type: LONGVARCHAR, required: false }
+    TipusComptable: { phpName: Tipuscomptable, type: LONGVARCHAR, required: false }
+    Text: { phpName: Text, type: LONGVARCHAR, required: false }
+    ValidaUsuari: { phpName: Validausuari, type: INTEGER, size: '11', required: false, foreignTable: usuaris, foreignReference: UsuariID, onDelete: CASCADE, onUpdate: CASCADE }
+    ValidatData: { phpName: Validatdata, type: DATE, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    _indexes: { Factures_FKIndex1: [Conceptes_ConcepteID], Factures_FKIndex2: [Proveidors_ProveidorID], Factures_FKIndex3: [ValidaUsuari] }
+  gestio_menus:
+    _attributes: { phpName: GestioMenus }
+    menu_id: { phpName: MenuId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    titol: { phpName: Titol, type: LONGVARCHAR, required: true }
+    url: { phpName: Url, type: LONGVARCHAR, required: true }
+    categoria: { phpName: Categoria, type: LONGVARCHAR, required: true }
+    ordre: { phpName: Ordre, type: TINYINT, size: '4', required: true }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true }
+    tipus: { phpName: Tipus, type: TINYINT, size: '4', required: true, defaultValue: '1' }
+  horaris:
+    _attributes: { phpName: Horaris }
+    HorarisID: { phpName: Horarisid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Activitats_ActivitatID: { phpName: ActivitatsActivitatid, type: INTEGER, size: '11', required: true, foreignTable: activitats, foreignReference: ActivitatID, onDelete: CASCADE, onUpdate: CASCADE }
+    Dia: { phpName: Dia, type: DATE, required: false }
+    HoraInici: { phpName: Horainici, type: TIME, required: false }
+    HoraFi: { phpName: Horafi, type: TIME, required: false }
+    HoraPre: { phpName: Horapre, type: TIME, required: false }
+    HoraPost: { phpName: Horapost, type: TIME, required: false }
+    Avis: { phpName: Avis, type: LONGVARCHAR, required: true }
+    Espectadors: { phpName: Espectadors, type: INTEGER, size: '11', required: true }
+    Places: { phpName: Places, type: INTEGER, size: '11', required: true }
+    Titol: { phpName: Titol, type: VARCHAR, size: '255', required: true }
+    Preu: { phpName: Preu, type: DOUBLE, required: true }
+    PreuR: { phpName: Preur, type: FLOAT, required: true }
+    Estat: { phpName: Estat, type: TINYINT, size: '1', required: true }
+    Responsable: { phpName: Responsable, type: LONGVARCHAR, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: true }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    isEntrada: { phpName: Isentrada, type: TINYINT, size: '1', required: true, defaultValue: '0' }
+    _indexes: { Horaris_FKIndex3: [Activitats_ActivitatID] }
+  horarisespais:
+    _attributes: { phpName: Horarisespais }
+    idHorarisEspais: { phpName: Idhorarisespais, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Material_idMaterial: { phpName: MaterialIdmaterial, type: INTEGER, size: '11', required: false, foreignTable: material, foreignReference: idMaterial, onDelete: CASCADE, onUpdate: CASCADE }
+    Espais_EspaiID: { phpName: EspaisEspaiid, type: INTEGER, size: '11', required: false, foreignTable: espais, foreignReference: EspaiID, onDelete: CASCADE, onUpdate: CASCADE }
+    idEspaiextern: { phpName: Idespaiextern, type: INTEGER, size: '11', required: false, foreignTable: espais_externs, foreignReference: idEspaiextern, onDelete: CASCADE, onUpdate: CASCADE }
+    Horaris_HorarisID: { phpName: HorarisHorarisid, type: INTEGER, size: '11', required: false, foreignTable: horaris, foreignReference: HorarisID, onDelete: CASCADE, onUpdate: CASCADE }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { Material_idMaterial: [Material_idMaterial, Espais_EspaiID, Horaris_HorarisID], Espais_EspaiID: [Espais_EspaiID], Horaris_HorarisID: [Horaris_HorarisID], idEspaiextern: [idEspaiextern] }
+  hospici_agenda:
+    _attributes: { phpName: HospiciAgenda }
+    agenda_id: { phpName: AgendaId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    titol: { phpName: Titol, type: LONGVARCHAR, required: true }
+    text: { phpName: Text, type: LONGVARCHAR, required: true }
+    data_inicial: { phpName: DataInicial, type: DATE, required: true }
+    data_final: { phpName: DataFinal, type: DATE, required: true }
+    lloc: { phpName: Lloc, type: LONGVARCHAR, required: true }
+    hora_inicial: { phpName: HoraInicial, type: TIME, required: true }
+    hora_final: { phpName: HoraFinal, type: TIME, required: true }
+    link: { phpName: Link, type: LONGVARCHAR, required: true }
+    ciutat: { phpName: Ciutat, type: LONGVARCHAR, required: true }
+    reserva: { phpName: Reserva, type: TINYINT, size: '1', required: true }
+  hospici_articles:
+    _attributes: { phpName: HospiciArticles }
+    article_id: { phpName: ArticleId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    titol: { phpName: Titol, type: LONGVARCHAR, required: true }
+    text: { phpName: Text, type: LONGVARCHAR, required: true }
+    data_alta: { phpName: DataAlta, type: DATE, required: true }
+    hora_alta: { phpName: HoraAlta, type: TIME, required: true }
+  hospici_articles_comentaris:
+    _attributes: { phpName: HospiciArticlesComentaris }
+    comentari_id: { phpName: ComentariId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    article_id: { phpName: ArticleId, type: INTEGER, size: '11', required: true }
+    qui: { phpName: Qui, type: LONGVARCHAR, required: true }
+    comentari: { phpName: Comentari, type: LONGVARCHAR, required: true }
+  hospici_categoria:
+    _attributes: { phpName: HospiciCategoria }
+    categoria_id: { phpName: CategoriaId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    tipus: { phpName: Tipus, type: CHAR, size: '1', required: true }
+    nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+  hospici_documents:
+    _attributes: { phpName: HospiciDocuments }
+    document_id: { phpName: DocumentId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    url: { phpName: Url, type: LONGVARCHAR, required: true }
+    nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    descripcio: { phpName: Descripcio, type: LONGVARCHAR, required: true }
+    tags: { phpName: Tags, type: LONGVARCHAR, required: true }
+    data_alta: { phpName: DataAlta, type: DATE, required: true }
+  hospici_entitat_elements:
+    _attributes: { phpName: HospiciEntitatElements }
+    element_id: { phpName: ElementId, type: INTEGER, size: '11', primaryKey: true, required: true }
+    tipus: { phpName: Tipus, type: CHAR, size: '1', primaryKey: true, required: true }
+    entitat_id: { phpName: EntitatId, type: INTEGER, size: '11', primaryKey: true, required: true }
+    nivell: { phpName: Nivell, type: INTEGER, size: '11', required: false }
+  hospici_entitats:
+    _attributes: { phpName: HospiciEntitats }
+    entitat_id: { phpName: EntitatId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    descripcio: { phpName: Descripcio, type: LONGVARCHAR, required: true }
+    habilitat: { phpName: Habilitat, type: TINYINT, size: '1', required: true }
+  hospici_projectes:
+    _attributes: { phpName: HospiciProjectes }
+    projecte_id: { phpName: ProjecteId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    descripcio: { phpName: Descripcio, type: LONGVARCHAR, required: true }
+    habilitat: { phpName: Habilitat, type: TINYINT, size: '1', required: true }
+  hospici_projectes_elements:
+    _attributes: { phpName: HospiciProjectesElements }
+    element_id: { phpName: ElementId, type: INTEGER, size: '11', primaryKey: true, required: true }
+    tipus: { phpName: Tipus, type: CHAR, size: '1', primaryKey: true, required: true }
+    projecte_id: { phpName: ProjecteId, type: INTEGER, size: '11', primaryKey: true, required: true }
+    nivell: { phpName: Nivell, type: INTEGER, size: '11', required: false }
+  hospici_subcategories:
+    _attributes: { phpName: HospiciSubcategories }
+    subcategoria_id: { phpName: SubcategoriaId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    categoria_id: { phpName: CategoriaId, type: INTEGER, size: '11', required: true }
+    nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+  hospici_subcategories_elements:
+    _attributes: { phpName: HospiciSubcategoriesElements }
+    element_id: { phpName: ElementId, type: INTEGER, size: '11', primaryKey: true, required: true }
+    subcategoria_id: { phpName: SubcategoriaId, type: INTEGER, size: '11', primaryKey: true, required: true }
+    tipus: { phpName: Tipus, type: CHAR, size: '1', primaryKey: true, required: true }
+  incidencies:
+    _attributes: { phpName: Incidencies }
+    idIncidencia: { phpName: Idincidencia, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    quiinforma: { phpName: Quiinforma, type: INTEGER, size: '11', required: true, foreignTable: usuaris, foreignReference: UsuariID, onDelete: RESTRICT, onUpdate: RESTRICT }
+    quiresol: { phpName: Quiresol, type: INTEGER, size: '11', required: true, foreignTable: usuaris, foreignReference: UsuariID, onDelete: RESTRICT, onUpdate: RESTRICT }
+    titol: { phpName: Titol, type: LONGVARCHAR, required: false }
+    descripcio: { phpName: Descripcio, type: LONGVARCHAR, required: false }
+    estat: { phpName: Estat, type: INTEGER, size: '11', required: true }
+    dataalta: { phpName: Dataalta, type: DATE, required: true }
+    dataresolucio: { phpName: Dataresolucio, type: DATE, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { quiinforma: [quiinforma, quiresol], quiresol: [quiresol] }
+  llistes:
+    _attributes: { phpName: Llistes }
+    idLlistes: { phpName: Idllistes, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    isActiva: { phpName: Isactiva, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  log:
+    _attributes: { phpName: Log }
+    Id: { phpName: Id, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    UsuariID: { phpName: Usuariid, type: INTEGER, size: '11', required: false, foreignTable: usuaris, foreignReference: UsuariID, onDelete: 'SET NULL', onUpdate: CASCADE }
+    Accio: { phpName: Accio, type: VARCHAR, size: '50', required: true }
+    Model: { phpName: Model, type: VARCHAR, size: '50', required: true }
+    DadesBefore: { phpName: Dadesbefore, type: LONGVARCHAR, required: false }
+    DadesAfter: { phpName: Dadesafter, type: LONGVARCHAR, required: false }
+    Data: { phpName: Data, type: TIMESTAMP, required: false }
+    _indexes: { UsuariID: [UsuariID] }
+  material:
+    _attributes: { phpName: Material }
+    idMaterial: { phpName: Idmaterial, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    MaterialGeneric_idMaterialGeneric: { phpName: MaterialgenericIdmaterialgeneric, type: INTEGER, size: '11', required: true, foreignTable: materialgeneric, foreignReference: idMaterialGeneric, onDelete: CASCADE, onUpdate: CASCADE }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: false }
+    Descripcio: { phpName: Descripcio, type: LONGVARCHAR, required: false }
+    Responsable: { phpName: Responsable, type: LONGVARCHAR, required: false }
+    Ubicacio: { phpName: Ubicacio, type: LONGVARCHAR, required: false }
+    DataCompra: { phpName: Datacompra, type: DATE, required: false }
+    Identificador: { phpName: Identificador, type: LONGVARCHAR, required: false }
+    NumSerie: { phpName: Numserie, type: LONGVARCHAR, required: false }
+    DataGarantia: { phpName: Datagarantia, type: DATE, required: false }
+    DataRevisio: { phpName: Datarevisio, type: DATE, required: false }
+    Cedit: { phpName: Cedit, type: LONGVARCHAR, required: false }
+    DataCessio: { phpName: Datacessio, type: DATE, required: false }
+    DataRetorn: { phpName: Dataretorn, type: DATE, required: false }
+    NumFactura: { phpName: Numfactura, type: LONGVARCHAR, required: false }
+    Preu: { phpName: Preu, type: FLOAT, required: false }
+    NotesManteniment: { phpName: Notesmanteniment, type: LONGVARCHAR, required: false }
+    DataBaixa: { phpName: Databaixa, type: DATE, required: false }
+    DataReparacio: { phpName: Datareparacio, type: DATE, required: false }
+    Disponible: { phpName: Disponible, type: TINYINT, size: '1', required: false, defaultValue: '1' }
+    AltaRegistre: { phpName: Altaregistre, type: DATE, required: false }
+    isTransferible: { phpName: Istransferible, type: TINYINT, size: '1', required: true }
+    isAdministratiu: { phpName: Isadministratiu, type: TINYINT, size: '1', required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    unitats: { phpName: Unitats, type: SMALLINT, size: '6', required: true, defaultValue: '1' }
+    _indexes: { Material_FKIndex1: [MaterialGeneric_idMaterialGeneric] }
+  materialgeneric:
+    _attributes: { phpName: Materialgeneric }
+    idMaterialGeneric: { phpName: Idmaterialgeneric, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  matricules:
+    _attributes: { phpName: Matricules }
+    idMatricules: { phpName: Idmatricules, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Usuaris_UsuariID: { phpName: UsuarisUsuariid, type: INTEGER, size: '11', required: false, foreignTable: usuaris, foreignReference: UsuariID, onDelete: CASCADE, onUpdate: CASCADE }
+    Cursos_idCursos: { phpName: CursosIdcursos, type: INTEGER, size: '11', required: false, foreignTable: cursos, foreignReference: idCursos, onDelete: CASCADE, onUpdate: CASCADE }
+    Estat: { phpName: Estat, type: SMALLINT, size: '2', required: false }
+    Comentari: { phpName: Comentari, type: LONGVARCHAR, required: false }
+    DataInscripcio: { phpName: Datainscripcio, type: TIMESTAMP, required: false }
+    Pagat: { phpName: Pagat, type: DOUBLE, required: false }
+    tReduccio: { phpName: Treduccio, type: SMALLINT, size: '2', required: true }
+    tPagament: { phpName: Tpagament, type: SMALLINT, size: '2', required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    tpv_operacio: { phpName: TpvOperacio, type: VARCHAR, size: '20', required: true }
+    tpv_order: { phpName: TpvOrder, type: INTEGER, size: '11', required: true }
+    _indexes: { Matricules_FKIndex1: [Cursos_idCursos], Matricules_FKIndex2: [Usuaris_UsuariID] }
+  missatges:
+    _attributes: { phpName: Missatges }
+    MissatgeID: { phpName: Missatgeid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Usuaris_UsuariID: { phpName: UsuarisUsuariid, type: INTEGER, size: '11', required: true, foreignTable: usuaris, foreignReference: UsuariID, onDelete: CASCADE, onUpdate: CASCADE }
+    Titol: { phpName: Titol, type: LONGVARCHAR, required: false }
+    Text: { phpName: Text, type: LONGVARCHAR, required: false }
+    Date: { phpName: Date, type: TIMESTAMP, required: false }
+    Publicacio: { phpName: Publicacio, type: DATE, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    isGlobal: { phpName: Isglobal, type: TINYINT, size: '1', required: true, defaultValue: '0' }
+    _indexes: { Taulell_FKIndex1: [Usuaris_UsuariID] }
+  missatges_emails:
+    _attributes: { phpName: MissatgesEmails }
+    idLlista: { phpName: Idllista, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: llistes, foreignReference: idLlistes, onDelete: CASCADE, onUpdate: CASCADE }
+    email: { phpName: Email, type: VARCHAR, size: '50', primaryKey: true, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  missatges_usuaris:
+    _attributes: { phpName: MissatgesUsuaris }
+    idLlista: { phpName: Idllista, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: llistes, foreignReference: idLlistes, onDelete: CASCADE, onUpdate: CASCADE }
+    email: { phpName: Email, type: VARCHAR, size: '50', primaryKey: true, required: true }
+    data: { phpName: Data, type: TIMESTAMP, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  missatgesllistes:
+    _attributes: { phpName: Missatgesllistes }
+    idMissatgesLlistes: { phpName: Idmissatgesllistes, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: missatgesmailing, foreignReference: idMissatge, onDelete: CASCADE, onUpdate: CASCADE }
+    Llistes_idLlistes: { phpName: LlistesIdllistes, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: llistes, foreignReference: idLlistes, onDelete: CASCADE, onUpdate: CASCADE }
+    Enviat: { phpName: Enviat, type: DATE, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: true }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { Llistes_idLlistes: [Llistes_idLlistes] }
+  missatgesmailing:
+    _attributes: { phpName: Missatgesmailing }
+    idMissatge: { phpName: Idmissatge, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    titol: { phpName: Titol, type: LONGVARCHAR, required: true }
+    text: { phpName: Text, type: LONGVARCHAR, required: true }
+    data_alta: { phpName: DataAlta, type: DATE, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true }
+  multimedia:
+    _attributes: { phpName: Multimedia }
+    multimedia_id: { phpName: MultimediaId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    taula: { phpName: Taula, type: VARCHAR, size: '20', required: true }
+    url: { phpName: Url, type: LONGVARCHAR, required: true }
+    site_id: { phpName: SiteId, type: INTEGER, size: '11', required: true }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true }
+    id_extern: { phpName: IdExtern, type: INTEGER, size: '11', required: true }
+  nivells:
+    _attributes: { phpName: Nivells }
+    idNivells: { phpName: Idnivells, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+  nodes:
+    _attributes: { phpName: Nodes }
+    idNodes: { phpName: Idnodes, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    TitolMenu: { phpName: Titolmenu, type: LONGVARCHAR, required: false }
+    HTML: { phpName: Html, type: LONGVARCHAR, required: false }
+    isCategoria: { phpName: Iscategoria, type: TINYINT, size: '4', required: false, defaultValue: '0' }
+    isPhp: { phpName: Isphp, type: TINYINT, size: '1', required: true, defaultValue: '0' }
+    isActiva: { phpName: Isactiva, type: TINYINT, size: '4', required: false, defaultValue: '1' }
+    Ordre: { phpName: Ordre, type: INTEGER, size: '11', required: false }
+    Nivell: { phpName: Nivell, type: INTEGER, size: '11', required: true }
+    Url: { phpName: Url, type: LONGVARCHAR, required: true }
+    Categories: { phpName: Categories, type: VARCHAR, size: '100', required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  noticies:
+    _attributes: { phpName: Noticies }
+    idNoticia: { phpName: Idnoticia, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    TitolNoticia: { phpName: Titolnoticia, type: VARCHAR, size: '100', required: false }
+    TextNoticia: { phpName: Textnoticia, type: LONGVARCHAR, required: false }
+    DataPublicacio: { phpName: Datapublicacio, type: DATE, required: false }
+    Activa: { phpName: Activa, type: TINYINT, size: '1', required: false }
+    Imatge: { phpName: Imatge, type: VARCHAR, size: '255', required: false }
+    Adjunt: { phpName: Adjunt, type: VARCHAR, size: '255', required: false }
+    idActivitat: { phpName: Idactivitat, type: INTEGER, size: '11', required: false }
+    DataDesaparicio: { phpName: Datadesaparicio, type: DATE, required: false }
+    Ordre: { phpName: Ordre, type: INTEGER, size: '11', required: true, defaultValue: '0' }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  options:
+    _attributes: { phpName: Options }
+    option_id: { phpName: OptionId, type: VARCHAR, size: '30', primaryKey: true, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', primaryKey: true, required: true }
+    valor: { phpName: Valor, type: LONGVARCHAR, required: true }
+  personal:
+    _attributes: { phpName: Personal }
+    idPersonal: { phpName: Idpersonal, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    idUsuari: { phpName: Idusuari, type: INTEGER, size: '11', required: true, foreignTable: usuaris, foreignReference: UsuariID, onDelete: CASCADE, onUpdate: CASCADE }
+    idData: { phpName: Iddata, type: DATE, required: true }
+    tipus: { phpName: Tipus, type: TINYINT, size: '1', required: false }
+    text: { phpName: Text, type: LONGVARCHAR, required: false }
+    data_revisio: { phpName: DataRevisio, type: TIMESTAMP, required: false }
+    data_alta: { phpName: DataAlta, type: TIMESTAMP, required: false }
+    data_baixa: { phpName: DataBaixa, type: DATE, required: false }
+    usuariUpdateId: { phpName: Usuariupdateid, type: INTEGER, size: '11', required: false, foreignTable: usuaris, foreignReference: UsuariID, onDelete: 'SET NULL', onUpdate: 'SET NULL' }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    data_finalitzada: { phpName: DataFinalitzada, type: TIMESTAMP, required: false }
+    _indexes: { idUsuari: [idUsuari], idData: [idData], usuariUpdateId: [usuariUpdateId] }
+  poblacions:
+    _attributes: { phpName: Poblacions }
+    idPoblacio: { phpName: Idpoblacio, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    Comarca: { phpName: Comarca, type: LONGVARCHAR, required: true }
+    CodiPostal: { phpName: Codipostal, type: LONGVARCHAR, required: true }
+  promocions:
+    _attributes: { phpName: Promocions }
+    PromocioID: { phpName: Promocioid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: false }
+    Ordre: { phpName: Ordre, type: INTEGER, size: '11', required: false, defaultValue: '1' }
+    Extensio: { phpName: Extensio, type: LONGVARCHAR, required: false }
+    isActiva: { phpName: Isactiva, type: TINYINT, size: '4', required: false, defaultValue: '1' }
+    isFixa: { phpName: Isfixa, type: TINYINT, size: '1', required: true, defaultValue: '0' }
+    URL: { phpName: Url, type: LONGVARCHAR, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+  proveidors:
+    _attributes: { phpName: Proveidors }
+    ProveidorID: { phpName: Proveidorid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    NIF: { phpName: Nif, type: VARCHAR, size: '20', required: false }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: false }
+    Telefon: { phpName: Telefon, type: VARCHAR, size: '50', required: false }
+    CE: { phpName: Ce, type: VARCHAR, size: '100', required: false }
+    CC: { phpName: Cc, type: VARCHAR, size: '100', required: false }
+    CP: { phpName: Cp, type: VARCHAR, size: '100', required: false }
+    Adreca: { phpName: Adreca, type: LONGVARCHAR, required: false }
+    Alta: { phpName: Alta, type: DATE, required: false }
+    Ciutat: { phpName: Ciutat, type: LONGVARCHAR, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+  reservaespais:
+    _attributes: { phpName: Reservaespais }
+    ReservaEspaiID: { phpName: Reservaespaiid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Representacio: { phpName: Representacio, type: LONGVARCHAR, required: false }
+    Responsable: { phpName: Responsable, type: LONGVARCHAR, required: false }
+    PersonalAutoritzat: { phpName: Personalautoritzat, type: LONGVARCHAR, required: false }
+    PrevisioAssistents: { phpName: Previsioassistents, type: INTEGER, size: '11', required: false, defaultValue: '0' }
+    EsCicle: { phpName: Escicle, type: TINYINT, size: '1', required: false, defaultValue: '0' }
+    Comentaris: { phpName: Comentaris, type: LONGVARCHAR, required: false }
+    Estat: { phpName: Estat, type: CHAR, size: '1', required: false, defaultValue: '0' }
+    Usuaris_usuariID: { phpName: UsuarisUsuariid, type: INTEGER, size: '11', required: false, foreignTable: usuaris, foreignReference: UsuariID, onDelete: CASCADE, onUpdate: CASCADE }
+    Organitzadors: { phpName: Organitzadors, type: LONGVARCHAR, required: true }
+    DataActivitat: { phpName: Dataactivitat, type: LONGVARCHAR, required: true }
+    HorariActivitat: { phpName: Horariactivitat, type: LONGVARCHAR, required: true }
+    TipusActe: { phpName: Tipusacte, type: LONGVARCHAR, required: true }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    isEnregistrable: { phpName: Isenregistrable, type: TINYINT, size: '1', required: true }
+    EspaisSolicitats: { phpName: Espaissolicitats, type: LONGVARCHAR, required: true }
+    MaterialSolicitat: { phpName: Materialsolicitat, type: LONGVARCHAR, required: true }
+    DataAlta: { phpName: Dataalta, type: TIMESTAMP, required: false }
+    Codi: { phpName: Codi, type: VARCHAR, size: '10', required: true }
+    CondicionsCCG: { phpName: Condicionsccg, type: LONGVARCHAR, required: false }
+    DataAcceptacioCondicions: { phpName: Dataacceptaciocondicions, type: TIMESTAMP, required: false }
+    ObservacionsCondicions: { phpName: Observacionscondicions, type: LONGVARCHAR, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { Usuaris_usuariID: [Usuaris_usuariID] }
+  sessions:
+    _attributes: { phpName: Sessions }
+    sess_id: { phpName: SessId, type: VARCHAR, size: '64', required: true }
+    sess_data: { phpName: SessData, type: LONGVARCHAR, required: true }
+    sess_time: { phpName: SessTime, type: INTEGER, size: '11', required: true }
+    _indexes: { sess_id: [sess_id] }
+  sites:
+    _attributes: { phpName: Sites }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', primaryKey: true, autoIncrement: true, required: true }
+    nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    poble: { phpName: Poble, type: INTEGER, size: '11', required: false }
+    logoUrl: { phpName: Logourl, type: VARCHAR, size: '255', required: false }
+    webUrl: { phpName: Weburl, type: VARCHAR, size: '255', required: false }
+    _indexes: { poble: [poble] }
+  tipus:
+    _attributes: { phpName: Tipus }
+    idTipus: { phpName: Idtipus, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    tipusNom: { phpName: Tipusnom, type: LONGVARCHAR, required: false }
+    tipusDesc: { phpName: Tipusdesc, type: LONGVARCHAR, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+  tipusactivitat:
+    _attributes: { phpName: Tipusactivitat }
+    idTipusActivitat: { phpName: Idtipusactivitat, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+  trac:
+    _attributes: { phpName: Trac }
+    idTrac: { phpName: Idtrac, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    title: { phpName: Title, type: LONGVARCHAR, required: true }
+    description: { phpName: Description, type: LONGVARCHAR, required: true }
+    type: { phpName: Type, type: CHAR, size: '1', required: false }
+    solved_version: { phpName: SolvedVersion, type: INTEGER, size: '11', required: false }
+    importancy: { phpName: Importancy, type: CHAR, size: '1', required: false }
+    usuari_id: { phpName: UsuariId, type: INTEGER, size: '11', required: false }
+    site_id: { phpName: SiteId, type: INTEGER, size: '11', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    date: { phpName: Date, type: TIMESTAMP, required: false }
+  usuaris:
+    _attributes: { phpName: Usuaris }
+    UsuariID: { phpName: Usuariid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Nivells_idNivells: { phpName: NivellsIdnivells, type: INTEGER, size: '11', required: false, foreignTable: nivells, foreignReference: idNivells, onDelete: 'SET NULL', onUpdate: 'SET NULL' }
+    DNI: { phpName: Dni, type: VARCHAR, size: '12', required: false }
+    Passwd: { phpName: Passwd, type: VARCHAR, size: '20', required: false }
+    Nom: { phpName: Nom, type: LONGVARCHAR, required: false }
+    Cog1: { phpName: Cog1, type: LONGVARCHAR, required: false }
+    Cog2: { phpName: Cog2, type: LONGVARCHAR, required: false }
+    Email: { phpName: Email, type: LONGVARCHAR, required: false }
+    Adreca: { phpName: Adreca, type: LONGVARCHAR, required: false }
+    CodiPostal: { phpName: Codipostal, type: INTEGER, size: '11', required: false }
+    Poblacio: { phpName: Poblacio, type: INTEGER, size: '11', required: false, foreignTable: poblacions, foreignReference: idPoblacio, onDelete: 'SET NULL', onUpdate: 'SET NULL' }
+    Poblaciotext: { phpName: Poblaciotext, type: LONGVARCHAR, required: false }
+    Telefon: { phpName: Telefon, type: LONGVARCHAR, required: false }
+    Mobil: { phpName: Mobil, type: LONGVARCHAR, required: false }
+    Entitat: { phpName: Entitat, type: LONGVARCHAR, required: false }
+    Habilitat: { phpName: Habilitat, type: TINYINT, size: '4', required: false }
+    Actualitzacio: { phpName: Actualitzacio, type: DATE, required: false }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    facebook_id: { phpName: FacebookId, type: BIGINT, size: '20', required: false }
+    _indexes: { Usuaris_FKIndex1: [Nivells_idNivells], Poblacio: [Poblacio] }
+  usuaris_apps:
+    _attributes: { phpName: UsuarisApps }
+    usuari_id: { phpName: UsuariId, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: usuaris, foreignReference: UsuariID, onDelete: CASCADE, onUpdate: CASCADE }
+    app_id: { phpName: AppId, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: apps, foreignReference: app_id, onDelete: CASCADE, onUpdate: CASCADE }
+    nivell_id: { phpName: NivellId, type: INTEGER, size: '11', required: false, foreignTable: nivells, foreignReference: idNivells, onDelete: 'SET NULL', onUpdate: 'SET NULL' }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { nivell_id: [nivell_id], app_id: [app_id] }
+  usuaris_menus:
+    _attributes: { phpName: UsuarisMenus }
+    usuari_id: { phpName: UsuariId, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: usuaris, foreignReference: UsuariID, onDelete: CASCADE, onUpdate: CASCADE }
+    menu_id: { phpName: MenuId, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: gestio_menus, foreignReference: menu_id, onDelete: CASCADE, onUpdate: CASCADE }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', primaryKey: true, required: true }
+    nivell_id: { phpName: NivellId, type: INTEGER, size: '11', required: true, foreignTable: nivells, foreignReference: idNivells, onDelete: CASCADE, onUpdate: CASCADE }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { menu_id: [menu_id], nivell_id: [nivell_id] }
+  usuaris_sites:
+    _attributes: { phpName: UsuarisSites }
+    usuari_id: { phpName: UsuariId, type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: usuaris, foreignReference: UsuariID, onDelete: CASCADE, onUpdate: CASCADE }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', primaryKey: true, required: true, foreignTable: sites, foreignReference: site_id, onDelete: CASCADE, onUpdate: CASCADE }
+    nivell_id: { phpName: NivellId, type: INTEGER, size: '11', required: true, foreignTable: nivells, foreignReference: idNivells, onDelete: CASCADE, onUpdate: CASCADE }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '0' }
+    _indexes: { nivell_id: [nivell_id], site_id: [site_id] }
+  usuarisllistes:
+    _attributes: { phpName: Usuarisllistes }
+    idUsuarisLlistes: { phpName: Idusuarisllistes, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    Llistes_idLlistes: { phpName: LlistesIdllistes, type: INTEGER, size: '11', required: false, foreignTable: llistes, foreignReference: idLlistes, onDelete: CASCADE, onUpdate: CASCADE }
+    Usuaris_UsuarisID: { phpName: UsuarisUsuarisid, type: INTEGER, size: '11', required: false, foreignTable: usuaris, foreignReference: UsuariID, onDelete: CASCADE, onUpdate: CASCADE }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { Llistes_idLlistes: [Llistes_idLlistes], Usuaris_UsuarisID: [Usuaris_UsuarisID] }

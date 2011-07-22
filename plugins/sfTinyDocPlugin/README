@@ -1,0 +1,462 @@
+# sfTinyDocPlugin
+
+
+## Overview
+
+The sfTinyDocPlugin allows to generate OpenOffice and Word 2007 documents with TinyButStrong template engine.
+
+  * __History :__
+
+  The previous class was named [tbsOOo](http://www.tinybutstrong.com/tbsooo.php). I rewrite the class to have a clean code with new methods and add some new functionnality like :
+    * work with the last version of [TinyButStrong](http://www.tinybutstrong.com)
+    * better support of specials characters like __\n__, __\r__, __\r\n__, __\t__
+    * can generate __Word 2007__ documents
+    * can add __images__ 
+    * can merge data with __native format__ in OpenOffice spreadsheet
+    * two methods to zip and unzip the office files (zip with command line and the pecl ZipArchive)
+    * and a plugin for __[symfony framework](http://www.symfony-project.org)__
+
+  * __The office formats supported :__
+
+    * OpenOffice 1.0 or OpenDocument 1.0
+    * OpenOffice 2.0 or OpenDocument 1.1
+    * Word 2007
+
+  * __It's useful :__
+
+    * To create word processing and spreadsheet documents.
+    * To create reports, bill, orders.
+    * To create mailing.
+    * To create multi pages documents.
+    * To use the power of the TinyButStrong template engine syntax :
+      * Merge fields
+      * Merge blocks (repetitive fields)
+      * and more...
+
+  * __It's not :__
+
+    * To create an Office document from scratch.
+    * To convert a document from OpenOffice to Word or to PDF or else. See the project [PyODConverter](http://www.artofsolving.com/opensource/pyodconverter) to do that.
+
+  * __Avantages :__
+
+    * __No installation of OpenOffice__ on the server side.
+    * Work on *nix, win and other systems.
+    * Templates can be created and modified __easyly__ by designer.
+    * Templates layouts and styles are made with __OpenOffice__ or __Word2007__ application.
+    * Data in spreadsheet are converted to native OpenOffice format with the __new parameter__ named 'type'.
+      * Useful to use with spreadsheet formulas
+      * Useful to use the spreadsheet format
+    * __For the [symfony framework](http://www.symfony-project.org)__
+      * Template have the same location as the symfony templates.
+      * Template name have the same name as the symfony templates.
+      * Get the config from app.yml.
+      * The method __`createFrom()`__ is automatic. By default : __`moduleName/templates/actionNameSuccess.odt`__
+
+
+  * __Limitations :__
+
+    * Can't merge collection of objects (iterator not supported in TinyButStrong, next version), you have to transform to an array before.
+      * For __Propel__ write your own method like __`asArray()`__  in the Jobeet tutorial, [see day 16](http://www.symfony-project.org/jobeet/1_2/Propel/en/16).
+      * For __Doctrine__ use the magic method : __`$result->toArray (false | true)`__ to transform the result to an array, see : [doctrine api](http://www.doctrine-project.org/documentation/manual/1_0/en/working-with-models:arrays-and-objects:to-array)
+
+    * Can't change a style of the Office document by code, the styles are fix when you editing your Office document.
+    * Can't merge global vars __`[var.xxx]`__, use method __`mergeXmlField()`__ in place of use globals vars
+    * Can't merge sub-block because TinyButStrong need global vars, see __`headergrp`__ syntax
+
+  * __Experimental for OpenOffice :__
+
+    * Add images dynamicaly, to make a catalog by example - The image size have to be the same as in the layout.
+
+
+## Installation 
+
+  * Install sfTinyDocPlugin :
+
+        symfony plugin-install http://plugins.symfony-project.com/sfTinyDocPlugin
+
+  * Optionally add the following config to `app.yml` :
+
+        all:
+          sf_tiny_doc_plugin:
+            zip_method:    shell             # the method to zip/unzip : shell | ziparchive
+            zip_bin:       zip               # the binary to zip   for 'shell' method
+            unzip_bin:     unzip             # the binary to unzip for 'shell' method
+            process_dir:   %SF_WEB_DIR%/tmp  # the process directory
+
+  * Clear your cache :
+
+        symfony cc
+
+  * Configure the method to zip/unzip office documents :
+
+    * Method 1 : __shell__ (by default)
+
+      To install Zip on Red Hat Enterprise Linux or CentOS
+
+              yum install zip
+
+    * Method 2 : __ziparchive__
+
+       To install Pecl ZipArchive on Red Hat Enterprise Linux or CentOS
+
+              yum install httpd-devel
+              pecl install zip
+
+  * Create a directory where to process temporary files, by example on web root :
+
+        mkdir web/tmp
+        chmod 777 web/tmp
+
+
+## My first OpenOffice text document in action (.odt)
+
+  * Create a new module `doc` in your application
+
+  * Create an action `basic` in `doc/actions/actions.class.php`
+
+        public function executeBasic(sfWebRequest $request)
+        {
+          // create the document
+          $doc = new sfTinyDoc();
+          $doc->createFrom();
+          $doc->loadXml('content.xml');
+          $doc->mergeXmlField('field1', 'variable');
+          $doc->mergeXmlField('field2', array('id' => 55, 'name' => 'bob'));
+          $doc->mergeXmlField('field3', $doc);
+          $doc->mergeXmlBlock('block1',
+            array(
+              array('firstname' => 'John'   , 'lastname' => 'Doe'),
+              array('firstname' => 'Douglas', 'lastname' => 'Adams'),
+              array('firstname' => 'Roger'  , 'lastname' => 'Waters'),
+            )
+          );
+          $doc->saveXml();
+          $doc->close();
+
+          // send and remove the document
+          $doc->sendResponse();
+          $doc->remove();
+
+          throw new sfStopException;
+        }
+
+  * Create an OpenOffice text document (.odt) and paste this.
+
+        $doc->mergeXmlField() with a string
+
+        [field1]
+
+        $doc->mergeXmlField() with an array
+
+        [field2.id] [field2.name]
+
+        $doc->mergeXmlField() with an object
+
+        [field3.getZipMethod]
+        [field3.getZipBinary]
+        [field3.getUnzipBinary]
+
+        $doc->mergeXmlBlock() with an array
+
+        [block1;block=begin][block1.$] [block1.firstname] [block1.lastname]
+        [block1;block=end]
+        Num rows : [block1.#]
+
+
+  * Save the document as `basicSuccess.odt` in template directory `doc/templates/`
+
+  * You can now test my first doc in a browser the result : [doc/basic](http://tinydoc.unesolution.fr/doc/basic)
+
+  The result is something like this :
+
+        $doc->mergeXmlField() with a string
+
+        variable
+
+        $doc->mergeXmlField() with an array
+
+        55 bob
+
+        $doc->mergeXmlField() with an object
+
+        shell
+        zip
+        unzip
+
+
+        $doc->mergeXmlBlock() with an array
+
+        0 John Doe
+        1 Douglas Adams
+        2 Roger Waters
+
+        Num rows : 3
+
+
+## and for OpenOffice calc document (.ods)
+
+  * Change in your action
+
+        $doc->createFrom();
+
+  By
+
+        $doc->createFrom(array('extension' => 'ods'));
+
+
+  * Create an OpenOffice spreadsheed document (.ods) and paste the same as before.
+
+        $doc->mergeXmlField() with a string
+
+        [field1]
+
+        $doc->mergeXmlField() with an array
+
+        [field2.id] [field2.name]
+
+        $doc->mergeXmlField() with an object
+
+        [field3.getZipMethod]
+        [field3.getZipBinary]
+        [field3.getUnzipBinary]
+
+        $doc->mergeXmlBlock() with an array
+
+        [block1;block=begin][block1.$] [block1.firstname] [block1.lastname]
+        [block1;block=end]
+        Num rows : [block1.#]
+
+
+  * Save the document as `basicSuccess.ods` in template directory `doc/templates/`
+
+  * You can now test my OpenOffice calc document in a browser the result : [doc/basicCalc](http://tinydoc.unesolution.fr/doc/basicCalc)
+
+
+## and for Word2007 document (.docx)
+
+  * Change in your action
+
+        $doc->createFrom();
+        $doc->loadXml('content.xml');
+
+  By
+
+        $doc->createFrom(array('extension' => 'docx'));
+        $doc->loadXml('word/document.xml');
+
+  * Create an Word2007 document (.docx) and paste the same as before.
+
+        $doc->mergeXmlField() with a string
+
+        [field1]
+
+        $doc->mergeXmlField() with an array
+
+        [field2.id] [field2.name]
+
+        $doc->mergeXmlField() with an object
+
+        [field3.getZipMethod]
+        [field3.getZipBinary]
+        [field3.getUnzipBinary]
+
+        $doc->mergeXmlBlock() with an array
+
+        [block1;block=begin][block1.$] [block1.firstname] [block1.lastname]
+        [block1;block=end]
+        Num rows : [block1.#]
+
+
+  * Save the document as `basicSuccess.docx` in template directory `doc/templates/`
+
+  * You can now test the Word2007 document in a browser the result : [doc/basicWord](http://tinydoc.unesolution.fr/doc/basicWord)
+
+
+  ### Tips
+
+        $doc->createFrom();  // the defaut extension is 'odt'
+        $doc->loadXml(); // the defaut XML filename is 'content.xml'
+
+
+## The basic structure of OpenDocument (OpenOffice) and Word 2007 files
+
+  * The documents are a zip archive format with these main files :   
+
+                          OpenDocument      Word2007
+
+        content           content.xml       word/document.xml
+        meta              meta.xml          ? 
+        settings          settings.xml      word/settings.xml
+        styles            styles.xml        word/styles.xml     
+        header            styles.xml        word/header1.xml     
+        footer            styles.xml        word/footer1.xml     
+
+  __`content.xml`__ is the main file to merge in OpenOffice documents.
+
+  __`word/document.xml`__ is the main file to merge in Word 2007 documents.
+
+  __`content.xml`__ is the defaut file in __`loadXml()`__ method.
+
+  See more on :
+
+    - [OpenOffice XML website](http://xml.openoffice.org/general.html)
+    - [OpenDocument XML website](http://opendocument.xml.org/faq)
+    - [OASIS OpenDocument Essentials](http://books.evc-cit.info/odbook/book.html)
+
+  * The XML tags you have to know :
+
+                    HTML tags     OpenDocument XML tags     Word2007 XML tags
+
+        table       <table>       <table:table>             <w:tbl>
+        row         <tr>          <table:table-row>         <w:tr>
+        cell        <td>          <table:table-cell>        <w:tc>
+        paragraph   <p>           <text:p>                  <w:p>
+
+
+## The method to merge data
+
+  * __Before merging data__, you have to load the XML file with the __`loadXml()`__ method.
+  * __After merging data__, you have to save the result of merging in the XML file with the __`saveXml()`__ method. 
+
+  Each time you have to merge data with an another file you have to
+
+        $doc->loadXml('content.xml');
+        ...
+        $doc->mergeXml(...);
+        $doc->mergeXmlField(...);
+        $doc->mergeXmlBlock(...);
+        $doc->mergeXml(...);
+        ...
+        $doc->saveXml();
+
+
+        $doc->loadXml('styles.xml');
+        ...
+        $doc->mergeXml(...);
+        $doc->mergeXmlField(...);
+        $doc->mergeXmlBlock(...);
+        $doc->mergeXml(...);
+        ...
+        $doc->saveXml();
+
+  * There two different methods to merge data, field and block
+
+    * method : __`mergeXmlField($name, $data)`__
+
+      MergeField it's for fields (one time)
+
+    * method : __`mergeXmlBlock($name, $data)`__
+
+      MergeBlock it's for repetive fields to merge all items from an array.
+
+      Note : If you don't define the begin block and the end of the block, the fields are merged one time.
+
+
+  * The two methods call the generic method : __`mergeXml($options, $data)`__
+
+  With this method, you can pass some parameters in the __`$options`__ array like :
+
+    * __name__:       The tag name in the template ('block' by default)
+    * __type__:       The tag type in the template ('field' | 'block' - 'block' by default)
+    * __data_type__:  The data type - only for type = 'block' ('array' by default)
+    * __charset__:    The data charset ('UTF-8' by default)
+    * __is_escape__:  If data are escaped (true by default)
+    * __callback__:   The callback to encode data ('=~encodeData' by default)
+
+    Example :
+
+          $doc->mergeXml(
+            array(
+              'name'      => 'b1',
+              'type'      => 'block',
+              'data_type' => 'array',
+              'charset'   => 'UTF-8',
+              'is_escape' => true,
+            ),
+            $data
+          );
+
+
+
+## TinyButStrong templates syntax (TBS tags)
+
+  For all parameters of TinyButStrong, have a look to the [TinyButStrong manual](http://www.tinybutstrong.com/manual.php#html_side)
+
+### The TBS field parameters
+
+  * ifempty
+  * if expr1=expr2;then val1;else val2
+  * frm=format1|format2|format3|format4
+  * magnet
+  * mtype
+  * ope=action
+
+### The TBS block parameters
+
+  * block
+  * $
+  * #
+  * nodata
+  * bmagnet
+  * headergrp
+  * footergrp
+  * splittergrp
+  * parentgrp
+  * serial
+  * p1=val1 (for subquery, this param don't work inside a class, like for sfTinyDoc)
+  * when expr1=expr2
+  * default
+  * several
+
+### New parameter
+
+  * type : This parameter is only for OpenOffice spreadsheet. It fixes the __value type__ of the cell, not the format. The format is set with OpenOffice.
+
+    * __type=currency__ or the shorten way __type=c__.
+
+      The input data is a float.
+
+    * __type=date__ or __type=d__.
+
+      The input data is a string 'Y-m-d' or 'Y-m-d H:i:s'.
+
+    * __type=float__ or __type=f__.
+
+      The input data is a float.
+
+    * __type=int__ or __type=i__.
+
+      The input data is a integer.
+
+    * __type=percentage__ or __type=p__.
+
+      The input data is a float.
+
+    * __type=time__ or __type=t__.
+
+      The input data is a string like 'H:i:s'.
+
+  Note : __Only one TBS field__ can be merge in a cell when the parameter __`type`__ is set.
+
+  Note2 : To fix __the format__ the cell, use OpenOffice for that. Don't use __`frm`__ parameter.
+
+
+## Examples
+
+As in French we can said, "Un dessin vaut mieux qu'un long discours", here some [examples](http://tinydoc.unesolution.fr/examples) for sfTinyDocPlugin
+
+
+## Bugs / Features
+
+- implement width and height for images in method __`tagXmlImage()`__ in tinyDoc.class.php
+- optionals parameters in method __`sendResponse()`__ like to fix, the download name, to convert the document ...
+- externalize zip methods in another classes
+
+## Todo
+
+- More documentation
+- More examples on specials TBS parameters
+- Link to download
+- Link to SVN
+- Link to trac

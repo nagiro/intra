@@ -1,0 +1,15 @@
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    #title:        symfony project
+    #description:  symfony project
+    #keywords:     symfony, project
+    #language:     en
+    #robots:       index, follow
+
+  stylesheets:    [gestio.css, smoothness/jquery-ui-1.7.2.custom.css , jquery-datepick/jquery.datepick.css, thickbox.css]
+  javascripts:    [tiny_mce/tiny_mce.js, jquery-1.4.1.min.js, thickbox-compressed.js, jquery-ui/js/jquery-ui-1.7.2.custom.min.js]
+  has_layout:     true
+  layout:         layout

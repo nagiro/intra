@@ -1,0 +1,312 @@
+/*
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big,
+cite, code, del, dfn, em, font, img,
+ins, kbd, q, s, samp, small, strike,
+strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+center, u, b, i {  margin: 0; padding: 0; border: 0; outline: 0; font-weight: normal; font-style: normal; font-size: 100%; font-family: inherit; vertical-align: baseline; }
+body { line-height: 0 }
+:focus { outline: 0 }
+ol, ul {list-style: none }
+table { border-collapse: collapse; border-spacing: 0 }
+blockquote:before, blockquote:after, q:before, q:after { content: "" }
+blockquote, q { quotes: "" "" }
+input, textarea { margin: 0; padding: 0 }
+hr { margin: 0; padding: 0; border: 0; color: #000;  background-color: #000; height: 1px }
+*/
+
+/***********************************/
+/* Disseny de taules i formularis  */
+/***********************************/
+
+
+body { font-size:10px; }
+
+BUTTON { background:#FFEFD7; border:1px solid #BBBBBB; padding:2px; }
+BUTTON:focus { background: #FFD7DC; }
+
+.MISSATGE { background-color:#CCCCCC; }
+#validacio { font-style: italic; width:200px; }
+#valor_validacio { font-weight:bold; padding:10px; text-align:center; width:150px; }
+#resultat_validacio { width:20px; }
+
+DIV.text { font-size:11px; }
+
+.REQUADRE { border:5px solid #CCCCCC; margin:20px; padding:20px; width:650px; }
+.REQUADRE .TITOL { font-size:10px; font-weight:bold; margin-bottom:10px;  }
+.REQUADRE .TITOL { background-color:#DDDDDD; border:1px solid #CCCCCC; padding:4px; }
+.REQUADRE .MENU { margin-bottom:30px; border:1px solid gray; height:40px; }
+.REQUADRE .MENU .SUBMEN { padding-top:20px; vertical-align: middle; background-color: #CCCCCC; height:30px; }
+.REQUADRE .MENU .SUBMEN1 { vertical-align: middle; background-color:white; height:30px; }
+.REQUADRE .OPCIO_FINESTRA { text-align:right; margin-top:-10px; }
+.REQUADRE .BOTO_ACTIVITAT { font-size:11px; }
+.REQUADRE DIV { font-size:11px; }
+
+.FORMULARI { font-size:11px; }
+.FORMULARI TH { vertical-align:top; text-align:left; font-size:11px; }
+.FORMULARI TD { padding:2px; vertical-align: middle; }
+.FORMULARI input,select { background:#FFEFD7; border:1px solid #BBBBBB; padding:2px; font-size:10px; }
+.FORMULARI select option { padding-right:10px; }
+.FORMULARI input:focus,select:focus { background: #FFD7DC; }
+.FORMULARI .BOTO_ACTIVITAT { background-color: #6BD281; border: 1px solid black; padding:5px; font-size:10px; }
+.FORMULARI .BOTO_ACTIVITAT:hover { background-color: #82BC8E; border: 1px solid black; padding:5px;  }
+.FORMULARI .BOTO_PERILL { background-color: red; border: 1px solid black; padding:5px;  }
+.FORMULARI .error_list { color: red; font-size:16px; font-weight:bold;  }
+.FORMULARI .missat_ok { background-color:#FFF5C1; height:30px; text-align:left; padding:5px; }
+.FORMULARI .missat_ko { background-color:red; color:white; height:30px; text-align:left; }
+.DADES { width:100%; border-collapse: collapse; font-size:11px; }
+
+.DADES .LINIA { border-bottom:1px solid #CCCCCC; padding-top:3px; padding-bottom:3px; vertical-align:middle; }
+.DADES A { font-size:10px; text-decoration:none; color:black; font-weight:bold; }
+.DADES .PAR { background-color:#EEEEEE; }
+.DADES .IPAR { background-color:White; }
+
+.DADES TD { border-bottom:1px solid #CCCCCC; padding-top:3px; padding-bottom:3px; vertical-align:middle; }
+.DADES TD A { font-size:10px; text-decoration:none; color:black; font-weight:bold; }
+.DADES TD.PAR { background-color:#EEEEEE; }
+.DADES TD.IPAR { background-color:White; }
+.DADES TH { text-align:left; font-weight:bold; }
+.DADES .TITOLCAT { background-color:rgb(243,177,154); font-weight: bolder; font-style: italic; }
+.DADES .ICOINI { width:30px; }
+.text { font-size:12px; width:100%; }
+textarea { font-size:12px; width:100%;}
+.error { color: red; font-style: italic; }
+.dreta { text-align:right; }
+
+.BOTO_ACTIVITAT { background-color: #6BD281; border: 1px solid black; padding:2px;  }
+.textExplicacio { font-size:8px; color:gray; font-style:italic; }
+
+.tt2:hover span { margin-top:10px; padding:5px; position: absolute; display: block; background: #fdd; border: 1px solid brown; font-size:10px; font-weight:normal; }  
+.tt2 span { display:none; }
+.AMAGAT { display:none; }
+
+
+/**********************/
+/* Disseny del Layout */
+/**********************/
+
+
+body.CCG { background-color: #680000; font-family: Verdana; font-size: 10px; }
+.TAULA { width:1024px; border-collapse: collapse; border:0px; table-layout: fixed; }
+.TAULA .TD { width:256px; }
+ 
+.CAPCALERA { background-color: #ae1912; height:65px; border-top:4px solid #ae1912; border-bottom:0px; padding:0px; margin:0px; }
+#logo { position:relative; left:20px; top:0px; }
+
+/**************************/
+/* Tira de fotos del home */
+/**************************/
+
+.TIRA_FOTOS .FOTOS { display:block; float:left; width:253px; height:80px;    }
+.TIRA_FOTOS .FOTOS .IMG_FOTO { width:253px; height:80px; border:0px; vertical-align: bottom; }
+.TIRA_FOTOS .ESPAI { float:left; display:block; width:4px; background-color:white; } 
+.TIRA_FOTOS { padding-top:4px; padding-bottom: 4px; background-color:white; height:81px; }
+
+.MENU { width:256px; background-color:white; vertical-align:top; padding-top:40px; } 
+.CONTINGUT_ADMIN { background-color:white; width:512px; vertical-align: top; padding-top:40px; border-right:0px solid white; font-size:11px; }
+.CONTINGUT { width:512px; background-color:white; vertical-align: top; padding-top:40px; border-right:0px solid white; font-size:11px; }
+.CONTINGUT A { color:#A3C101; text-decoration:none; }
+.CONTINGUT A:hover { text-decoration:underline; }    
+.CALENDARI { width:256px; background-color:white; vertical-align: top; padding-top:20px; }
+#CALENDARI_ACTIVITATS { width:100%; }
+#CALENDARI_ACTIVITATS A { text-decoration:none; color:black; font-size:10px; }
+#CALENDARI_ACTIVITATS TD { font-size:10px; text-align: left; padding:1px; }
+#CALENDARI_ACTIVITATS .DIES { font-size: 10px; padding:4px;  }
+#CALENDARI_ACTIVITATS .DIES TH { font-size:11px; }
+#CALENDARI_ACTIVITATS .SELECCIONAT { font-weight:bold; }
+#CALENDARI_ACTIVITATS .titol_mes { font-weight:bold;  }
+#MESOS { font-weight:normal; border: 3px solid #F3F3F3; background-color:#FAFAFA; margin-left:5px; font-size:10px; }
+#MESOS A { font-size:10px; text-decoration:none; color:black; }
+#MESOS .mesos_unit { font-weight:lighter; }
+#MESOS .negreta { font-weight:bold;  }
+
+.PEU { height:25px; background-color:#1f1a17; color: white; text-align:center; font-size: 10px; vertical-align:middle; }    
+.DEGRADAT_INFERIOR { background-image: url('/images/intranet/DifuminatInferior.png'); background-repeat: repeat-x; }
+#ESPAI { width:256px; }
+            
+            
+.MENU_TABLE { border-collapse: collapse; }
+.MENU_TABLE A { color:black; font-size:10px; text-decoration: none; }
+
+TD.SUBMENU_1   { font-size:9px; background-color:#b58282; border:1px solid black; width:165px; height:30px; vertical-align:middle; padding-left:10px; border:1px solid white; }		
+TD.SUBMENU_1 A { font-weight:bold;  }
+
+TD.SUBMENU_2   { font-size:9px; border:1px solid black; width:165px; height:20px; vertical-align:middle; padding-left:20px; background-color: white; border:1px solid white; }
+TD.SUBMENU_2 A { font-weight:normal;  }
+
+TD.SUBMENU_3   { font-size:9px; border:1px solid black; width:165px; height:20px; vertical-align:middle; padding-left:40px; background-color: white; border:1px solid white; }
+TD.SUBMENU_3 A { font-weight:normal;  }
+
+#REGISTRAT  { font-size:9px; background-color: #680000; border:2px solid white; height:20px; width:175px; text-align:center; display: table-cell; vertical-align: middle; }
+#REGISTRAT a { color:white; font-size:9px; text-decoration: none; }
+#REGISTRAT a:visited { color:white; font-size:9px; text-decoration: none; }
+
+A.white { color:white; font-weight:bold; text-decoration:none; }
+A.white:hover { color:white; font-weight:bold; text-decoration:none; }
+A.white:visited { color:white; font-weight:bold; text-decoration:none; }
+
+A IMG { border:0px; }
+
+.MATRICULES th { font-weight:bold; text-align:left; }
+.MATRICULES th, td { padding:2px; }
+.MATRICULES .TITOL { background:#CCCCCC; }
+
+.BOX { border-collapse:collapse; border:3px solid #CCCCCC; margin-bottom:10px; width:100%;  }
+.BOX .FOTO { width:130px; vertical-align:top; }
+.BOX .FOTO .IMG_FOTO { width:120px; border:10px solid white; }
+.BOX .NOTICIA { padding:10px; vertical-align:top; }    
+.BOX .DATA { color:#a3c101; font-size:11px; margin-bottom:20px; }
+.BOX .TITOL { color:black; font-size:11px; font-weight:bold; margin-bottom:10px; }
+.BOX .TEXT { color:black; font-size:11px; margin-bottom:10px; }
+.BOX .PEU { background-color:white; border:0px; }
+.BOX .ERRORS  { color:red; font-size:11px; }    
+.BOX .NOTICIA_MENU { margin:0px; padding-top:0px; padding-bottom: 10px; padding-left:0px; padding-right:10px; }
+.BOX .SUBMEN { border-collapse:collapse; border: 4px #F3F3F3 solid; border-left-width:0px; border-top-width: 0px; padding:5px;  }
+.BOX TD.SUBMEN { padding:5px; padding-left:10px; padding-right:10px; background-color: #F3F3F3; text-align: left; font-size:11px; font-weight: bold; }
+.BOX TD.SUBMEN1 { padding:5px; padding-left:10px; padding-right:10px; background-color: white; text-align: left; font-size:11px; font-weight: bold; }
+.BOX A { text-decoration:none; color:black; }
+.BOX .MES_NOTICIES { color:green; font-weight:bold; font-size:10px; }
+
+.CAL { width:175px; margin-top:20px; }
+.CAL .CERCA { width:152px; margin-bottom:10px; }
+.CAL .CALENDARI { margin-bottom:10px; }
+.CAL .BANNER { margin-bottom:10px; width:171px; border:0px; margin:0px; padding:0px; }
+	
+A.white { text-decoration:none; color:white; }
+A.white:hover { font-weight:bold; text-decoration: underline; color:white; }
+A.white:visited { color:white; text-decoration:none; }
+A.black  { text-decoration:none; color:black; }
+A.black:hover { text-decoration: underline; font-weight:bold; color:black; }
+A.black:visited { color:black; text-decoration:none; }
+A.verd  { text-decoration:none; color:#a3c101; }
+A.verd:hover { text-decoration: underline; font-weight:bold; color:#a3c101; }
+A.verd:visited { color:#a3c101; text-decoration:none; }
+A.taronja  { text-decoration:none; color:orange; }
+A.taronja:hover { text-decoration: underline; font-weight:bold; color:orange; }
+A.taronja:visited { color:orange; text-decoration:none; }
+A.blau  { text-decoration:none; color:blue; }
+A.blau:hover { text-decoration: underline; }
+               
+.div_taula .t_calendari { border-collapse:collapse; border:0px; }
+.div_taula .titol { border-collapse: collapse; background-color: #CCCCCC; text-align:center; font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:bold; color: #606060; font-size:10px; padding:2px; }    
+.div_taula .dies { text-align: center; font-weight: bold; font-family: verdana; font-size: 10px; padding: 2px; }    
+.div_taula .numeros { font-family: verdana; font-size: 10px; text-align: right; padding: 2px; }        
+.div_taula .selsetmana { background-color: #F9E8E4; color: #6E1F0C; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; padding:2px; text-align:right; }
+.div_taula .selsetmana a { text-decoration: none; color: #6E1F0C; }
+.div_taula a { text-decoration:none; color: #606060; }     
+.div_taula .t_calendari .HIHAACTIVITAT A { color:#7D0805; font-weight: bold; }
+
+
+.CERCA_TITOL { font-size:10px; font-weight: bold; }
+.CERCA_TEXT  { font-size:10px; color:gray; margin-left:20px; }
+.CERCA_DIES  { font-size:10px; color:gray; margin-left:20px; }
+li.CERCA { border:2px solid #CCCCCC; padding:10px; }
+    
+.bold { font-weight:bold; }    
+    
+.PESTANYA_SUPERIOR { float:left; display:block; background-color:transparent; position:relative; left:0px; top:17px; }
+.fb { float:left; display:block; }
+.clear { clear: both; }
+.title { font-weight:bold; }
+.row { padding-bottom:5px; }
+.pp { padding:2px; }
+BUTTON.web {  }
+
+
+/*****************************/
+/* Disseny del contingut WEB */
+/*****************************/
+
+#TEXT_WEB {	
+	font-size:11px;	
+	text-align:left;
+	font-family: Verdana; 
+}
+
+#TEXT_WEB ul {
+    padding-top:5px;
+}
+
+#TEXT_WEB li {
+	list-style: disc;
+	list-style-position: outside;
+	margin-left: 30px;
+	font-size:11px;    
+}
+
+#TEXT_WEB table, td {		
+	font-size:11px;
+}
+
+#TEXT_WEB p {
+	color:black;
+	text-align: left;	
+    padding-top:15px;	
+	font-size:11px;	
+}
+
+#TEXT_WEB h1 {
+	font-size: 20px;
+	font-weight: bold;			
+	color: #864444;	
+}
+
+#TEXT_WEB h2 {
+	font-size: 14px;
+	font-weight: bold;    	
+	color: #864444;
+}
+
+#TEXT_WEB h3 {
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	color: #864444;
+}
+
+td.checkbox_list { border:1px solid #CCCCCC; background-color: #FFEFD7; }
+
+.checkbox_list li  {	
+	display: inline;
+	float:left;	
+	margin: 0px;
+	padding: 0px;
+	list-style: none;	
+}
+
+.ul_espais input { background-color:white; border:0px; }
+.ul_material input { background-color:white; border:0px; }
+
+li.ul_espais { 	
+	width:220px; 
+}
+
+li.ul_material{ 	
+	width:100px; 
+}
+ 
+/* Notícies */
+.titol_noticia { color:#646466; font-size:12pt;  width:480px; }
+.titol_noticia a { color:inherit;  }
+
+.text_noticia { font-size:11px; width:380px; float:left; }
+.imatge_noticia { width:100px; float:right; }
+.llegir_mes { font-size:11px; width:380px; float:left; text-align:right; }
+.llegir_mes a { color:#96BF0D; text-decoration:none; }
+.pdf_noticia { text-align:center; float:right; width:100px; }
+.pdf_noticia a { text-decoration:none; color:#BBBBBB; font-size:10px; }
+
+.df { display:block; float:left; }
+
+.titol_cicle { font-size:12px; text-decoration:none;  }
+.titol_cicle a { text-decoration:none; color: #A73339; }
+.pdf_cicle { font-size:11px; text-decoration:none; color:#AAAAAA; }
+.pdf_cicle a { text-decoration:none; color:#AAAAAA; }
+
+#llistat_activitats_dia { border:2px solid #DFECB6; width:100%; border-collapse:collapse; font-size:12px; }
+#llistat_activitats_dia th { background-color:#CADF86; padding:5px;}
+#llistat_activitats_dia td { border-bottom:1px solid #CADF86; padding:5px;}
+#llistat_activitats_dia a { text-decoration:none; color:blue; }
