@@ -47,16 +47,14 @@ td.checkbox_list { border:1px solid #CCCCCC; background-color: #FFEFD7; }
 	list-style: none;	
 }
 
-.ul_espais input { background-color:white; border:0px; }
-.ul_material input { background-color:white; border:0px; }
+.ul_espais input { background-color:white; border:0px; float:left; width:30px; }
+.ul_material input { background-color:white; border:0px; float:left; width:30px; }
 
-label.ul_espais { display:inline; float:left; background-color:blue;  }
+label.ul_espais { float:left;  width:160px;  }
+label.ul_material { float:left; width:50px;  }
 
-li.ul_espais { 		
-    background-color:red;
-    border:1px solid black;
-    width:200px;
-    vertical-align:top;
+li.ul_espais { 		        
+    width:200px;    
 }
 
 li.ul_material{ 	
@@ -355,7 +353,8 @@ li.ul_material{
                 </div>                
             </div>                        
         </div>
-        <div style="clear: both;"></div>        
+        <div style="clear: both; ">&nbsp;</div>
+        <div style="margin-top:30px; height:30px; background-color: #3F3F3F">&nbsp;</div>                
     </div>    
     
 </div>

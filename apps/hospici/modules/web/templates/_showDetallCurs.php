@@ -79,6 +79,6 @@
 				                                                
                 <!-- Fi Requadre de compra o reserva d'entrades  -->													
 			</div>
-    <?php endif; ?>					                                                                    
+    <?php endif; ?>    					                                                                    
     </div>
 </div>
