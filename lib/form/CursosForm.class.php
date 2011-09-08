@@ -22,51 +22,57 @@ class CursosForm extends sfFormPropel
       'Codi'            => new sfWidgetFormInputText(array(),array('style'=>'width:100px;')),
       'TitolCurs'       => new sfWidgetFormInputText(array(),array('style'=>'width:100%;')),
       'isActiu'         => new sfWidgetFormChoice(array('choices'=>array(1=>'Sí',0=>'No'))),
-      'VisibleWEB'      => new sfWidgetFormChoice(array('choices'=>array(1=>'Sí',0=>'No'))),
       'Places'          => new sfWidgetFormInputText(array(),array('style'=>'width:10%;')),      
-      'Descripcio'      => new sfWidgetFormTextareaTinyMCE(array(),array('style'=>'width:100%;')),
+      'Descripcio'      => new sfWidgetFormTextareaTinyMCE(array(),array()),
       'Preu'            => new sfWidgetFormInputText(array(),array('style'=>'width:10%;')),
       'Preur'           => new sfWidgetFormInputText(array(),array('style'=>'width:10%;')),
       'Horaris'         => new sfWidgetFormInputText(array(),array('style'=>'width:50%;')),
-      'Categoria'       => new sfWidgetFormChoice(array('choices'=>CursosPeer::getSelectCategories())),
-      'OrdreSortida'    => new sfWidgetFormInputText(array(),array('style'=>'width:10%;')),
-      'DataAparicio'    => new sfWidgetFormJQueryDateMy(array('format'=>'%day%/%month%/%year%'),array()),
-      'DataDesaparicio' => new sfWidgetFormJQueryDateMy(array('format'=>'%day%/%month%/%year%'),array()),
-      'DataFiMatricula' => new sfWidgetFormJQueryDateMy(array('format'=>'%day%/%month%/%year%'),array()),
+      'Categoria'       => new sfWidgetFormChoice(array('choices'=>CursosPeer::getSelectCategories())),      
+      'OrdreSortida'    => new sfWidgetFormInputText(array(),array('style'=>'width:10%;')),      
       'DataInici'       => new sfWidgetFormJQueryDateMy(array('format'=>'%day%/%month%/%year%'),array()),
+      'DataInMatricula' => new sfWidgetFormJQueryDateMy(array('format'=>'%day%/%month%/%year%'),array()),
+      'DataFiMatricula' => new sfWidgetFormJQueryDateMy(array('format'=>'%day%/%month%/%year%'),array()),
       'site_id'         => new sfWidgetFormInputHidden(),
+      'VisibleWEB'      => new sfWidgetFormChoice(array('choices'=>array(1=>'Sí',0=>'No'))),
       'actiu'           => new sfWidgetFormInputHidden(),
-      'isEntrada'       => new sfWidgetFormChoice(array('choices'=>array(0=>'No',1=>'Sí')),array()),
+      'isEntrada'       => new sfWidgetFormChoice(array('choices'=>array(0=>'No',1=>'Només reserva',2=>'Matrícula i pagament amb targeta')),array()),
       'PDF'             => new sfWidgetFormInputFileEditableMy(array('file_src'=>'/'.$this->WEB_PDF.$this->getObject()->getPdf() , 'is_image'=>false,'with_delete'=>false)),
+      'ADescomptes'     => new sfWidgetFormChoice(array('renderer_class'=>'sfWidgetFormSelectManyMy' , 'choices'=>MatriculesPeer::selectDescomptes() , 'multiple'=>true , 'expanded'=>true),array('class'=>'ul_espais')), 
+    ));
+
+    $this->setDefaults(array(
+        'isEntrada'     => CursosPeer::HOSPICI_RESERVA,
+        'VisibleWEB'    => 1,
+        'isActiu'       => 1,        
     ));
 
     $this->setValidators(array(
       'idCursos'        => new sfValidatorPropelChoice(array('model' => 'Cursos', 'column' => 'idCursos', 'required' => false)),
-      'TitolCurs'       => new sfValidatorString(array('required' => false)),
-      'isActiu'         => new sfValidatorBoolean(array('required' => false)),
-      'Places'          => new sfValidatorInteger(array('required' => false)),
-      'Codi'            => new sfValidatorString(array('required' => false)),
-      'Descripcio'      => new sfValidatorString(array('required' => false)),
-      'Preu'            => new sfValidatorInteger(array('required' => false)),
-      'Preur'           => new sfValidatorInteger(array('required' => false)),
-      'Horaris'         => new sfValidatorString(array('required' => false)),
-      'Categoria'       => new sfValidatorString(array('required' => false)),
+      'TitolCurs'       => new sfValidatorString(array('required' => true)),
+      'isActiu'         => new sfValidatorBoolean(array('required' => true)),
+      'Places'          => new sfValidatorInteger(array('required' => true)),
+      'Codi'            => new sfValidatorString(array('required' => true)),
+      'Descripcio'      => new sfValidatorString(array('required' => true)),
+      'Preu'            => new sfValidatorInteger(array('required' => true)),
+      'Preur'           => new sfValidatorInteger(array('required' => true)),
+      'Horaris'         => new sfValidatorString(array('required' => true)),
+      'Categoria'       => new sfValidatorString(array('required' => true)),
       'OrdreSortida'    => new sfValidatorInteger(array('required' => false)),
-      'DataAparicio'    => new sfValidatorDate(array('required' => false)),
-      'DataDesaparicio' => new sfValidatorDate(array('required' => false)),
-      'DataFiMatricula' => new sfValidatorDate(array('required' => false)),
-      'DataInici'       => new sfValidatorDate(array('required' => false)),
+      'DataInMatricula' => new sfValidatorDate(array('required' => true)),
+      'DataFiMatricula' => new sfValidatorDate(array('required' => true)),
+      'DataInici'       => new sfValidatorDate(array('required' => true)),
       'VisibleWEB'      => new sfValidatorInteger(array('required' => true)),
       'site_id'         => new sfValidatorInteger(array('min' => -128, 'max' => 127, 'required' => false)),
       'actiu'           => new sfValidatorInteger(array('min' => -128, 'max' => 127, 'required' => false)),
-      'isEntrada'       => new sfValidatorBoolean(array('required'=>true),array()),
+      'isEntrada'       => new sfValidatorInteger(array('required'=>true),array()),       
       'PDF'             => new sfValidatorFile(array('path'=>$this->BASE.$this->WEB_PDF , 'required' => false)),
+      'ADescomptes'     => new sfValidatorString(array('required'=>false)),
     ));
 
     
     $this->widgetSchema->setLabels(array(      
       'TitolCurs'       => 'Títol del curs: ',
-      'isActiu'         => 'Està actiu? ',
+      'isActiu'         => 'Matrícula oberta? ',
       'Places'          => 'Núm de places: ',
       'Descripcio'      => 'Descripció: ',
       'Preu'            => 'Preu: ',
@@ -74,13 +80,13 @@ class CursosForm extends sfFormPropel
       'Horaris'         => 'Descripció d\'horaris: ',
       'Categoria'       => 'Categoria: ',
       'OrdreSortida'    => 'Ordre de sortida: ',
-      'DataAparicio'    => 'Data d\'aparició: ',
-      'DataDesaparicio' => 'Data de desaparició: ',
-      'DataFiMatricula' => 'Data de fi de matriculació: ',
-      'DataInici'       => 'Data d\'inici del curs: ',
-      'VisibleWEB'      => 'Visible al web?',
-      'isEntrada'       => 'Reserva per internet?',
-      'PDF'             => 'PDF: ',
+      'DataInici'       => 'Inici del curs: ',
+      'DataInMatricula' => 'WEB: Inici matriculació: ',
+      'DataFiMatricula' => 'WEB: Fi matriculació: ',
+      'VisibleWEB'      => 'WEB: Visible a hospici?',
+      'isEntrada'       => 'WEB: Reserva i pagament?',
+      'PDF'             => 'WEB: Doc. pdf: ',
+      'ADescomptes'      => 'WEB: Descompte possible? ',
     ));
     
     
@@ -100,10 +106,12 @@ class CursosForm extends sfFormPropel
   public function save($conn = null)
   {
 
-  	parent::save();
-  	
+    //Actualitzem l'objecte
+	$this->updateObject();
   	$OC = $this->getObject();
-  	
+    //Guardem els descomptes  	  	  	  	  	
+  	if(!is_null($this['ADescomptes']->getValue())) $OC->setAdescomptes(implode('@',$this['ADescomptes']->getValue()));  	  	
+  	  	
   	$BASE = $this->BASE.$this->WEB_PDF;    
   	 	
   	if($OC instanceof Cursos):
@@ -117,7 +125,7 @@ class CursosForm extends sfFormPropel
 	    endif;
 	endif;
 
-  	$OC->save();  	
+  	$OC->save();
 
   }
 

@@ -4,7 +4,13 @@
             $("#tabs").tabs({ cookie: { expires: 30 } });
             $.datepicker.setDefaults( $.datepicker.regional["ca"] );      
             $("#di").datepicker({flat:true});             
-            $("#df").datepicker({flat:true});    
+            $("#df").datepicker({flat:true});
+            
+            $("#di").change(function(){ $("#formulari").submit(); });    
+            $("#df").change(function(){ $("#formulari").submit(); });
+            $("#cerca_POBLE").change(function(){ $("#formulari").submit(); });
+            $("#cerca_CATEGORIA").change(function(){ $("#formulari").submit(); });
+            $("#cerca_SITE").change(function(){ $("#formulari").submit(); });
     });
         
 </script>
@@ -18,7 +24,7 @@
 	
     	<div class="taula_dades" id="tabs-1">
     
-        <form action="<?php echo url_for('@hospici_cercador_activitats')?>" method="POST">
+        <form id="formulari" action="<?php echo url_for('@hospici_cercador_activitats')?>" method="post">
     
             <div style="float: left; width: 600px;">
                 <div style="margin: 5px;">

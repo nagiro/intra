@@ -43,13 +43,15 @@ class ReservaespaisPeer extends BaseReservaespaisPeer
         $OR->setSiteId($idS);        
         $OR->setActiu(true);        		            			    			    			        					
 	endif; 
+
+    //Si no s'han guardat les condicions, carreguem per defecte.
     if($OR->getCondicionsccg() == ""){ $OR->setCondicionsccg(ReservaespaisPeer::getCondicionsGeneric($OR,$idS)); }
     if($client) return new ClientReservesForm($OR,array('IDS'=>$idS));
     else return new ReservaespaisForm($OR,array('IDS'=>$idS));
     
   }
 
-  static public function initializeHospici($idR , $idS , $idE = null , $idU = 0)
+  static public function initializeHospici($idR , $idS = 1 , $idE = null , $idU = 0)
   {
     //Mirem si existeix, la carreguem. 
     $OR = self::retrieveByPK($idR);    
@@ -62,7 +64,8 @@ class ReservaespaisPeer extends BaseReservaespaisPeer
         $OR->setActiu(true); 
         if(!is_null($idE)) $OR->setEspaissolicitats($idE);
 	endif; 
-    if($OR->getCondicionsccg() == ""){ $OR->setCondicionsccg(ReservaespaisPeer::getCondicionsGeneric($OR,$idS)); }
+    
+    //if($OR->getCondicionsccg() == ""){ $OR->setCondicionsccg(ReservaespaisPeer::getCondicionsGeneric($OR,$idS)); }
     
     return new HospiciReservesForm($OR,array('IDS'=>$idS));
        
@@ -137,6 +140,7 @@ class ReservaespaisPeer extends BaseReservaespaisPeer
       $C = new Criteria();
       $C = self::h_getCriteriaActiu( $C );
       $C->add(ReservaespaisPeer::USUARIS_USUARIID , $idU);
+      $C->addDescendingOrderByColumn(self::DATAALTA);
       return ReservaespaisPeer::doSelect($C);
    }
 
@@ -240,30 +244,47 @@ class ReservaespaisPeer extends BaseReservaespaisPeer
    static public function sendMailCondicions( $OR , $PAREA , $PARER , $idS )
    {
   	
+    
     $TEXT = OptionsPeer::getString('RESERVA_ESPAIS_MAILCOND' , $idS );
     $TEXT = str_replace('{{LOGO_URL}}',OptionsPeer::getString('LOGO_URL',$idS) , $TEXT );    
     $TEXT = str_replace('{{MISSATGE}}',$OR->getCondicionsccg() , $TEXT );
-    $TEXT = str_replace('{{URL_ACCEPTA}}',OptionsPeer::getString('SF_WEBROOTURL',$idS).'gestio/uFormularis?PAR='.$PAREA , $TEXT );
-    $TEXT = str_replace('{{URL_REBUTJA}}',OptionsPeer::getString('SF_WEBROOTURL',$idS).'gestio/uFormularis?PAR='.$PARER , $TEXT );
+    $TEXT = str_replace('{{URL_ACCEPTA}}','http://www.hospici.cat/formularis/'.$PAREA , $TEXT );
+    $TEXT = str_replace('{{URL_REBUTJA}}','http://www.hospici.cat/formularis/'.$PARER , $TEXT );
           				
    	return $TEXT; 
     
    }
 
-   static public function getCondicionsGeneric( $OR , $idS )
-   {
-  	
-    $TEXT = OptionsPeer::getString('RESERVA_ESPAIS_CONDICIONS',$idS);
-    $TEXT = str_replace('{{REPRESENTACIO}}',$OR->getRepresentacio(),$TEXT);
-    $TEXT = str_replace('{{ESPAIS}}',$OR->getEspaisString(),$TEXT);
-    $TEXT = str_replace('{{NOM}}',$OR->getNom(),$TEXT);
-    $TEXT = str_replace('{{DATA_ACTIVITAT}}',$OR->getDataactivitat(),$TEXT);
-    $TEXT = str_replace('{{HORARI_ACTIVITAT}}',$OR->getHorariactivitat(),$TEXT);
-    $TEXT = str_replace('{{MATERIAL}}',$OR->getMaterialString(),$TEXT);
+    /**
+     * Carrega el text per defecte de les condicions, que tenim a la variable RESERVA_ESPAIS_CONDICIONS
+     * @param $OR Objecte Reserva
+     * @param $idS SiteID
+     * @return String Missatge que s'envia 
+     **/
+    static public function getCondicionsGeneric( $OR , $idS )
+    {
       	
-   	return $TEXT; 
-    
-   }
+        $TEXT = OptionsPeer::getString('RESERVA_ESPAIS_CONDICIONS',$idS);
+        $TEXT = str_replace('{{REPRESENTACIO}}',$OR->getRepresentacio(),$TEXT);
+        $TEXT = str_replace('{{ESPAIS}}',$OR->getEspaisString(),$TEXT);
+        $TEXT = str_replace('{{NOM}}',$OR->getNom(),$TEXT);
+        $TEXT = str_replace('{{DATA_ACTIVITAT}}',$OR->getDataactivitat(),$TEXT);
+        $TEXT = str_replace('{{HORARI_ACTIVITAT}}',$OR->getHorariactivitat(),$TEXT);
+        $TEXT = str_replace('{{MATERIAL}}',$OR->getMaterialString(),$TEXT);
+                  	
+        return $TEXT; 
+                
+    }
 
-   
+    /**
+     * Funció que retorna aquelles reserves que estan en espera de condicions, servirà per enviar recordatoris
+     **/
+    static public function getReservesRecordatoriNoResposta(){
+        
+        $C = new Criteria();
+        $C->add(self::ACTIU, true);
+        $C->add(self::ESTAT, self::PENDENT_CONFIRMACIO);
+        return self::doSelect($C);                
+        
+    }
 }

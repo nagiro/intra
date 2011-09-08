@@ -30,6 +30,7 @@ propel:
     site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
     actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
     isEntrada: { phpName: Isentrada, type: TINYINT, size: '1', required: true, defaultValue: '0' }
+    Places: { phpName: Places, type: SMALLINT, size: '6', required: false }
     _indexes: { Activitats_FKIndex1: [Cicles_CicleID], TipusActivitat_idTipusActivitat: [TipusActivitat_idTipusActivitat] }
   agendatelefonica:
     _attributes: { phpName: Agendatelefonica }
@@ -259,6 +260,7 @@ propel:
     OrdreSortida: { phpName: Ordresortida, type: INTEGER, size: '11', required: false }
     DataAparicio: { phpName: Dataaparicio, type: DATE, required: false }
     DataDesaparicio: { phpName: Datadesaparicio, type: DATE, required: false }
+    DataInMatricula: { phpName: Datainmatricula, type: DATE, required: false }
     DataFiMatricula: { phpName: Datafimatricula, type: DATE, required: false }
     DataInici: { phpName: Datainici, type: DATE, required: false }
     VisibleWEB: { phpName: Visibleweb, type: TINYINT, size: '1', required: true, defaultValue: '1' }
@@ -267,6 +269,7 @@ propel:
     activitat_id: { phpName: ActivitatId, type: INTEGER, size: '11', required: false }
     isEntrada: { phpName: Isentrada, type: TINYINT, size: '1', required: true }
     PDF: { phpName: Pdf, type: LONGVARCHAR, required: true }
+    ADescomptes: { phpName: Adescomptes, type: LONGVARCHAR, required: false }
   entrades:
     _attributes: { phpName: Entrades }
     idEntrada: { phpName: Identrada, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -284,12 +287,13 @@ propel:
     _attributes: { phpName: EntradesReserva }
     entrades_reserva_id: { phpName: EntradesReservaId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     usuari_id: { phpName: UsuariId, type: INTEGER, size: '11', required: false }
-    horaris_id: { phpName: HorarisId, type: INTEGER, size: '11', required: false }
+    activitats_id: { phpName: ActivitatsId, type: INTEGER, size: '11', required: false }
     quantes: { phpName: Quantes, type: SMALLINT, size: '6', required: false }
     data: { phpName: Data, type: TIMESTAMP, required: false }
     estat: { phpName: Estat, type: SMALLINT, size: '6', required: false }
     actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
-    _indexes: { usuari_id: [usuari_id], activitat_id: [horaris_id] }
+    site_id: { phpName: SiteId, type: INTEGER, size: '11', required: false }
+    _indexes: { usuari_id: [usuari_id], activitat_id: [activitats_id] }
   equipament:
     _attributes: { phpName: Equipament }
     EquipamentID: { phpName: Equipamentid, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -334,6 +338,24 @@ propel:
     ValidatData: { phpName: Validatdata, type: DATE, required: false }
     site_id: { phpName: SiteId, type: TINYINT, size: '4', required: false }
     _indexes: { Factures_FKIndex1: [Conceptes_ConcepteID], Factures_FKIndex2: [Proveidors_ProveidorID], Factures_FKIndex3: [ValidaUsuari] }
+  formularis:
+    _attributes: { phpName: Formularis }
+    idFormularis: { phpName: Idformularis, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    nom: { phpName: Nom, type: VARCHAR, size: '200', required: true }
+    descripcio: { phpName: Descripcio, type: LONGVARCHAR, required: true }
+    formulari: { phpName: Formulari, type: LONGVARCHAR, required: true }
+    site_id: { phpName: SiteId, type: TINYINT, size: '4', required: true, defaultValue: '1' }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
+    _indexes: { site_id: [site_id] }
+  formularis_respostes:
+    _attributes: { phpName: FormularisRespostes }
+    idFormularisRespostes: { phpName: Idformularisrespostes, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    idUsuaris: { phpName: Idusuaris, type: INTEGER, size: '11', required: true }
+    idFormularis: { phpName: Idformularis, type: INTEGER, size: '11', required: true }
+    dades: { phpName: Dades, type: LONGVARCHAR, required: true }
+    registrat: { phpName: Registrat, type: TIMESTAMP, required: false }
+    site_id: { phpName: SiteId, type: INTEGER, size: '11', required: true }
+    actiu: { phpName: Actiu, type: TINYINT, size: '1', required: true, defaultValue: '1' }
   gestio_menus:
     _attributes: { phpName: GestioMenus }
     menu_id: { phpName: MenuId, type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -701,6 +723,8 @@ propel:
     poble: { phpName: Poble, type: INTEGER, size: '11', required: false }
     logoUrl: { phpName: Logourl, type: VARCHAR, size: '255', required: false }
     webUrl: { phpName: Weburl, type: VARCHAR, size: '255', required: false }
+    telefon: { phpName: Telefon, type: VARCHAR, size: '30', required: false }
+    email: { phpName: Email, type: VARCHAR, size: '50', required: false }
     _indexes: { poble: [poble] }
   tipus:
     _attributes: { phpName: Tipus }

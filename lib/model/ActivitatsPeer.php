@@ -168,6 +168,13 @@ class ActivitatsPeer extends BaseActivitatsPeer
         $C = self::getCriteriaActiu($C,$idS);
         
 		$C->add(self::CICLES_CICLEID,$idC);
+        
+        //Afegit per poder ordenar per dia les activitats del cicle
+        $C->addJoin(HorarisPeer::ACTIVITATS_ACTIVITATID, self::ACTIVITATID);
+        $C = HorarisPeer::getCriteriaActiu($C,$idS);        
+        $C->addAscendingOrderByColumn(HorarisPeer::DIA);
+        $C->addGroupByColumn(self::ACTIVITATID);        
+        
         if($publicaweb) $C->add(self::PUBLICAWEB, true);        
 		
 		if($pager):
@@ -179,8 +186,7 @@ class ActivitatsPeer extends BaseActivitatsPeer
 		else: 
 			return self::doSelect($C);
 		endif; 
-		
-		
+				
 	}
    	
 			
@@ -887,5 +893,50 @@ class ActivitatsPeer extends BaseActivitatsPeer
     return $SOL; 
     
   }  
+
+    /**
+     * Funció que retorna els horaris que tenen entrades a la venta. S'usa bàsicament a la gestió de reserves.
+     * @param $P Pàgina actual
+     * @param $idS Site que està consultant
+     * @return Pager d'Horaris()
+     * */
+    static public function cercaActivitatsVenta($P = 1, $idS = 1)
+    {
+        
+        $connection = Propel::getConnection();        
+        $query =         
+                "                              
+                   SELECT a.ActivitatID as idA, a.Nom as nom, a.Places as places, min(h.Dia) as dia, min(h.HoraInici) as hora
+                     FROM activitats a, horaris h                       
+                    WHERE a.actiu = 1 AND h.actiu = 1 
+                      AND h.Activitats_ActivitatID = a.ActivitatID
+                      AND a.isEntrada = true
+                      AND a.site_id = $idS
+                    GROUP BY idA, nom, places                                                           
+                    HAVING MIN(h.Dia) AND MIN(h.HoraInici)
+                    ORDER BY dia desc, hora asc                    
+                ";               
+                
+        $statement = $connection->prepare($query);        
+        $statement->execute();
+        $RET = array();
+        
+        //Guardo els elements resultats i els passo a un format Criteria
+        $mida = 20;
+        $i = 0; $min = ($P-1)*$mida; $max = $min + $mida;    
+        while($res = $statement->fetch(PDO::FETCH_ASSOC)){
+            if( $i >= $min && $i < $max ):
+                $RET[$res['idA']] = array(  'nom'=>$res['nom'],
+                                            'places'=>$res['places'],
+                                            'dia'=>$res['dia'],
+                                            'hora'=>$res['hora']);        
+            endif;
+            $i++;
+          }                  	
+
+        return $RET;
+        
+    }
+
 
 }

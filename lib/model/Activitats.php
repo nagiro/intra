@@ -97,8 +97,7 @@ class Activitats extends BaseActivitats
    
    
    public function getPrimeraData()
-   {   	                    
-    
+   {   	                        
    		$H = $this->getHorariss();
    		if(isset($H[0]) && $H[0] instanceof Horaris):
    		
@@ -113,6 +112,17 @@ class Activitats extends BaseActivitats
    		endif;
    	
    }
+
+   public function getPrimerHorari()
+   {   	                        
+        $C = new Criteria();
+        $C->addAscendingOrderByColumn(HorarisPeer::DIA);
+        
+   		$H = $this->getHorariss($C);
+        if($H[0] instanceof Horaris) return $H[0];        
+        else return null;          	
+   }
+
    
    public function getHorarisOrdenats($camp)
    {
@@ -146,6 +156,14 @@ class Activitats extends BaseActivitats
    {
         $nom = $this->getTmig();
         return myUser::text2url($nom);        
+   }
+
+    /**
+     * Retorna si una activitat ja no té més entrades a la venta. 
+     * */
+   public function getIsPle()
+   {
+        return (EntradesReservaPeer::countEntradesActivitatConf($this->getActivitatid()) >= $this->getPlaces());        
    }
    
 }

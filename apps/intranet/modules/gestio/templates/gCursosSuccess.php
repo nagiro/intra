@@ -12,10 +12,11 @@
 .espai { padding-left:5px; padding-right:5px; }
 #comentari { width:40%; }
 
-	.row { width:500px; }
-	.row_field { width:80%; }
-	.row_title { width:20%; }
-	.row_field input { width:100%; }
+	.row { width:600px; padding:10px; margin-top:5px;  }
+    .row:hover { background-color:#EEE;  }
+	.row_field { width:70%; }
+	.row_title { width:30%;  }
+	.row_field input { width:20px;}          
 
 </STYLE>
    
@@ -68,9 +69,8 @@
 		if($('#cursos_Preur').val().length == 0) { alert('PREU REDUIT no pot estar en blanc.'); return false; }
 		if($('#cursos_Horaris').val().length == 0) { alert('HORARIS no pot estar en blanc.'); return false; }
 		if($('#cursos_Categoria').val().length < 0){ alert('CATEGORIA no pot estar en blanc.'); return false; }
-		if($('#cursos_DataAparicio_day').val().length == 0) { alert('DATA APARICIÓ no pot estar en blanc.'); return false; }
-		if($('#cursos_DataDesaparicio_day').val().length == 0) { alert('DATA DESAPARICIÓ no pot estar en blanc.'); return false; }
-		if($('#cursos_DataFiMatricula_day').val().length == 0) { alert('DATA FI MATRÍCULA no pot estar en blanc.'); return false; }
+		if($('#cursos_DataInMatricula_day').val().length == 0) { alert('INICI MATRICULACIÓ no pot estar en blanc.'); return false; }		
+		if($('#cursos_DataFiMatricula_day').val().length == 0) { alert('FI MATRICULACIÓ no pot estar en blanc.'); return false; }
 		if($('#cursos_DataInici_day').val().length == 0) { alert('DATA INICI no pot estar en blanc.'); return false; }
 		 
 	}

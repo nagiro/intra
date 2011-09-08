@@ -18,90 +18,7 @@ class HorarisPeer extends BaseHorarisPeer
     if(!is_null($idS)) $C->add(self::SITE_ID,$idS);
     return $C;
   }
-   	    
-/*
-  static public function getCercaWeb($DIA, $TEXT, $DATAI,$DATAF, $page = 1)
-  {
-
-	$C = self::cercaCriteria($DIA, $TEXT, $DATAI,$DATAF,null);
-	$C->add(ActivitatsPeer::PUBLICAWEB,1);	
-	$C->addGroupByColumn(self::HORARISID);
-	
-	$pager = new sfPropelPager('Horaris', 30);	
-    $pager->setCriteria($C);
-    $pager->setPage($page);
-    $pager->init();
-
-    return $pager;    
-     
-  }
-*/  
-  
-  /**
-   * Funció que fa la cerca pel calendari de la pàgina principal i omple l'agenda
-   *
-   * @param unknown_type $DIA
-   * @param unknown_type $TEXT
-   * @param unknown_type $DATAI
-   * @param unknown_type $DATAF
-   * @param unknown_type $IDACTIVITAT
-   * @return unknown
-   */
-/*
-  static public function getCerca($DIA, $TEXT, $DATAI, $DATAF, $IDACTIVITAT)
-  {
-  	 //Fem la cerca
-     $HORARIS = self::cerca($DIA, $TEXT, $DATAI, $DATAF, $IDACTIVITAT);
-     $RET = array( 'CALENDARI'=>array() , 'ACTIVITATS' => array() );
-     //Carreguem al calendari quan hi ha les activitats    
-     $RET['CALENDARI'] = self::calendari($HORARIS);     
-     $ANT = "";
-     //Fem la recerca de les activitats agrupades per activitat i carregant les dades
-     foreach($HORARIS as $H):
-        if($ANT <> $H->getActivitatsActivitatid()) {           
-           $A = $H->getActivitats();
-           
-           $titol = $A->getTCurt();
-           if(!empty($titol)){           
-	           $RET['ACTIVITATS'][$H->getActivitatsActivitatid()]['TITOL'] = $titol; 
-	           $RET['ACTIVITATS'][$H->getActivitatsActivitatid()]['TEXT'] = $A->getDCurt();
-	           $RET['ACTIVITATS'][$H->getActivitatsActivitatid()]['DIES'][] = $H->getDia('d/m/Y');
-           } 
-        } else {
-           if(isset($RET['ACTIVITATS'][$H->getActivitatsActivitatid()]))
-              $RET['ACTIVITATS'][$H->getActivitatsActivitatid()]['DIES'][] = $H->getDia('d/m/Y');
-        }
-        
-        $ANT = $H->getActivitatsActivitatid();        
-     endforeach;
-     
-     return $RET;
-     
-  }
-*/
-/*  
-  static public function getActivitatsGrouped($DIA, $TEXT, $DATAI, $DATAF, $IDACTIVITAT)
-  {
-     $RET = array(); $ANT = "";
-     $HORARIS = self::cerca($DIA, $TEXT, $DATAI, $DATAF, $IDACTIVITAT);
-     $RET['CALENDARI'] = self::calendari($HORARIS);
-     $RET['ACTIVITATS'] = array();
-     
-     foreach($HORARIS as $H):
-        if($ANT <> $H->getActivitatsActivitatid()) $RET['ACTIVITATS'][] = $H->getActivitatsActivitatid();
-        $ANT = $H->getActivitatsActivitatid();        
-     endforeach;
-     
-     return $RET;
-  }
-*/ 	
-/* 
-  static public function getCalendari($DIA , $TEXT, $DATAI, $DATAF, $IDACTIVITAT, $GESTIO)
-  {
-     return self::calendari(self::cerca($DIA , $TEXT, $DATAI, $DATAF, $IDACTIVITAT),$GESTIO);
-  }
-*/
-  
+   	      
   static public function getActivitats($DIA , $TEXT, $DATAI, $DATAF, $IDACTIVITAT , $idS )
   {
     
@@ -229,99 +146,6 @@ class HorarisPeer extends BaseHorarisPeer
     
   } 
  
-   /**
-    * Espai per estadístics
-    */
-   
-/*  
-  static public function getMesosEspais($any)
-  {
-     $RET = array(array(array()));
-     $SQL = "
-     	SELECT MONTH(".self::DIA.") as mes,".HorarisespaisPeer::ESPAIS_ESPAIID." as espai,".self::ACTIVITATS_ACTIVITATID." as activitat
-     	  FROM ".self::TABLE_NAME.", ".HorarisespaisPeer::TABLE_NAME."
-     	 WHERE ".self::HORARISID." = ".HorarisespaisPeer::HORARIS_HORARISID."
-     	   AND YEAR(".self::DIA.") = '$any'          
-     ";
-
-     
-     $con = Propel::getConnection(); $stmt = $con->prepare($SQL); $stmt->execute();     
-	 
-     while($rs = $stmt->fetch(PDO::FETCH_OBJ)): 
-          
-        if(isset($RET[$rs->mes][$rs->espai][$rs->activitat]))                        
-           $RET[$rs->mes][$rs->espai][$rs->activitat] += 1;
-        else
-           $RET[$rs->mes][$rs->espai][$rs->activitat] = 0;
-     endwhile;
-     
-     return $RET;     
-  } 
-*/  
-/*  
-  static public function getMesosDiesEspai($any,$espai)
-  {
-     $RET = array();
-     $SQL = "
-     	SELECT MONTH(".self::DIA.") as mes, DAY(".self::DIA.") as dia ,".self::ACTIVITATS_ACTIVITATID." as activitat
-     	  FROM ".self::TABLE_NAME.", ".HorarisespaisPeer::TABLE_NAME."
-     	 WHERE ".self::HORARISID." = ".HorarisespaisPeer::HORARIS_HORARISID."
-     	   AND YEAR(".self::DIA.") = '$any'          
-           AND ".HorarisespaisPeer::ESPAIS_ESPAIID." = $espai
-     ";
-     $con = Propel::getConnection();
-     $stmt = $con->prepare($SQL);
-     $stmt->execute();
-     
-     while($rs = $stmt->fetch(PDO::FETCH_OBJ)):                        
-        if(isset($RET[$rs->mes][$rs->dia][$rs->activitat]))
-           $RET[$rs->mes][$rs->dia][$rs->activitat] += 1;
-        else
-           $RET[$rs->mes][$rs->dia][$rs->activitat] = 0;        
-     endwhile;
-     
-     return $RET;     
-  }
-*/  
-/*  
-  static public function getMesosEspaisHores($any,$espai,$mes)
-  {
-     $RET = array(array(array()));
-              
-	 $SQL = "
-	     	 SELECT count(*) as count , h.horaInici as hi , h.horaFi as hf , h.dia as dia 
-	     	   FROM horarisespais he , horaris h , espais e
-	 		  WHERE he.Espais_EspaiID = e.EspaiID
-	   			AND he.Horaris_HorarisID = h.HorarisID
-	   			AND e.EspaiID = $espai
-	   			AND YEAR(h.dia) = $any
-	   			AND MONTH(h.dia) = $mes
-	   		 GROUP BY h.horainici, h.horafi , h.dia          
-	     ";
-	   		 
-     $con = Propel::getConnection(); $stmt = $con->prepare($SQL); $stmt->execute();     
-	 
-     while($rs = $stmt->fetch(PDO::FETCH_OBJ)):
-     	$res = explode('-',$rs->dia);      
-        $time = mktime(0,0,0,$res[1],$res[0],$res[2]);
-        $hourIT = explode(':',$rs->hi);
-        $hourI = intval($hourIT[0]);
-        $hourFT = explode(':',$rs->hf);
-        $hourF = intval($hourFT[0]);
-        
-        for($i = $hourI; $i <= $hourF; $i++):
-           	if(isset($RET[$time][$i])):
-           		$RET[$time][$i] += $rs->count;
-           	else:
-           		if($time > 0) $RET[$time][$i] = $rs->count;
-           	endif;
-        endfor;
-                
-     endwhile;               
-     
-     return $RET;     
-  } 
-*/  
 
 /**
  * Comprova que el dia no estigui bloquejat
@@ -467,14 +291,15 @@ class HorarisPeer extends BaseHorarisPeer
         
   }
   
-	static public function getActivitatsDia($D,$idS)
-	{
-		$C = new Criteria();
+    static public function getActivitatsDia($D,$idS)
+    {
+    	$C = new Criteria();
         $C = self::getCriteriaActiu($C,$idS);
         
-		$C->add(self::DIA, $D);
+    	$C->add(self::DIA, $D);
                 
-		return self::doSelect($C);
-	}
+    	return self::doSelect($C);
+    }
+    
       
 }

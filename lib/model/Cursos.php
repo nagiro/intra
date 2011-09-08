@@ -92,5 +92,15 @@ class Cursos extends BaseCursos
     $nom = $this->getTitolcurs();
     return myUser::text2url($nom);        
   } 
+
+  public function h_getDescomptes()
+  {
+    $RET = array();    
+    foreach(explode('@',$this->getAdescomptes()) as $DESC){
+        $OT = TipusPeer::retrieveByPK($DESC);
+        if($OT instanceof Tipus) $RET[$DESC] = $OT->getTipusdesc();        
+    }
+    return $RET;
+  }
     
 }

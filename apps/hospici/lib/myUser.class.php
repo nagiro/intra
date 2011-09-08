@@ -6,10 +6,10 @@ class myUser extends sfBasicSecurityUser
   /**
    * myUser::ParReqSesForm()
    * 
-   * Comprova els par�metres del request i l'actualtiza amb la sessi�.
-   * Si existeix al request, el guarda en sessi� i el retorna.
-   * Si no existeix al request, retorna el de sessi�. 
-   * Si tampoc existeix a la sessi� retorna el default.  
+   * Comprova els paràmetres del request i l'actualtiza amb la sessió.
+   * Si existeix al request, el guarda en sessió i el retorna.
+   * Si no existeix al request, retorna el de sessió. 
+   * Si tampoc existeix a la sessió retorna el default.  
    * 
    * @param mixed $request
    * @param mixed $nomCamp
@@ -39,7 +39,7 @@ class myUser extends sfBasicSecurityUser
   /**
    * myUser::setSessionPar()
    *
-   * Actualitza un par�metre de la sessi�
+   * Actualitza un paràmetre de la sessió
    *  
    * @param mixed $nomCamp
    * @param mixed $value
@@ -59,7 +59,7 @@ class myUser extends sfBasicSecurityUser
   /**
    * myUser::getSessionPar()
    * 
-   * Carrega un par�metre de la sessi� 
+   * Carrega un paràmetre de la sessió 
    * 
    * @param mixed $nomCamp
    * @param string $default
@@ -77,7 +77,7 @@ class myUser extends sfBasicSecurityUser
   /**
    * myUser::addLogAction()
    * 
-   * Afegeix un registre al log amb alguna acci�. Versi� no est�tica. .
+   * Afegeix un registre al log amb alguna acció. Versió no estàtica. .
    * 
    * @param mixed $accio
    * @param mixed $model
@@ -93,7 +93,7 @@ class myUser extends sfBasicSecurityUser
   /**
    * myUser::addLogAction()
    * 
-   * Afegeix un registre al log amb alguna acci�.
+   * Afegeix un registre al log amb alguna acció.
    * 
    * @param mixed $accio
    * @param mixed $model
@@ -123,8 +123,8 @@ class myUser extends sfBasicSecurityUser
   /**
    * myUser::gestionaOrdre()
    * 
-   * Funci� est�tica que gestionar un ordre. 
-   * Posa a la posici� dest� el que est� a l'actual usant el m�tode getOrdre()
+   * Funció estàtica que gestionar un ordre. 
+   * Posa a la posició destí el que està a l'actual usant el mètode getOrdre()
    * 
    * @param mixed $desti
    * @param mixed $actual
@@ -134,7 +134,7 @@ class myUser extends sfBasicSecurityUser
    */
   static public function gestionaOrdre( $desti , $actual , $idS , $LO )
   {   
-     //Si el dest� i actual s�n iguals, llavors no fem res. '
+     //Si el destí i actual són iguals, llavors no fem res. '
      if($desti == $actual) return null;
                                                                                   
      //Canvia l'ordre segons els intermitjos.
@@ -145,7 +145,7 @@ class myUser extends sfBasicSecurityUser
         if($Ordre == $actual) $O->setOrdre($desti);                
         elseif($Ordre < $actual && $Ordre >= $desti && $actual > 0 ) $O->setOrdre($Ordre+1);
         elseif($Ordre <= $desti  && $Ordre >= $actual && $actual > 0 ) $O->setOrdre($Ordre-1);
-        elseif($actual == 0 && $Ordre >= $desti) $O->setOrdre($Ordre+1); //�s un nou node.        
+        elseif($actual == 0 && $Ordre >= $desti) $O->setOrdre($Ordre+1); //És un nou node.        
         
 	    $O->save();
      
@@ -155,8 +155,8 @@ class myUser extends sfBasicSecurityUser
   /**
    * myUser::selectOrdre()
    * 
-   * Retorna un men� de Select amb els ordres actuals. 
-   * Si �s nou a m�s hi ha Ordre+1 que ser� el nou ordre per defecte. 
+   * Retorna un menú de Select amb els ordres actuals. 
+   * Si és nou a més hi ha Ordre+1 que serà el nou ordre per defecte. 
    * 
    * @param mixed $idS
    * @param mixed $LOP
@@ -174,7 +174,7 @@ class myUser extends sfBasicSecurityUser
        $last = $OP->getOrdre()+1;         
      }          
      
-     //Si �s nou hi afegim un n�mero m�s.
+     //Si és nou hi afegim un número més.
      if($NOU) { $RET[$last] = $last; }
      
      return $RET;            
@@ -183,7 +183,7 @@ class myUser extends sfBasicSecurityUser
   /**
    * myUser::resizeImage()
    * 
-   * Funci� est�tica que canvia la mida d'una imatge carregada amb un input file. 
+   * Funció estàtica que canvia la mida d'una imatge carregada amb un input file. 
    *  
    * @param mixed $x
    * @param mixed $y
@@ -270,13 +270,13 @@ class myUser extends sfBasicSecurityUser
     #Creem l'objecte facebook        
     $facebook = myUser::getFbObject();       
     
-    # Carreguem l'usuari que tenim en sessi� (0 si no existeix)
+    # Carreguem l'usuari que tenim en sessió (0 si no existeix)
     $uid = $facebook->getUser();
     
     # Generem la url de login
     $RET['logUrl'] = $facebook->getLoginUrl($A);
 
-    # Si l'usuari existeix en sessi�, carreguem les seves dades
+    # Si l'usuari existeix en sessió, carreguem les seves dades
     if($uid){
         try {
             #Provem a veure si l'usuari existeix
@@ -361,7 +361,7 @@ class myUser extends sfBasicSecurityUser
 		        
 		        if(isset($CALENDARI[$CalDia])):
 		        	$SELECCIONAT = "SELECCIONAT";		        	
-		        	$SPAN  = '<span><table id="TD1"><tr><th>Inici</th><th>Fi</th><th>Espai</th><th>T�tol</th><th>Organitzador</th></tr>';				 
+		        	$SPAN  = '<span><table id="TD1"><tr><th>Inici</th><th>Fi</th><th>Espai</th><th>Títol</th><th>Organitzador</th></tr>';				 
 		          		foreach($CALENDARI[$CalDia] as $CAL) $SPAN .= '<tr><td>'.$CAL['HORAI'].'</td><td>'.$CAL['HORAF'].'</td><td>'.$CAL['ESPAIS'].'</td><td>'.$CAL['TITOL'].'</td><td>'.$CAL['ORGANITZADOR'].'</td></tr>';
 		            $SPAN .= '</table></span>';
 		        else: 
@@ -394,7 +394,7 @@ class myUser extends sfBasicSecurityUser
   
   
   /**
-   * A partir d'una DataI generem els enlla�os del men�
+   * A partir d'una DataI generem els enllaços del menú
    * @param time() $DATAI
    * @return string
    */
@@ -423,7 +423,7 @@ class myUser extends sfBasicSecurityUser
     switch($mes){
       case 1: $text = "Gener"; break;
       case 2: $text = "Febrer"; break;
-      case 3: $text = "Mar�"; break;
+      case 3: $text = "Març"; break;
       case 4: $text = "Abril"; break;
       case 5: $text = "Maig"; break;
       case 6: $text = "Juny"; break;
@@ -464,5 +464,273 @@ class myUser extends sfBasicSecurityUser
     list($dia,$mes,$any) = explode('/',$data);
     return $any.'-'.$mes.'-'.$dia;
   }
+
+    static public function ph_EstatCurs($AUTH, $OC, $url, $CURSOS_MATRICULATS){
+        
+        $AUTEN = (isset($AUTH) && $AUTH > 0);
+        
+        $TNReserva  =  ($OC->getIsEntrada() == CursosPeer::HOSPICI_NO_RESERVA);
+        $TReserva   =  ($OC->getIsEntrada() == CursosPeer::HOSPICI_RESERVA);
+        $TReservaT  =  ($OC->getIsEntrada() == CursosPeer::HOSPICI_RESERVA_TARGETA);
+        $HiHaPlaces =  $OC->isPle();                    
+        $datai      =  $OC->getDatainmatricula('U');        
+        $JaMat      = (isset($CURSOS_MATRICULATS[$OC->getIdcursos()]));
+        $url        = url_for('@hospici_detall_curs?idC='.$OC->getIdcursos().'&titol='.$OC->getNomForUrl());
+        $idS        = $OC->getSiteId();
+        
+        $OS         = SitesPeer::retrieveByPK($idS);
+        $nom        = $OS->getNom();
+        $email      = $OS->getEmailString();
+        $tel        = $OS->getTelefonString();
+        $MatAntIdi  = CursosPeer::IsAnticAlumne($OC->getIdcursos(),$CURSOS_MATRICULATS);
+        $dataiA     = mktime(0,0,0,9,12,2011);
+        
+        $RET = "";                                        
+        
+        //Si la data d'inici de matrícula és inferior a la d'avui, mostrem que encara no s'han iniciat les matrícules
+        $avui = time();  
+
+        //Si no està autentificat
+        if( !$AUTEN ){
+            
+            return "NO_AUTENTIFICAT";
+            
+        //Ja està autentificat
+        }else {
+
+            //Ja ha estat matriculat
+            if( $JaMat ){
+                
+                $OM = MatriculesPeer::retrieveByPK($CURSOS_MATRICULATS[$OC->getIdcursos()]);
+                if($OM instanceof Matricules){
+                    
+                    //Si l'usuari ja està matriculat, doncs li marquem
+                    if(MatriculesPeer::ACCEPTAT_NO_PAGAT == $OM->getEstat() || MatriculesPeer::ACCEPTAT_PAGAT == $OM->getEstat()){
+                        return "MATRICULAT";
+                        
+                    //L'usuari està en espera'
+                    } elseif(MatriculesPeer::EN_ESPERA == $OM->getEstat()) {
+                        return "EN_ESPERA";
+                    }
+                } else {
+                    
+                    return "ANULADA";
+                }                                                                                                
+            
+            //No està matriculat
+            } else {
+                
+                //No queden places
+                if( !$HiHaPlaces ){      
+                    return "NO_HI_PLACES";                
+                                        
+                //No hi ha reserva en línia
+                }elseif( $TNReserva ){
+                    return "NO_HI_HA_RESERVA_LINIA";
+        
+                //Encara no es pot matricular i és alumne antic d'idiomes
+                }elseif( $MatAntIdi && $avui < $dataiA ){
+                    return "ABANS_PERIODE_MATRICULA_AA_IDIOMES";                    
+        
+                //Encara no es pot matricular i no és un alumne antic d'idiomes o el curs no és d'idiomes
+                }elseif( !$MatAntIdi && $avui < $datai ){
+                    return "ABANS_PERIODE_MATRICULA";                    
+
+                //Es pot matricular
+                }elseif( $TReserva || $TReservaT ){
+                    return "POT_MATRICULAR";                                            
+                }                            
+            }            
+        }        
+    }
+
+
+
+    /**
+     * Mostra les etiquetes amb els estats i accions dels cursos
+     * @param $AUTEN Si l'usuari està autentificat o no
+     * @param $OC Objecte Cursos
+     * @param $url On s'ha d'anar si es clica l'enllaç
+     * @return String
+     * */
+    static public function ph_getEtiquetaCursos($AUTH, $OC, $url, $CURSOS_MATRICULATS)
+    {
+        
+        $ESTAT = self::ph_EstatCurs($AUTH, $OC, $url, $CURSOS_MATRICULATS);
+                
+        $datai      =  $OC->getDatainmatricula('U');
+        $avui       = time();        
+        $JaMat      = (isset($CURSOS_MATRICULATS[$OC->getIdcursos()]));
+        $url        = url_for('@hospici_detall_curs?idC='.$OC->getIdcursos().'&titol='.$OC->getNomForUrl());
+        
+        $OS         = SitesPeer::retrieveByPK($OC->getSiteId());
+        $nom        = $OS->getNom();
+        $email      = $OS->getEmailString();
+        $tel        = $OS->getTelefonString();
+        $MatAntIdi  = CursosPeer::IsAnticAlumne($OC->getIdcursos(),$CURSOS_MATRICULATS);
+        $dataiA     = mktime(0,0,0,9,12,2011);
+
+        $RET = "";                                        
+                          
+        //Si no està autentificat
+        if( $ESTAT == 'NO_AUTENTIFICAT' ){            
+            $RET = ph_getRoundCorner('<a class="auth" href="'.$url.'">Autentifica\'t i matricula\'t</a>', '#FFCC00');
+                        
+        }elseif( $ESTAT == 'MATRICULAT' ){
+            $RET  = '  <div class="tip" title="Vostè està matriculat correctament al curs.<br /><br /> Per a més informació ha de posar-se en contacte amb <b>'.$nom.'</b> enviant un correu electrònic a <b>'.$email.'</b> o bé trucant al <b>'.$tel.'</b>">';
+            $RET .= ph_getRoundCorner('Ja hi esteu matriculat', '#29A729').'</div>';
+            
+        }elseif( $ESTAT == 'EN_ESPERA'){
+            $RET  = '  <div class="tip" title="El curs està complet. La seva matrícula queda en llista d\'espera.<br /><br /> Per a més informació ha de posar-se en contacte amb <b>'.$nom.'</b> enviant un correu electrònic a <b>'.$email.'</b> o bé trucant al <b>'.$tel.'</b>">';
+            $RET .= ph_getRoundCorner('En espera de plaça', '#F184DD').'</div>';
+                            
+        }elseif( $ESTAT == 'ANULADA'){
+            $RET  = '  <div class="tip" title="Vostè s\'ha matriculat en aquest curs, però s\'ha donat de baixa o el procés no s\'ha completat correctament. Matrícula sense efecte.<br /><br /> Per a més informació ha de posar-se en contacte amb <b>'.$nom.'</b> enviant un correu electrònic a <b>'.$email.'</b> o bé trucant al <b>'.$tel.'</b>">';
+            $RET .= ph_getRoundCorner('Matrícula aunl·lada', '#CCCCCC').'</div>';               
+        
+        }elseif( $ESTAT == 'NO_HI_PLACES'){                                    
+            $RET  = '  <div class="tip" title="Aquest curs no disposa de més places.<br /><br /> Si vol pot matricular-s\'hi igualment i restarà en llista d\'espera. En el cas que s\'alliberi alguna plaça, que vostè pot ocupar, el trucarem el més aviat possible. Per a més informació, pot posar-se en contacte amb <b>'.$nom.'</b> enviant un correu electrònic a <b>'.$email.'</b> o bé trucant al telèfon <b>'.$tel.'</b>.<br /><br />Disculpi les molèsties.">';
+            $RET .= ph_getRoundCorner('<a href="'.$url.'#matricula">Curs ple</a>', '#EF0101').'</div>';            
+        
+        }elseif( $ESTAT == 'NO_HI_HA_RESERVA_LINIA'){            
+            $RET  = '  <div class="tip" title="Aquest curs no disposa de matrícula en línia.<br /><br /> Per poder-s\'hi matricular, ha de posar-se en contacte amb <b>'.$nom.'</b> enviant un correu electrònic a <b>'.$email.'</b> o bé trucant al telèfon <b>'.$tel.'</b>.<br /><br />Disculpi les molèsties.">';
+            $RET .= ph_getRoundCorner('Matrícula presencial', '#CCCCCC').'</div>';
+                        
+        }elseif( $ESTAT == 'ABANS_PERIODE_MATRICULA_AA_IDIOMES'){                                    
+            $RET  = '  <div class="tip" title="Vostè podrà matricular-se a aquest curs per internet a partir del dia '.date('d/m/Y',$dataiA).' si vol continuar els estudis d\'idiomes. Assegureu-vos que us matriculeu al curs que us correspon o la matrícula quedarà invalidada sense guardar plaça. <br /><br /> Per a més informació pot posar-se en contacte amb <b>'.$nom.'</b> enviant un correu electrònic a <b>'.$email.'</b> o bé trucant al <b>'.$tel.'</b>">';
+            $RET .= ph_getRoundCorner('Tancada fins '.date('d/m/Y',$dataiA), '#CBAD85').'</div>';
+            
+        }elseif( $ESTAT == 'ABANS_PERIODE_MATRICULA'){                                    
+            $RET  = '  <div class="tip" title="Vostè podrà matricular-se a aquest curs per internet a partir del dia '.date('d/m/Y',$datai).'.<br /><br /> Per a més informació pot posar-se en contacte amb <b>'.$nom.'</b> enviant un correu electrònic a <b>'.$email.'</b> o bé trucant al <b>'.$tel.'</b>">';
+            $RET .= ph_getRoundCorner('Tancada fins '.date('d/m/Y',$datai), '#CBAD85').'</div>';
+                        
+        }elseif( $ESTAT == 'POT_MATRICULAR'){
+            $RET = ph_getRoundCorner('<a href="'.$url.'#matricula">Matriculeu-vos</a>', '#FF8D00');            
+        }                
+                
+        return $RET;         
+    }
+
+    /**
+     * Mostra les etiquetes amb els estats i accions dels cursos
+     * @param $AUTEN Si l'usuari està autentificat o no
+     * @param $OC Objecte Cursos
+     * @param $url On s'ha d'anar si es clica l'enllaç
+     * @return String
+     * */
+    static public function ph_getEtiquetaActivitats($AUTH, $OA, $ACTIVITATS_AMB_ENTRADES)
+    {
+        
+        $AUTEN  = (isset($AUTH) && $AUTH > 0);
+        $isEnt  = $OA->getIsentrada();
+        $Places = $OA->getPlaces();
+        $isPle  = $OA->getIsPle();                 
+        $JaRes  = (isset($ACTIVITATS_AMB_ENTRADES[$OA->getActivitatid()]));
+        $url    = url_for('@hospici_detall_activitat?idA='.$OA->getActivitatid().'&titol='.$OA->getNomForUrl());
+        $idS    = $OA->getSiteId();
+
+        $OS     = SitesPeer::retrieveByPK($idS);
+        $nom    = $OS->getNom();
+        $email  = $OS->getEmailString();
+        $tel    = $OS->getTelefonString();
+
+        $RET    = "";                                                          
+
+        //Si no està autentificat
+        if( !$AUTEN ){
+            
+            $RET = ph_getRoundCorner('<a class="auth" href="'.$url.'">Autentifica\'t i reserva</a>', '#FFCC00');
+            
+        //Ja està autentificat
+        }else {
+
+            //Ja ha reservat per aquesta activitat
+            if( $JaRes ){
+                
+                $OER =  EntradesreservaPeer::retrieveByPK($ACTIVITATS_AMB_ENTRADES[$OA->getActivitatid()]);
+                if( $OER instanceof EntradesReserva ){
+                    //Si l'usuari ja té l'entrada reservada, doncs li marquem
+                    if($OER->getEstat() == EntradesreservaPeer::CONFIRMADA){
+                        $RET  = '  <div class="tip" title="Vostè ha reservat entrades per aquesta activitat correctament.<br /><br /> Per a més informació ha de posar-se en contacte amb <b>'.$nom.'</b> enviant un correu electrònic a <b>'.$email.'</b> o bé trucant al <b>'.$tel.'</b>">';
+                        $RET .= ph_getRoundCorner('Reserva confirmada', '#29A729').'</div>';
+                    //L'usuari està en espera'
+                    } elseif($OER->getEstat() == EntradesreservaPeer::ANULADA) {
+                        $RET  = '  <div class="tip" title="Vostè ha reservat entrades però han estat anul·lades.<br /><br /> Per a més informació ha de posar-se en contacte amb <b>'.$nom.'</b> enviant un correu electrònic a <b>'.$email.'</b> o bé trucant al <b>'.$tel.'</b>">';
+                        $RET .= ph_getRoundCorner('Reserva anul·lada', '#F184DD').'</div>';
+                    }
+                }                                                                                                
+            
+            //No ha reservat            
+            } else {
+              
+                //No hi ha venta per internet
+                if( !$isEnt ){
+                    $RET  = '';                                                        
+                                                    
+                //No queden places
+                }elseif( $isPle ){
+                    $RET  = '  <div class="tip" title="Aquesta activitat ha exhaurit les entrades.<br /><br /> Per a més informació ha de posar-se en contacte amb <b>'.$nom.'</b> enviant un correu electrònic a <b>'.$email.'</b> o bé trucant al <b>'.$tel.'</b>">';
+                    $RET .= ph_getRoundCorner('<a href="'.$url.'#matricula">Entrades exhaurides</a>', '#EF0101').'</div>';            
+                                        
+                //Pot reservar entrades
+                }elseif( $isEnt ){
+                    $RET = ph_getRoundCorner('<a href="'.$url.'#matricula">Reserva entrada</a>', '#FF8D00');                        
+                }            
+                
+            }
+            
+        }
+                
+        return $RET;         
+    }
+
+
+    /**
+     * Mostra les etiquetes amb els estats i accions dels cursos
+     * @param $AUTEN Si l'usuari està autentificat o no
+     * @param $OC Objecte Cursos
+     * @param $url On s'ha d'anar si es clica l'enllaç
+     * @return String
+     * */
+    static public function ph_getEtiquetaFormulari( $AUTH, $OF , $idU )
+    {
+        
+        $AUTEN  = (isset($AUTH) && $AUTH > 0);
+        $isPle  = $OF->isOmplert($idU);                                         
+        $url    = url_for('@hospici_formularis_detall?idF='.$OF->getIdformularis().'&titol='.$OF->getNomForUrl());
+        $idS    = $OF->getSiteId();
+
+        $OS     = SitesPeer::retrieveByPK($idS);
+        $nom    = $OS->getNom();
+        $email  = $OS->getEmailString();
+        $tel    = $OS->getTelefonString();
+
+        $RET    = "";                                                          
+
+        //Si no està autentificat
+        if( !$AUTEN ){
+            
+            $RET = ph_getRoundCorner('<a class="auth" href="'.$url.'">Autentifica\'t i omple\'l</a>', '#FFCC00');
+            
+        //Ja està autentificat
+        }else {
+
+            //Ja ha omplert el formulari
+            if( $isPle ){
+                                
+                $RET  = '  <div class="tip" title="Vostè ja ha omplert aquest formulari correctament.<br /><br /> Per a més informació ha de posar-se en contacte amb <b>'.$nom.'</b> enviant un correu electrònic a <b>'.$email.'</b> o bé trucant al <b>'.$tel.'</b>">';
+                $RET .= ph_getRoundCorner('<a class="link_compra" href="'.$url.'">Formulari omplert</a>', '#29A729').'</div>';                                                                                                                    
+            
+            //Encara no l'ha omplert            
+            } else {
+                              
+                $RET = ph_getRoundCorner('<a href="'.$url.'">Omple el formulari</a>', '#FF8D00');
+                                                                                    
+            }
+            
+        }
+                
+        return $RET;         
+    }
   
 }

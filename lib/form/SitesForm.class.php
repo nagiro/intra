@@ -5,7 +5,7 @@
  *
  * @package    intranet
  * @subpackage form
- * @author     Albert Johé i Martí
+ * @author     Albert JohÃ© i MartÃ­
  */
 class SitesForm extends BaseSitesForm
 {
@@ -22,6 +22,8 @@ class SitesForm extends BaseSitesForm
       'site_id'            => new sfWidgetFormInputHidden(),
       'nom'                => new sfWidgetFormInputText(array(),array('style'=>'width:500px')),      
       'webUrl'             => new sfWidgetFormInputText(array(),array('style'=>'width:500px')),
+      'telefon'            => new sfWidgetFormInputText(array(),array('style'=>'width:200px')),
+      'email'              => new sfWidgetFormInputText(array(),array('style'=>'width:200px')),
       'logoUrl'            => new sfWidgetFormInputFileEditableMy(array('file_src'=>'/'.$this->WEB_IMATGE.$this->I , 'is_image'=>true,'with_delete'=>false),array('style'=>'width:100px')),
       'actiu'              => new sfWidgetFormInputHidden(array(),array()),      
     ));
@@ -30,7 +32,9 @@ class SitesForm extends BaseSitesForm
       'site_id'            => new sfValidatorChoice(array('choices' => array($this->getObject()->getSiteId()), 'empty_value' => $this->getObject()->getSiteId(), 'required' => false)),
       'nom'                => new sfValidatorString(),
       'logoUrl'            => new sfValidatorFile(array('path'=>$this->BASE.$this->WEB_IMATGE , 'required' => false)),
-      'webUrl'             => new sfValidatorString(array('required'=>false)),            
+      'webUrl'             => new sfValidatorString(array('required'=>false)),
+      'telefon'            => new sfValidatorString(array('required'=>false)),
+      'email'              => new sfValidatorString(array('required'=>false)),                  
       'actiu'              => new sfValidatorPass(),
     ));
 
@@ -39,8 +43,10 @@ class SitesForm extends BaseSitesForm
     
     $this->widgetSchema->setLabels(array(        
         'nom' => 'Nom: ',
-        'urlWeb' => 'Url del web: ',
-        'logoUrl' => 'Logo: ', 
+        'webUrl' => 'Web: ',
+        'logoUrl' => 'Logo: ',
+        'telefon' => 'TelÃ¨fon: ',
+        'email' => 'Email: ' 
     ));
     
   }

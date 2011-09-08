@@ -21,13 +21,23 @@ require 'lib/model/om/BaseSitesPeer.php';
 class SitesPeer extends BaseSitesPeer {
 
     const HOSPICI_ID = 0;
-    
+
+    /**
+     * Afegitó al criteria per retornar només els actius. 
+     * @param Criteria $C
+     * @return Criteria      
+     * */                        
     static public function getCriteriaActiu( $C )
     {
       $C->add(self::ACTIU,true);      
       return $C;
     }    
-    
+
+    /**
+     * Inicialitza un formulari de Site 
+     * @param $idS Site ID     
+     * @return SitesForm()
+     * */                        
     static public function initialize( $idS )
     {
         $OO = self::retrieveByPK($idS);            
@@ -40,6 +50,12 @@ class SitesPeer extends BaseSitesPeer {
        	return new SitesForm($OO,array('IDS'=>$idS));
     }
 
+    /**
+     * Select de les entitats disponibles. 
+     * @param $has_new 1=>add(Opció Nou Site)
+     * @param $no_labels 1=>No apareix ni opció escull entitat ni nou site.     
+     * @return Array('idS'=>'NomSite')
+     * */                    
     static public function getSelect( $has_new = true , $no_labels = false )
     {
         $RET = array();
@@ -55,6 +71,11 @@ class SitesPeer extends BaseSitesPeer {
         return $RET;
     }
 
+    /**
+     * Select de les entitats a les que pertany un usuari. 
+     * @param $idU Identificador d'usuari
+     * @return Array('idS'=>'Username')
+     * */                    
     static public function getSelectUser($idU = 0)
     {
         $RET = array();
@@ -73,7 +94,11 @@ class SitesPeer extends BaseSitesPeer {
         return $RET;
     }
 
-    
+    /**
+     * Retorna el nom d'un Site. 
+     * @param $idS Identificador del Site
+     * @return String Nom del Site
+     * */                        
     static public function getNom($idS)
     {
         $OS = self::retrieveByPK($idS);
@@ -83,7 +108,14 @@ class SitesPeer extends BaseSitesPeer {
             return "n/d";
         endif; 
     }
-    
+
+    /**
+     * Cerca els sites que encaixen amb una consulta per a un autocompletat. 
+     * @param $q Text a cercar
+     * @param $lim Resultats a mostrar
+     * @param $idS Identificador del Site
+     * @return Array('clau'=>'text')
+     * */                    
     static public function cercaTotsCampsSelect($q, $lim, $idS)
     {
         $RET = array();         
@@ -98,6 +130,13 @@ class SitesPeer extends BaseSitesPeer {
         return $RET;
     }
     
+    /**
+     * Funció que serveix per cercar usuaris que compleixen unes característiques i apareixen per un autocomplete.
+     * @param $q Text a cercar
+     * @param $lim Quants en busquem
+     * @param $IDS Identificador de site
+     * @return Array('clau'=>'Nom')
+     * */
     static public function getSiteUsersCercaUser($q, $lim, $IDS)
     {        
         $C = self::getCriteriaActiu(new Criteria());
@@ -114,7 +153,13 @@ class SitesPeer extends BaseSitesPeer {
         
         return $RET;                
     }
-    
+
+
+    /**
+     * Funció que retorna el logo del Site. Si no en té, retorna el de l'Hospici.
+     * @param $idS Identificador de site
+     * @return String URL de la imatge
+     * */    
     static public function getSiteLogo($idS)
     {
         $OS = self::retrieveByPK($idS);
@@ -132,105 +177,117 @@ class SitesPeer extends BaseSitesPeer {
 
 
 
-
-
-
-  static public function getCategoriesCercaHospici($CER)
-  {
-    $C = new Criteria();
-//    $C->add(self::ACTIU, true);        
-//    $C->add(self::IDCURSOS , $a_cursos , CRITERIA::IN );
-//    $C->addJoin(TipusPeer::IDTIPUS, self::CATEGORIA);            
-    
-//    $RET = array(); $SOL = array();
-    
-    $RET[0] = array('NOM' => "Totes les categories..." , 'COUNT'=>0);
-//    foreach(TipusPeer::doSelect($C) as $OT):
-//        if(!isset($RET[$OT->getIdtipus()])) $RET[$OT->getIdtipus()] = array('NOM' => $OT->getTipusdesc(),'COUNT'=>0);        
-//        $RET[$OT->getIdtipus()]['COUNT'] += 1;
-//        $RET[0]['COUNT'] += 1;
-//    endforeach;
+    /**
+     * Retorna les categories a partir d'una cerca pel cercador de l'Hospici. 
+     * @param $CER Array('paràmetres de cerca')     
+     * @return Array('clau'=>'Nom')
+     * */
+    static public function getCategoriesCercaHospici($CER)
+    {
+        $C = new Criteria();
+    //    $C->add(self::ACTIU, true);        
+    //    $C->add(self::IDCURSOS , $a_cursos , CRITERIA::IN );
+    //    $C->addJoin(TipusPeer::IDTIPUS, self::CATEGORIA);            
         
-    foreach($RET as $K=>$V):
-//        $SOL[$K] = $V['NOM']." ({$V['COUNT']})";
-        $SOL[$K] = $V['NOM'];            
-    endforeach;
-    
-    return $SOL; 
-    
-  }        
-                
-  static public function getPoblacionsCercaHospici( $CER )
-  {
-    $C = new Criteria();
-    
-    $C = self::CriteriaCercaEntitatsHospici( $CER , $C );
+    //    $RET = array(); $SOL = array();
         
-    $C->add(SitesPeer::ACTIU, true);
-    $C->addJoin(PoblacionsPeer::IDPOBLACIO, SitesPeer::POBLE);
-    $C->addJoin(self::SITE_ID, SitesPeer::SITE_ID);
+        $RET[0] = array('NOM' => "Totes les categories..." , 'COUNT'=>0);
+    //    foreach(TipusPeer::doSelect($C) as $OT):
+    //        if(!isset($RET[$OT->getIdtipus()])) $RET[$OT->getIdtipus()] = array('NOM' => $OT->getTipusdesc(),'COUNT'=>0);        
+    //        $RET[$OT->getIdtipus()]['COUNT'] += 1;
+    //        $RET[0]['COUNT'] += 1;
+    //    endforeach;
+            
+        foreach($RET as $K=>$V):
+    //        $SOL[$K] = $V['NOM']." ({$V['COUNT']})";
+            $SOL[$K] = $V['NOM'];            
+        endforeach;
         
-    $RET = array(); $SOL = array();
-    
-    $RET[0] = array('NOM' => "Tots els pobles..." , 'COUNT'=>0);
-    foreach(PoblacionsPeer::doSelect($C) as $OP):
+        return $SOL; 
+        
+    }        
+
+    /**
+     * Retorna les poblacions a partir d'una cerca de l'Hospici.
+     * @param $CER Array('Paràmetres de cerca')
+     * @return Array('clau'=>'Nom')
+     * */                
+    static public function getPoblacionsCercaHospici( $CER )
+    {
+        $C = new Criteria();
+        
+        $C = self::CriteriaCercaEntitatsHospici( $CER , $C );
+        
+        $C->add(SitesPeer::ACTIU, true);
+        $C->addJoin(PoblacionsPeer::IDPOBLACIO, SitesPeer::POBLE);
+        $C->addJoin(self::SITE_ID, SitesPeer::SITE_ID);
+        
+        $RET = array(); $SOL = array();
+        
+        $RET[0] = array('NOM' => "Tots els pobles..." , 'COUNT'=>0);
+        foreach(PoblacionsPeer::doSelect($C) as $OP):
         if(!isset($RET[$OP->getIdpoblacio()])) $RET[$OP->getIdpoblacio()] = array('NOM' => $OP->getNom(),'COUNT'=>0);        
         $RET[$OP->getIdpoblacio()]['COUNT'] += 1;
         $RET[0]['COUNT'] += 1;
-    endforeach;
-    
-    foreach($RET as $K=>$V):
+        endforeach;
+        
+        foreach($RET as $K=>$V):
         $SOL[$K] = $V['NOM']." ({$V['COUNT']})";
-    endforeach;
-    
-    return $SOL; 
-  }
+        endforeach;
+        
+        return $SOL; 
+    }
    
-  static private function CriteriaCercaEntitatsHospici( $CER , $C ){        
+    /**
+     * Genera el Criteria per a les cerques de desplegables de l'Hospici. 
+     * @param $CER Array('Paràmetres de cerca')
+     * @param $C   Criteria
+     * @return Criteria
+     * */                
+    static private function CriteriaCercaEntitatsHospici( $CER , $C )
+    {            
+        //Agafo els sites que estan actius.      
+        $C->add(self::ACTIU, true);    
+        
+        if( !empty($CER['TEXT']) ) {        
+            $C->add(self::NOM, '%'.$CER['TEXT'].'%', Criteria::LIKE);                
+        }
+            
+        if(  $CER['POBLE'] > 0 ){        
+            $C->add(self::POBLE, $CER['POBLE']);
+        }
     
-    //Agafo els sites que estan actius.      
-    $C->add(self::ACTIU, true);    
-
-    if( !empty($CER['TEXT']) ) {        
-        $C->add(self::NOM, '%'.$CER['TEXT'].'%', Criteria::LIKE);                
+    /* Encara no existeix la categoria en les entitats
+        if(  $CER['CATEGORIA'] > 0 ){
+            $C->addJoin(self::SITE_ID, SitesPeer::SITE_ID);
+            $C->add(SitesPeer::POBLE, $CER['POBLE']);
+        }
+    */    
+        $C->addAscendingOrderByColumn(self::NOM);    
+    
+        return $C;    
     }
         
-    if(  $CER['POBLE'] > 0 ){        
-        $C->add(self::POBLE, $CER['POBLE']);
-    }
+    /**
+     * Cerca les entitats a partir d'una cerca de l'Hospici. 
+     * @param $CER Array('Paràmetres de cerca')     
+     * @return sfPager Sites que encaixen amb la cerca
+     * */                
+    static public function getEntitatsCercaHospici($CER)
+    {
     
-/* Encara no existeix la categoria en les entitats
-    if(  $CER['CATEGORIA'] > 0 ){
-        $C->addJoin(self::SITE_ID, SitesPeer::SITE_ID);
-        $C->add(SitesPeer::POBLE, $CER['POBLE']);
-    }
-*/    
-    $C->addAscendingOrderByColumn(self::NOM);    
-    
-    return $C;
-    
-  }
+        $C = new Criteria();
+           
+        $C = self::CriteriaCercaEntitatsHospici( $CER , $C );
+                                    
+        //Ara fem la select dels cursos amb el pager        
+        $pager = new sfPropelPager('Sites', 20);
+        $pager->setCriteria($C);
+        $pager->setPage($CER['P']);
+        $pager->init();    	                
+           
+        return $pager;
         
-  static public function getEntitatsCercaHospici($CER)
-  {
-    
-    $C = new Criteria();
-       
-    $C = self::CriteriaCercaEntitatsHospici( $CER , $C );
-                                
-    //Ara fem la select dels cursos amb el pager        
-    $pager = new sfPropelPager('Sites', 20);
-    $pager->setCriteria($C);
-    $pager->setPage($CER['P']);
-    $pager->init();    	                
-       
-    return $pager;
-    
-  }
+    }
 
-
-
-
-
-    
 } // SitesPeer

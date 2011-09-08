@@ -31,12 +31,13 @@ class EntradesReservaPeer extends BaseEntradesReservaPeer {
     }
 
 	static public function initialize( $idER = 0 )
-	{		
-		$OER = EntradesPeer::retrieveByPK($idER);		
+	{				
+        $OER = self::retrieveByPK($idER);	
+        
 		if(!($OER instanceof EntradesReserva)):
 			$OER = new EntradesReserva();
 			$OER->setUsuariid(null);
-			$OER->setHorarisid(null);
+			$OER->setActivitatsid(null);
 			$OER->setQuantes(0);
 			$OER->setData(date('Y-m-d H:i',time()));						
 		endif; 		
@@ -44,6 +45,22 @@ class EntradesReservaPeer extends BaseEntradesReservaPeer {
         return new EntradesReservaForm($OER);
 	}
 
+    static public function h_getEntradesUsuariArray($idU){
+        $RET = array();
+        
+        foreach(self::getEntradesUsuari($idU) as $OE):
+            $RET[$OE->getActivitatsid()] = $OE->getEntradesReservaId();
+        endforeach;
+        
+        return $RET;
+    }
+
+
+    /**
+     * Retorna les entrades guardades per a un usuari en concret.
+     * @param $idU Usuariid()
+     * @return Llistat d'entrades
+     * */
     static public function getEntradesUsuari($idU){
         $C = new Criteria();
         $C = self::getCriteriaActiu($C);
@@ -53,13 +70,54 @@ class EntradesReservaPeer extends BaseEntradesReservaPeer {
         return self::doSelect($C);        
     }
 
+    /**
+     * Retorna les entrades guardades per a una activitat en concret.
+     * @param $idA Activitatid()
+     * @return Llistat d'entrades
+     * */
+    static public function getEntradesActivitat($idA){
+        $C = new Criteria();
+        $C = self::getCriteriaActiu($C);
+        
+        $C->add(self::ACTIVITATS_ID, $idA);
+        $C->addDescendingOrderByColumn(self::ENTRADES_RESERVA_ID);
+        return self::doSelect($C);        
+    }
+
+
+    /**
+     * Diu quantes entrades s'han confirmat d'una activitat.
+     * @param $idA Activitat id     
+     * @return Int Quantes entrades s'han trobat.
+     * */
+    static public function countEntradesActivitatConf($idA){
+        $RET = 0;
+        
+        $C = new Criteria();
+        $C = self::getCriteriaActiu($C);
+        $C->add( self::ACTIVITATS_ID , $idA );
+        $C->add( self::ESTAT , self::CONFIRMADA);
+        foreach(self::doSelect($C) as $OE):            
+            $RET += $OE->getQuantes();
+        endforeach;
+        
+        return $RET;
+    }
+
+
+    /**
+     * L'usuari ja ha comprat entrades per aquest dia en concret.
+     * @param $idU Usuari ID
+     * @param $idH Horari ID
+     * @return Int Quantes entrades s'han trobat.
+     * */
     static public function ExisteixenEntradesComprades($idU,$idH)
     {
         $C = new Criteria();
         $C = self::getCriteriaActiu($C);
         
         $C->add(self::USUARI_ID, $idU);
-        $C->add(self::HORARIS_ID, $idH);
+        $C->add(self::ACTIVITATS_ID, $idH);
         $C->add(self::ESTAT,EntradesReservaPeer::ANULADA, CRITERIA::NOT_EQUAL);
         return (self::doCount($C)>0);        
     }

@@ -16,7 +16,7 @@
     <div style="padding: 10px;">
     	<div class="taula_dades">
     
-        <form action="<?php echo url_for('@hospici_cercador_entitats')?>" method="POST">
+        <form action="<?php echo url_for('@hospici_cercador_entitats')?>" method="post">
     
             <div style="float: left; width: 600px;">
                 <div style="margin: 5px;">

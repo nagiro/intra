@@ -19,11 +19,11 @@
 				<div style="height:30px;">&nbsp;</div>				
 										
 				<div style="width:150px; float:left">                    
-					<div><img width="150px" src="<?php echo $imatge ?>" style="vertical-align:middle" /></div>
+					<div><img src="<?php echo $imatge ?>" style="width:150px; vertical-align:middle" /></div>
                         
 						<div style="margin-top:20px; font-size:10px">
                             <div class="requadre_mini" style="background-color:#A2844A;">
-                                <a href="javascript:history.back()">< Torna al llistat d'espais</a>
+                                <a href="javascript:history.back()">&lt; Torna al llistat d'espais</a>
                             </div>
                         </div>
                                                                         
@@ -37,7 +37,7 @@
                         <?php else: ?>
                             <div style="margin-top: 5px">
                                 <div class="requadre_mini" style="background-color: #FFCC00;">                
-                                    <a class="auth" url="<?php echo $url ?>" href="#">Autentifica't i reserva</a>
+                                    <a class="auth" href="<?php echo $url ?>">Autentifica't i reserva</a>
                                 </div>
                             </div>
                         <?php endif; ?>                        
@@ -47,7 +47,7 @@
                     </div>
 				</div>
                                 
-				<div style="width:330px; float:left;">
+				<div style="width:400px; float:left;">
 					<div style="padding-left:10px; font-size:10px;">
                         <?php
                             $desc = $ESPAI->getDescripcio();   
@@ -72,7 +72,7 @@
                         $urlPost = url_for("@hospici_espai_detall_canvi_mes?idE={$ESPAI->getEspaiid()}&titol={$ESPAI->getNomForUrl()}&data=$timepost");;
                                                 
                         echo '<div style="width:300px;">
-                                <a style="font-size:10px; color:gray; text-decoration:none; float:left;" href="'.$urlAnt.'">< Mes anterior</a><a style="float:right;font-size:10px; color:gray; text-decoration:none;" href="'.$urlPost.'">Mes següent ></a></div>';
+                                <a style="font-size:10px; color:gray; text-decoration:none; float:left;" href="'.$urlAnt.'">&lt; Mes anterior</a><a style="float:right;font-size:10px; color:gray; text-decoration:none;" href="'.$urlPost.'">Mes següent &gt;</a></div>';
                         echo    '<div style="clear:both;float:left">'.this_calendari_mes($DATA,$OCUPACIO).'</div>';                                                        
                         $data1 = mktime(0,0,0,date('m',$DATA)+1,1,date('Y',$DATA));                        
                         echo    '<div style="float:left; margin-left:30px;">'.this_calendari_mes($data1,$OCUPACIO2).'</div>';
@@ -119,14 +119,14 @@
                 $span = '<span>Ocupat les següents hores:';
                 foreach($OCUPACIO[$year.'-'.$month.'-'.$d] as $e => $A_H):
                     foreach($A_H as $hi => $hf):
-                        if($hf > $hi){ $span .= '<br />de '.$hi.' a '.$hf; $class = 'selec'; } 
+                        if($hf > $hi){ $span .= '<br />de '.$hi.' a '.$hf; $class = ' class="selec" '; } 
                     endforeach;
                 endforeach;
                 $span .= '</span>';
             }
             //Si el dia és dilluns, fem una nova línia                                              
-            if(date('w',$t) == 1) $RET .= '<div style="display:block; float:left; width: 20px; text-align:center; clear:both; "><a class="tt2" href="#"><div class="'.$class.'">'.$dia.'</div>'.$span.'</a></div>';
-            else $RET .= '<div style="display:block; float:left; width: 20px; text-align:center; "><a class="tt2" href="#"><div class="'.$class.'">'.$dia.'</div>'.$span.'</a></div>';
+            if(date('w',$t) == 1) $RET .= '<div style="display:block; float:left; width: 20px; text-align:center; clear:both; "><a class="tt2" href="#"><div '.$class.'>'.$dia.'</div>'.$span.'</a></div>';
+            else $RET .= '<div style="display:block; float:left; width: 20px; text-align:center; "><a class="tt2" href="#"><div '.$class.'>'.$dia.'</div>'.$span.'</a></div>';
         }
         
         return $RET;

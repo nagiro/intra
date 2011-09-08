@@ -1,12 +1,4 @@
-<link rel="stylesheet" type="text/css" media="screen" href="/js/lightbox/css/jquery.lightbox-0.5.css" />
-<script type="text/javascript" src="/js/lightbox/js/jquery.lightbox-0.5.js"></script>
-
-<style>    
-    .pager { font-size:16px;  }
-    .pager a { font-size:16px; color:inherit; text-decoration:inherit;  }
-    .pagerE { margin-top:10px; margin-bottom:30px; text-align:center;  }
-</style>
-<script>
+<script  type="text/javascript">
 
     $(document).ready(function(){
    	    $('a.lightbox').lightBox(); 
@@ -33,11 +25,6 @@
             foreach($LLISTAT_ENTITATS->getResults() as $OE):                                
                 echo '<div style="margin-top:10px; margin-bottom:10px;">';
                     
-                    //Si la categoria és diferent a l'anterior la mostrem
-/*                    if($cat_ant <> $OE->getSiteId()):
-                        echo '<div class="h_llistat_activitat_tipus_titol">'.$OE->getSiteName().'</div>';
-                    endif;
-*/                    
                     $url = $OE->getWebUrl();
                     if(empty($url)) $url = "";        
                     else $url = ' | <a style=" font-size:12px;" href="'.url_for($url,true).'">WEB</a>';
@@ -49,7 +36,7 @@
                                     <img src="'.$logo.'" height="30" alt="" />
                                 </div>
                                 <div style="float:left; font-size:16px; padding-left:10px;">
-                                    '.$OE->getNom().'<br/>
+                                    '.$OE->getNom().'<br />
                                     <div style="font-size:12px; color:gray;">
                                     <a href="'.url_for('@hospici_cercador_entitats_activitats?SITE='.$OE->getSiteId()).'">Activitats</a> | 
                                     <a href="'.url_for('@hospici_cercador_entitats_espais?SITE='.$OE->getSiteId()).'">Espais</a> |

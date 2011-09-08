@@ -46,7 +46,7 @@
 </div>
 
 <div style="margin-bottom: 50px;">
-    <form id="new_user" action="<?php echo url_for('@hospici_usuaris_alta') ?>" method="POST">
+    <form id="new_user" action="<?php echo url_for('@hospici_usuaris_alta') ?>" method="post">
         <table class="taula_dades">
             <?php echo $FUSUARI; ?>
         <tr><td></td><td style="padding-top:20px; text-align: right;"><input type="submit" value="Dona'm d'alta" /></td></tr>        
@@ -62,7 +62,7 @@
 <div style="margin-bottom: 50px;">
     <div style="padding:10px; margin-top: 20px; background-color:#FBFFD5;">
         El seu usuari ha estat creat correctament. <br />
-        Si us plau, accedeixi a l'Hospici amb les dades entrades. <br />
+        Per poder-lo començar a utilitzar, si us plau, cliqui <?php echo link_to('aquí','@hospici_usuaris'); ?> o bé entri amb les seves dades al portal. <br />
         En cas que no pugui accedir, si us plau envii un correu a informatica@casadecultura.org.<br />
         Moltes gràcies. 
     </div>

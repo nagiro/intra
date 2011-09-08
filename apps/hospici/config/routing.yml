@@ -17,6 +17,14 @@ hospici_usuaris_alta:
 hospici_usuaris_remember:
   url:  /recorda
   param: { module: web, action:remember }    
+
+hospici_cercador_formularis:
+  url: /cercador_formularis
+  param: { module: web, action:forms, accio:cerca_formularis } 
+
+hospici_formularis_detall:
+  url: /formularis/:idF/:titol
+  param: { module: web, action:forms, accio:detall_formularis }
   
 hospici_cercador_espais:
   url: /cercador_espais
@@ -54,10 +62,6 @@ hospici_anula_entrada:
   url: /usuaris/anula_entrada/:idER
   param: { module: web, action:usuaris, accio:anula_entrada  }
   
-hospici_nova_matricula:
-  url: /usuaris/matricula/:idC
-  param: { module: web, action:usuaris, accio:nova_matricula  }
-
 hospici_espai_detall:
   url: /espais/detall/:idE/:titol
   param: { module: web, action:espais, accio:detall_espai }
@@ -78,6 +82,10 @@ hospici_nova_reserva_espai_save:
   url: /usuaris/espais/reserva/guarda
   param: { module: web, action:usuaris, accio:save_nova_reserva }
 
+hospici_reserva_espai_condicions:
+  url: /usuaris/espais/reserva/condicions
+  param: { module: web, action: usuaris, accio: condicions }
+
 hospici_llista_reserves:
   url: /usuaris/espais
   param: { module: web, action:usuaris, accio:llista_reserves  }
@@ -97,7 +105,38 @@ hospici_cercador_entitats_espais:
 hospici_cercador_entitats_cursos:
   url: /cursos_entitat/:SITE
   param: { module: web, action:cursos, accio:cerca_cursos }
+
+hospici_nova_matricula:
+  url: /usuaris/matricula/nova
+  param: { module: web, action:usuaris, accio:nova_matricula }
+
+hospici_matricula_TPV_OK:
+  url: /usuaris/matricula/ok
+  param: { module: web, action:usuaris, accio:matricula_OK }
   
+hospici_matricula_TPV_KO:
+  url: /usuaris/matricula/ko
+  param: { module: web, action:usuaris, accio:matricula_KO }
+
+hospici_matricula_TPV_GET:
+  url: /usuaris/matricula/get
+  param: { module: web, action:usuaris, accio:GET_TPV }
+  
+# Aquest pels formularis de l'hospici
+hospici_nou_formulari:
+  url: /usuaris/formularis/alta
+  param: { module: web, action: usuaris, accio: alta_formulari }
+  
+hospici_llista_formularis:
+  url: /usuaris/formularis
+  param: { module: web, action: usuaris, accio: llista_formularis }
+   
+# Aquest és pels mails
+hospici_formulari_get:
+  url: /formularis/:PAR
+  param: { module: web, action: formularis, accio: GET }
+  
+
 #####################################################
 # DEFAULT                                           #
 #####################################################

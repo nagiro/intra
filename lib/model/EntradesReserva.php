@@ -35,11 +35,8 @@ class EntradesReserva extends BaseEntradesReserva {
         $this->save();
     }
 
-    public function getHorari(){
-        $C = new Criteria();
-        $C = HorarisPeer::getCriteriaActiu($C,null);
-        $C->add(HorarisPeer::HORARISID,$this->getHorarisid());        
-        return HorarisPeer::doSelectOne($C);
+    public function getActivitat(){                
+        return ActivitatsPeer::retrieveByPK($this->getActivitatsid());                
     }
 
 } // EntradesReserva

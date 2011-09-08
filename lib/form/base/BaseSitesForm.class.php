@@ -20,6 +20,8 @@ abstract class BaseSitesForm extends BaseFormPropel
       'poble'              => new sfWidgetFormInputText(),
       'logoUrl'            => new sfWidgetFormInputText(),
       'webUrl'             => new sfWidgetFormInputText(),
+      'telefon'            => new sfWidgetFormInputText(),
+      'email'              => new sfWidgetFormInputText(),
       'usuaris_sites_list' => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Usuaris')),
     ));
 
@@ -30,6 +32,8 @@ abstract class BaseSitesForm extends BaseFormPropel
       'poble'              => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'logoUrl'            => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'webUrl'             => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'telefon'            => new sfValidatorString(array('max_length' => 30, 'required' => false)),
+      'email'              => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'usuaris_sites_list' => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Usuaris', 'required' => false)),
     ));
 

@@ -20,6 +20,11 @@ require 'lib/model/om/BaseUsuarisSitesPeer.php';
  */
 class UsuarisSitesPeer extends BaseUsuarisSitesPeer {
     
+    /**
+     * Cerca el primer Site d'un usuari. 
+     * @param $U Usuari ID     
+     * @return Int Site ID
+     * */                    
     static public function getFirstSite($U)
     {
         $C = new Criteria();
@@ -35,6 +40,11 @@ class UsuarisSitesPeer extends BaseUsuarisSitesPeer {
                 
     }
 
+    /**
+     * Retorna la Select dels sites d'un usuari. 
+     * @param $idU Usuari ID     
+     * @return Select 
+     * */                    
     static public function getUserSites($idU)
     {
         $C = new Criteria();
@@ -43,6 +53,11 @@ class UsuarisSitesPeer extends BaseUsuarisSitesPeer {
         return self::doSelect($C);             
     }
 
+    /**
+     * Retorna els sites que hi ha segons un usuari.      
+     * @param $idU Usuari ID
+     * @return Array('Site ID'=>'Site Name')
+     * */                    
     static public function getSitesArray($idU)
     {        
         $C = new Criteria();
@@ -58,12 +73,24 @@ class UsuarisSitesPeer extends BaseUsuarisSitesPeer {
         return $RET;        
     }
 
+    /**
+     * Criteria que marca només els actius.      
+     * @param $C Criteria()
+     * @return Criteria()
+     * */                    
     static public function getCriteriaActiu( $C )
     {
       $C->add(self::ACTIU,true);      
       return $C;
     }    
 
+    /**
+     * Inicialitzem un formulari de UsuariSite      
+     * @param $idU Usuari ID
+     * @param $idS Site ID
+     * @param $new Es mostra "Mostra l'opció NEW SITE al formulari"
+     * @return UsuarisSitesForm()
+     * */                    
   	static public function initialize( $idU , $idS , $new = false )
 	{	   
 	   
@@ -81,6 +108,12 @@ class UsuarisSitesPeer extends BaseUsuarisSitesPeer {
                 
 	}        
 
+    /**
+     * A partir d'un usuari trobem els sites als que està relacionat.      
+     * @param $idU Usuari ID     
+     * @param $all Mostra tots els Sites, també els que no setan relacionats.
+     * @return UsuarisSitesForm()
+     * */                    
     static public function getSites($idU , $all = false)
     {
         $RET = array();
@@ -99,6 +132,12 @@ class UsuarisSitesPeer extends BaseUsuarisSitesPeer {
         return $RET;        
     }
 
+
+    /**
+     * A partir d'un DNI retorna els sites i els nivells.      
+     * @param $DNI Usuari DNI          
+     * @return Array('Site ID'=>'Nivell ID')
+     * */                    
     static public function searchDNI($DNI)
     {
         $RET = array();
@@ -115,6 +154,12 @@ class UsuarisSitesPeer extends BaseUsuarisSitesPeer {
         return array();        
     }
 
+    /**
+     * A partir d'un SITE retorna els usuaris vinculats.       
+     * @param $idS Site ID          
+     * @param $nivell Segons el nivell, mostrarà els usuaris
+     * @return Array('Usuari ID'=>'Usuri Nom')
+     * */                    
     static public function getSitesUsersSelect($idS, $nivell)
     {
         $RET = array();
@@ -126,6 +171,13 @@ class UsuarisSitesPeer extends BaseUsuarisSitesPeer {
         return $RET;
     }
 
+
+    /**
+     * Retorna el Select amb els usuaris d'un Site       
+     * @param $idS Site ID          
+     * @param $nivell Segons el nivell, mostrarà els usuaris
+     * @return Select
+     * */                    
     static public function getSitesUsers($idS,$nivell = NivellsPeer::ADMIN)
     {
         $C = new Criteria();
@@ -137,6 +189,11 @@ class UsuarisSitesPeer extends BaseUsuarisSitesPeer {
         return self::doSelect($C);
     }
 
+    /**
+     * A partir d'un Site retorna el primer usuari. (DEPRECATED)       
+     * @param $idS Site ID               
+     * @return Select
+     * */                    
     static public function getFirsSiteUser($idS)
     {
         $C = new Criteria();

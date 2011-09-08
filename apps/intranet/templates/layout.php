@@ -36,11 +36,11 @@
   <body class="CCG">
   <center>  	
     
-    <TABLE class="TAULA">
+    <table class="TAULA">
     <!-- <TR><TD colspan="4" class="DEGRADAT_SUPERIOR"><?php echo image_tag('intranet/DifuminatSuperior.png', array()); ?></TD></TR>  -->   
-    <TR>
-    	<TD class="CAPCALERA" style="width: 256px"><?php echo link_to(image_tag('intranet/logoCCG.png', array('id'=>'logo')),'web/index?accio=no'); ?></TD>    	
-    	<TD class="CAPCALERA" style="padding-left:120px;" colspan="3" >
+    <tr>
+    	<td class="CAPCALERA" style="width: 256px"><?php echo link_to(image_tag('intranet/logoCCG.png', array('id'=>'logo')),'web/index?accio=no'); ?></td>    	
+    	<td class="CAPCALERA" style="padding-left:120px;" colspan="3" >
 		<div style="vertical-align:bottom; position:relative; width:768px;">
 			<div class="PESTANYA_SUPERIOR">
 				<a target="_NEW" href="http://www.casadecultura.org/giroscopi">
@@ -48,7 +48,7 @@
 				</a>
 			</div>
 			<div class="PESTANYA_SUPERIOR">
-				<a target="_NEW" href="#">
+				<a target="_NEW" href="http://www.hospici.cat">
 					<img src="<?php echo url_for(sfConfig::get('sf_webrooturl').'images/menu_04.png'); ?>" /> 
 				</a>
 			</div>
@@ -63,7 +63,8 @@
 				</a>
 			</div>
 			<div class="PESTANYA_SUPERIOR">
-				<a href="<?php echo url_for('web/cursos'); ?>">
+				<!-- <a target="_NEW" href="http://www.hospici.cat/cursos_entitat/1"> -->
+                <a href="<?php echo url_for('web/cursos'); ?>">
 					<img src="<?php echo url_for(sfConfig::get('sf_webrooturl').'images/menu_06.png'); ?>" /> 
 				</a>
 			</div>

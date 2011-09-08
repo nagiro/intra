@@ -29,7 +29,7 @@ class MatriculesPeer extends BaseMatriculesPeer
    const PAGAMENT_METALIC         = '21';
    const PAGAMENT_TARGETA         = '20';
    const PAGAMENT_TELEFON         = '23';
-   const PAGAMENT_TRANSFERENCIA   = '24';
+   const PAGAMENT_TRANSFERENCIA   = '24';   
 
     static public function criteriaMatriculat($C)
     {
@@ -53,47 +53,65 @@ class MatriculesPeer extends BaseMatriculesPeer
     }
 
     /**
-     * Funció que carrega les dades i guarda una matrícula
+     * Funció que carrega les dades i guarda una matrícula. També li posa un estat i un preu segons el que s'ha escollit.
      * @param $idU Identificador d'usuari
      * @param $idC Identificador de curs
      * @param $idM Identificador de matrícula si volem reutilitzar-la
      * @param $comment Comentari a guardar
      * @return new Matricules() o $error ( Codi d'error ) 
      * */
-    static public function saveNewMatricula($idU,$idC,$idM = 0,$comment = "")
+    static public function saveNewMatricula( $idU , $idC , $idM = 0 , $comment = "" , $Descompte = self::REDUCCIO_CAP )
     {        
         //Carreguem les dades de l'usuari
         $OU = UsuarisPeer::retrieveByPK($idU);
         $OC = CursosPeer::retrieveByPK($idC);
                 
         //Si tenim un codi de matrícula, la carreguem.
-        $OM = self::retrieveByPK($idM);                
-        if(!($OM instanceof Matricules)) $OM = new Matricules();                        
+        $OM = self::retrieveByPK($idM);
+        if(!($OM instanceof Matricules)) $OM = new Matricules();
                                                         
         //Si ho hem carregat tot correctament, seguim
-        if($OU instanceof Usuaris && $OC instanceof Cursos && $OM instanceof Matricules):
+        if($OU instanceof Usuaris && $OC instanceof Cursos && $OM instanceof Matricules)
+        {
 
             //Comprovem si la matrícula ja s'ha fet.            
-            if(self::hasMatriculaUsuari($idU,$idC,$OC->getSiteid()) > 0):
+            if( self::hasMatriculaUsuari( $idU , $idC , $OC->getSiteid() ) > 0 )
+            {
                 $OM = 1; //Retorna aquest error quan ja hi ha una matrícula del mateix curs per aquesta persona
-            else: 
-            
+            }
+            else
+            {
                 //Mirem si hi ha places i marquem l'estat 
                 $PLACES = $OC->getPlacesArray();
-                if($PLACES['OCUPADES'] < $PLACES['TOTAL']):
-                    $OM->setPagat(0);
-                    $OM->setEstat(self::ACCEPTAT_NO_PAGAT);
-                else: 
+                if($PLACES['OCUPADES'] < $PLACES['TOTAL'])
+                {                                        
+                    //Si el pagament és amb targeta marquem l'estat EN_PROCES
+                    if($OC->getIsEntrada() == CursosPeer::HOSPICI_RESERVA_TARGETA){
+                        $OM->setPagat(0);
+                        $OM->setEstat(self::EN_PROCES);
+                    }                                                                    
+                    else
+                    {
+                        $OM->setPagat(0);
+                        $OM->setEstat(self::ACCEPTAT_NO_PAGAT);
+                    }                                                                                 
+                }
+                else
+                {                     
                     $OM->setPagat(0);
                     $OM->setEstat(self::EN_ESPERA);
-                endif;        
+                }        
     
                 $OM->setUsuarisUsuariid($OU->getUsuariid());
                 $OM->setCursosIdcursos($OC->getIdCursos());            
                 $OM->setComentari($comment);
                 $OM->setDatainscripcio(date('Y-m-d h:i',time()));            
-                $OM->setTreduccio(self::REDUCCIO_CAP);
-                $OM->setTpagament(self::PAGAMENT_METALIC);
+                $OM->setTreduccio($Descompte);
+                
+                //Si el pagament és havent marcat Hospici només reserva... posem pagament POSTERIOR. 
+                if($OC->getIsEntrada() == CursosPeer::HOSPICI_RESERVA)
+                     $OM->setTpagament(self::PAGAMENT_METALIC); //Afegir pagament posterior
+                else $OM->setTpagament(self::PAGAMENT_TARGETA);                
                 $OM->setSiteId($OC->getSiteid());
                 $OM->setActiu(true);
                 $OM->save();   
@@ -101,10 +119,12 @@ class MatriculesPeer extends BaseMatriculesPeer
                 //Un cop feta la matrícula, hem de donar visibilitat a l'usuari
                 UsuarisPeer::addSite($OU->getUsuariid(),$OC->getSiteid());
                 
-            endif;
-        else: 
+            }
+        }
+        else
+        { 
             $OM = 0; //Retorna aquest error quan hi ha alguna dada inicial malament o objecte que no existeix        
-        endif;
+        }
                                
         return $OM;
                                 
@@ -375,13 +395,11 @@ class MatriculesPeer extends BaseMatriculesPeer
   * Bàsicament, no hi ha filtre per site.  
   **/
   static function h_getMatriculesUsuari( $idU ){
-
+    
     $C = new Criteria();    
     $C = self::h_getCriteriaActiu( $C );
-    $C = self::criteriaMatriculat($C);
-    
+    $C = self::criteriaMatriculat( $C );
     $C->add(MatriculesPeer::USUARIS_USUARIID , $idU);            
-    $C->add(MatriculesPeer::ESTAT, self::EN_PROCES, CRITERIA::NOT_EQUAL);
     $C->addDescendingOrderByColumn(MatriculesPeer::DATAINSCRIPCIO);
 
     return MatriculesPeer::doSelect($C);
@@ -415,6 +433,30 @@ class MatriculesPeer extends BaseMatriculesPeer
       $C->add(MatriculesPeer::ESTAT,MatriculesPeer::EN_PROCES, CRITERIA::NOT_EQUAL);
   	    	  	
       return MatriculesPeer::doSelect($C);
+  }
+ 
+  /**
+   * Funció que amb una resposta del TPV la valida
+   * @param $Ds_Merchant_Amount
+   * @param $Ds_Merchant_Order
+   * @param $Ds_Merchant_MerchantCode
+   * @param $Ds_Merchant_Currency
+   * @param $MerchantSignature
+   * @param $password
+   * @return boolean  
+   * */
+  static public function valTPV($Ds_Merchant_Amount,$Ds_Merchant_Order,$Ds_Merchant_MerchantCode,$Ds_Merchant_Currency,$Ds_Response,$MerchantSignature,$password)
+  {
+       
+     $message =  $Ds_Merchant_Amount.
+                 $Ds_Merchant_Order.
+                 $Ds_Merchant_MerchantCode.
+                 $Ds_Merchant_Currency.
+                 $Ds_Response.
+                 $password;
+
+     return ($MerchantSignature == strtoupper(sha1($message)));
+    
   }
   
   
@@ -454,7 +496,7 @@ class MatriculesPeer extends BaseMatriculesPeer
                  $TPV['Ds_Merchant_Order'].
                  $TPV['Ds_Merchant_MerchantCode'].
                  $TPV['Ds_Merchant_Currency'].
-                 'perritopequenitonegr'; 
+                 OptionsPeer::getString('TPV_PASSWORD',$idS);               
                        
      $TPV['Ds_Merchant_MerchantSignature'] = strtoupper(sha1($message));
      
@@ -516,15 +558,19 @@ class MatriculesPeer extends BaseMatriculesPeer
   {
   	
   	$Nom = $OM->getUsuaris()->getNomComplet();
-  	$NomCurs = $OM->getCursos()->getCodi().' | '.$OM->getCursos()->getTitolcurs();
-  	$dataInici = $OM->getCursos()->getDatainici('d-m-Y');        
+  	$NomCurs = $OM->getCursos()->getCodi().' | '.$OM->getCursos()->getTitolcurs();   
+  	$dataInici = $OM->getCursos()->getDatainici('d-m-Y');
+    $OS = SitesPeer::retrieveByPK($OM->getSiteId());
     
-    $TEXT = OptionsPeer::getString( 'MAIL_MAT_OK' , $idS );    
-    $TEXT = str_replace( '{{LOGO_URL}}', OptionsPeer::getString( 'LOGO_URL' , $idS ) , $TEXT );    
-    $TEXT = str_replace( '{{URL_LOGIN}}', OptionsPeer::getString( 'URL_LOGIN' , $idS ) , $TEXT );
+    $TEXT = OptionsPeer::getString( 'BODY_MAIL_MATRICULA' , $idS );            
     $TEXT = str_replace( '{{NOM}}' , $Nom , $TEXT );
-    $TEXT = str_replace( '{{NOM_CURS}}' , $NomCurs , $TEXT );
-    $TEXT = str_replace( '{{DATA_INICI}}' , $dataInici , $TEXT );
+    $TEXT = str_replace( '{{CURS}}' , $NomCurs , $TEXT );
+    $TEXT = str_replace( '{{ENTITAT}}' , $OS->getNom() , $TEXT );
+    $TEXT = str_replace( '{{TEL_ENTITAT}}' , $OS->getTelefon() , $TEXT );
+    $TEXT = str_replace( '{{MAIL_ENTITAT}}' , $OS->getEmail() , $TEXT );
+    $TEXT = str_replace( '{{TEL_ADMIN}}' , '972.20.20.13' , $TEXT );
+    $TEXT = str_replace( '{{MAIL_ADMIN}}' , OptionsPeer::getString('MAIL_ADMIN',$idS) , $TEXT );            
+    $TEXT = str_replace( '{{DIA_CLASSE}}' , $dataInici , $TEXT );
       	
    	return $TEXT; 
   	

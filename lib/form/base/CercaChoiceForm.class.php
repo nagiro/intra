@@ -20,7 +20,8 @@ class CercaChoiceForm extends BaseForm
   
   public function setChoice(array $Choice)
   {
-  	$this['text']->getWidget()->setOption('choices',$Choice);  	  
+  	$this['text']->getWidget()->setOption('choices',$Choice);
+    $this->setDefault('text',-1);  	  
   }
   
 }

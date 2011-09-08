@@ -1,12 +1,5 @@
-<link rel="stylesheet" type="text/css" media="screen" href="/js/lightbox/css/jquery.lightbox-0.5.css" />
 <script type="text/javascript" src="/js/lightbox/js/jquery.lightbox-0.5.js"></script>
-
-<style>    
-    .pager { font-size:16px;  }
-    .pager a { font-size:16px; color:inherit; text-decoration:inherit;  }
-    .pagerE { margin-top:10px; margin-bottom:30px; text-align:center;  }
-</style>
-<script>
+<script type="text/javascript">
 
     $(document).ready(function(){
    	    $('a.lightbox').lightBox(); 
@@ -55,7 +48,7 @@
                     {
                         echo '  <div style="float:right">
                                     <div class="requadre_mini" style="color:white; background-color:#FFCC00;">
-                                        <a class="auth" url="'.$url.'" name="link_compra" style="text-decoration:none;" href="#">Reservar espai</a>
+                                        <a class="auth" href="'.$url.'" name="link_compra" style="text-decoration:none;">Reservar espai</a>
                                     </div>
                                 </div>';                                            
                     }                  
@@ -77,7 +70,11 @@
             endforeach; 
         endif;
 		
-        echo '<div class="pagerE">'.setPager($LLISTAT_ESPAIS,'@hospici_cercador_espais').'</div>';                
+        if($LLISTAT_ESPAIS->getLastPage() > $LLISTAT_ESPAIS->getPage()):
+            echo '<div class="pagerE">'.setPagerN($LLISTAT_ESPAIS,'@hospici_cercador_espais',false).'</div>';
+        else:      
+            echo '<div class="pagerE">'.setPagerN($LLISTAT_ESPAIS,'@hospici_cercador_espais',true).'</div>';
+        endif;                
     ?>
                         
     </div>

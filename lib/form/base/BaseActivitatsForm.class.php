@@ -40,6 +40,7 @@ abstract class BaseActivitatsForm extends BaseFormPropel
       'site_id'                         => new sfWidgetFormInputText(),
       'actiu'                           => new sfWidgetFormInputText(),
       'isEntrada'                       => new sfWidgetFormInputText(),
+      'Places'                          => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -69,6 +70,7 @@ abstract class BaseActivitatsForm extends BaseFormPropel
       'site_id'                         => new sfValidatorInteger(array('min' => -128, 'max' => 127, 'required' => false)),
       'actiu'                           => new sfValidatorInteger(array('min' => -128, 'max' => 127)),
       'isEntrada'                       => new sfValidatorInteger(array('min' => -128, 'max' => 127)),
+      'Places'                          => new sfValidatorInteger(array('min' => -32768, 'max' => 32767, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('activitats[%s]');

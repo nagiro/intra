@@ -5,7 +5,7 @@
  *
  * @package    intranet
  * @subpackage form
- * @author     Albert Joh� i Mart�
+ * @author     Albert Johé i Martí
  * @version    SVN: $Id: sfPropelFormTemplate.php 10377 2008-07-21 07:10:32Z dwhittle $
  */
 class UsuarisForm extends sfFormPropel
@@ -13,7 +13,7 @@ class UsuarisForm extends sfFormPropel
   public function setup()
   {
     
-    //Carrego el nivell de l'usuari a la taula,. Si l'estic veient per força n'he de tenir.
+    //Carrego el nivell de l'usuari a la taula,. Si l'estic veient per forÃ§a n'he de tenir.
     $OUS = UsuarisSitesPeer::initialize($this->getObject()->getUsuariId(),$this->getObject()->getSiteId(),false)->getObject();
     if($OUS->isNew()): $NIVELL = NivellsPeer::REGISTRAT;
     else: $NIVELL = $OUS->getNivellId();
@@ -35,7 +35,7 @@ class UsuarisForm extends sfFormPropel
       'Telefon'           => new sfWidgetFormInputText(array(),array('style'=>'width:200px')),
       'Mobil'             => new sfWidgetFormInputText(array(),array('style'=>'width:200px')),
       'Entitat'           => new sfWidgetFormInputText(array(),array('style'=>'width:200px')),
-      'Habilitat'         => new sfWidgetFormChoice(array('choices'=>array(1=>'Sí',0=>'No')),array()),
+      'Habilitat'         => new sfWidgetFormChoice(array('choices'=>array(1=>'SÃ­',0=>'No')),array()),
       'Actualitzacio'     => new sfWidgetFormInputHidden(array(),array()),
       'site_id'           => new sfWidgetFormInputHidden(array(),array()),
     ));
@@ -99,13 +99,13 @@ class UsuarisForm extends sfFormPropel
   public function save($conn = null)
   {
     
-    //Les dades de l'usuari que es mantenen són sempre les noves. Guardem la data d'actualització i avall.'
+    //Les dades de l'usuari que es mantenen sÃ³n sempre les noves. Guardem la data d'actualitzaciÃ³ i avall.'
     $this->updateObject();
     $OU = $this->getObject();
-    $OU->setActualitzacio(date('Y-m-d',time())); //Guardem la data d'actualització.'
+    $OU->setActualitzacio(date('Y-m-d',time())); //Guardem la data d'actualitzaciÃ³.'
     $OU->save();                    
         
-    //Mirem si l'usuari està relacionat amb el SITE
+    //Mirem si l'usuari estÃ  relacionat amb el SITE
     $OUS = UsuarisSitesPeer::initialize($OU->getUsuariId() , $OU->getSiteId())->getObject();    
     $OUS->setNivellid($this->getValue('Nivells_idNivells'));
     $OUS->save();
@@ -117,17 +117,17 @@ class UsuarisForm extends sfFormPropel
   	  	    
   	$DNI = trim($valor);
   	
-  	if(self::valida_nif_cif_nie($DNI) <= 0) throw new sfValidatorError($A, "Error: El DNI és incorrecte.<br /> Recorda escriure'l amb el format 99999999A.");
+  	if(self::valida_nif_cif_nie($DNI) <= 0) throw new sfValidatorError($A, "Error: El DNI Ã©s incorrecte.<br /> Recorda escriure'l amb el format 99999999A.");
   	
   	$OUsuari = UsuarisPeer::cercaDNI($DNI);    
-  	if($OUsuari instanceof Usuaris && $OUsuari->getUsuariid() != $arguments['idU']) throw new sfValidatorError($A, "Error: El DNI ja existeix. Si us plau envii un missatge a informatica@casadecultura.org per a més informació. ");
+  	if($OUsuari instanceof Usuaris && $OUsuari->getUsuariid() != $arguments['idU']) throw new sfValidatorError($A, "Error: El DNI ja existeix. Si us plau envii un missatge a informatica@casadecultura.org per a mÃ©s informaciÃ³. ");
   	return $valor;
   	  	
   } 
   
   
   static public function valida_nif_cif_nie($cif) {
-	//Copyright ©2005-2008 David Vidal Serra. Bajo licencia GNU GPL.
+	//Copyright Â©2005-2008 David Vidal Serra. Bajo licencia GNU GPL.
 	//Este software viene SIN NINGUN TIPO DE GARANTIA; para saber mas detalles
 	//puede consultar la licencia en http://www.gnu.org/licenses/gpl.txt
 	//Esto es software libre, y puede ser usado y redistribuirdo de acuerdo

@@ -57,6 +57,13 @@ DIV.text { font-size:11px; }
 .FORMULARI .error_list { color: red; font-size:16px; font-weight:bold;  }
 .FORMULARI .missat_ok { background-color:#FFF5C1; height:30px; text-align:left; padding:5px; }
 .FORMULARI .missat_ko { background-color:red; color:white; height:30px; text-align:left; }
+
+/****** Disseny taula dades amb div ****************/
+.DADIV { }
+.DADIV .col { float:left; padding:5px; border-bottom: 1px solid #CCCCCC; }
+.DADIV .titol { background-color:#CCCCCC; float:left; font-size:11px;  border:0px; border-bottom: 2px solid #CCC; }
+.DADIV A { font-size:11px; text-decoration:none; color:black; font-weight:bold; }
+
 .DADES { width:100%; border-collapse: collapse; font-size:11px; }
 
 .DADES .LINIA { border-bottom:1px solid #CCCCCC; padding-top:3px; padding-bottom:3px; vertical-align:middle; }

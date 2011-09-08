@@ -5,7 +5,7 @@
  *
  * @package    intranet
  * @subpackage form
- * @author     Albert Johé i Martí
+ * @author     Albert JohÃ© i MartÃ­
  * @version    SVN: $Id: sfPropelFormTemplate.php 10377 2008-07-21 07:10:32Z dwhittle $
  */
 class ActivitatsForm extends sfFormPropel
@@ -19,6 +19,7 @@ class ActivitatsForm extends sfFormPropel
       'TipusActivitat_idTipusActivitat' => new sfWidgetFormChoice(array('choices'=>TipusactivitatPeer::getSelect($this->getOption('IDS')))),
       'Preu'                            => new sfWidgetFormInputText(),
       'PreuReduit'                      => new sfWidgetFormInputText(),
+      'Places'                          => new sfWidgetFormInputText(),
       'isEntrada'                       => new sfWidgetFormChoice(array('choices'=>array(1=>'SÃ­',0=>'No'))),
       'Estat'                           => new sfWidgetFormChoice(array('choices'=>ActivitatsPeer::getSelectEstats())),
       'Organitzador'				    => new sfWidgetFormInputText(),
@@ -35,6 +36,7 @@ class ActivitatsForm extends sfFormPropel
       'Nom'                             => new sfValidatorString(array('required' => true)),
       'Preu'                            => new sfValidatorNumber(array('required' => false)),
       'PreuReduit'                      => new sfValidatorNumber(array('required' => false)),
+      'Places'                          => new sfValidatorNumber(array('required' => false)),
       'Publicable'                      => new sfValidatorInteger(array('required' => false)),
       'Estat'                           => new sfValidatorString(array('max_length' => 1, 'required' => false)),
       'Organitzador'				    => new sfValidatorString(array('required'=>false),array()),
@@ -55,6 +57,7 @@ class ActivitatsForm extends sfFormPropel
       'Organitzador'				    => 'Organitzador',
       'Responsable'				    	=> 'Responsable',      
       'isEntrada'                       => 'Vendre entrades?',
+      'Places'                          => 'Num. entrades',
     ));
     
     

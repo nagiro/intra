@@ -59,66 +59,6 @@ noticies_culturals:
   url:  /noticiesculturals
   param: { module:blogs, action:noticiesculturals }
 
-#####################################################
-# HOSPICI                                           #
-#####################################################
-
-#hospici_cercador_cursos_inici:
-#  url:  /hospici/cercador_cursos/inici
-#  param: { module:hospici, action:cursos, accio:inici  }
-
-#hospici_login:
-#  url:  /hospici/login
-#  param: { module:hospici, action:login, accio:login  }
-  
-#hospici_usuaris_alta:
-#  url:  /hospici/alta
-#  param: { module:hospici, action:alta }
-  
-#hospici_usuaris_remember:
-#  url:  /hospici/recorda
-#  param: { module:hospici, action:remember }  
-  
-#hospici_cercador_entitats:
-#  url: /hospici/entitats
-#  param: { module:hospici, action:entitats, accio:cerca_entitats  }  
-  
-#hospici_cercador_espais:
-#  url:  /hospici/cercador_espais
-#  param: { module:hospici, action:espais, accio:cerca_espais  }  
-    
-#hospici_cercador_cursos:
-#  url:  /hospici/cercador_cursos
-#  param: { module:hospici, action:cursos, accio:cerca_cursos  }
-
-#hospici_cercador_activitats:
-#  url:  /hospici/cercador_activitats/*
-#  param: { module:hospici, action:index, accio:cerca_activitat  }
-
-#hospici_detall_activitat:
-#  url:  /hospici/detall_activitat/:idA/:titol
-#  param: { module:hospici, action:index, accio:detall_activitat  }
-  
-#hospici_detall_curs:
-#  url:  /hospici/detall_curs/:idC/:titol
-#  param: { module:hospici, action:cursos, accio:detall_curs }
-
-#hospici_usuaris:
-#  url: /hospici/usuaris
-#  param: { module:hospici, action:usuaris, accio: inici }
-
-#hospici_usuaris_modifica:
-#  url: /hospici/usuaris/modifica
-#  param: { module:hospici, action:usuaris , accio: update }
-
-#hospici_compra_entrada:
-#  url:  /hospici/usuaris/compra_entrada
-#  param: { module:hospici, action:usuaris, accio:compra_entrada  }
-
-#hospici_anula_entrada:
-#  url:  /hospici/usuaris/anula_entrada/:idER
-#  param: { module:hospici, action:usuaris, accio:anula_entrada  }
-
 
 #####################################################
 # WEB CCG                                           #
@@ -143,6 +83,14 @@ web_activitat:
 web_cicle:
   url: /web/cicle/:idC/:titol
   param: { module:web, action:index, accio:cc  }
+
+#####################################################
+# BACKGROUND                                        #
+#####################################################
+
+reserva_espai_remember_mail:
+  url: /gestio/background/reserva_remember
+  param: { module: gestio, action:sBackground, accio:RECORDATORI_RESERVA_ESPAIS }
 
 #####################################################
 # GENERIQUES                                        #

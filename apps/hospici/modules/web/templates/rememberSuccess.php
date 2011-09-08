@@ -34,7 +34,7 @@
 </div>
 
 <div style="margin-bottom: 50px;">
-    <form id="remember_password" action="<?php echo url_for('@hospici_usuaris_remember') ?>" method="POST">
+    <form id="remember_password" action="<?php echo url_for('@hospici_usuaris_remember') ?>" method="post">
         <table class="taula_dades">
             <?php echo $FREMEMBER; ?>
         <tr><td></td><td style="padding-top:20px; text-align: right;"><input type="submit" value="Envia'm la contrassenya" /></td></tr>        

@@ -230,7 +230,12 @@ class UsuarisPeer extends BaseUsuarisPeer
   	$usuaris = array(1,2,4,6,9,11,24);
   	return (in_array($idU,$usuaris)); 
   }        
-    
+
+  /**
+   * Vincula un usuari a un Site si no existeix.
+   * @param $idU Usuari ID
+   * @param $idS Site ID    
+   * */    
   static public function addSite($idU,$idS)
   {
     UsuarisSitesPeer::initialize($idU,$idS,false)->getObject()->save();    

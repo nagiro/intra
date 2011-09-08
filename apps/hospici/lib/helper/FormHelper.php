@@ -920,7 +920,7 @@ function _convert_include_custom_for_select($options, &$select_options)
 
 /**
  * setPager()
- * Imprimeix per pantalla la indexaci� de p�gines 
+ * Imprimeix per pantalla la indexaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ de pÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â gines 
  * @param mixed $pager
  * @param mixed $url
  * @param mixed $page
@@ -947,6 +947,37 @@ function setPager( sfPager $pager , $url ){
 	return $RET;
 	
 }
+
+/**
+ * setPager()
+ * Imprimeix per pantalla la indexaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ de pÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â gines 
+ * @param mixed $pager
+ * @param mixed $url 
+ * @param mixed $toInici (Retorna al principi del pager?)
+ * @return
+ */
+function setPagerN( sfPager $pager , $url , $toInici = false ){
+	
+    $e = '&P=';
+    if(!stripos($url,'?')) $e = '?P=';
+    $RET = "";    
+        
+    if ($pager->haveToPaginate()):
+        if($toInici): 
+            $RET = '<div class="pagerN">';	        		
+            $RET .= link_to('&lt;&lt;&lt; No hi ha més resultats. Tornar al principi', $url.$e.'1');
+            $RET .= '</div>';
+        else:    
+            $RET = '<div class="pagerN">';	        		
+            $RET .= link_to('Veure\'n més &gt;&gt;&gt;', $url.$e.$pager->getNextPage());
+            $RET .= '</div>';
+        endif;		
+	endif;
+	
+	return $RET;
+	
+}
+
 
 function closetags ( $html )
 {

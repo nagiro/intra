@@ -20,4 +20,20 @@ require 'lib/model/om/BaseSites.php';
  */
 class Sites extends BaseSites {
 
+    public function getTelefonString()
+    {
+        $tel = $this->getTelefon();
+        if(empty($tel)) $tel = '972.20.20.13';
+    
+        return $tel;
+    }
+    
+    public function getEmailString()
+    {
+        $email = $this->getEmail();
+        if(empty($tel)) $email = 'informatica@casadecultura.org';
+    
+        return $email;        
+    }
+
 } // Sites

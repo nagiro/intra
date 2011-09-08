@@ -27,6 +27,7 @@ abstract class BaseCursosForm extends BaseFormPropel
       'OrdreSortida'    => new sfWidgetFormInputText(),
       'DataAparicio'    => new sfWidgetFormDate(),
       'DataDesaparicio' => new sfWidgetFormDate(),
+      'DataInMatricula' => new sfWidgetFormDate(),
       'DataFiMatricula' => new sfWidgetFormDate(),
       'DataInici'       => new sfWidgetFormDate(),
       'VisibleWEB'      => new sfWidgetFormInputText(),
@@ -35,6 +36,7 @@ abstract class BaseCursosForm extends BaseFormPropel
       'activitat_id'    => new sfWidgetFormInputText(),
       'isEntrada'       => new sfWidgetFormInputText(),
       'PDF'             => new sfWidgetFormTextarea(),
+      'ADescomptes'     => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -51,6 +53,7 @@ abstract class BaseCursosForm extends BaseFormPropel
       'OrdreSortida'    => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'DataAparicio'    => new sfValidatorDate(array('required' => false)),
       'DataDesaparicio' => new sfValidatorDate(array('required' => false)),
+      'DataInMatricula' => new sfValidatorDate(array('required' => false)),
       'DataFiMatricula' => new sfValidatorDate(array('required' => false)),
       'DataInici'       => new sfValidatorDate(array('required' => false)),
       'VisibleWEB'      => new sfValidatorInteger(array('min' => -128, 'max' => 127)),
@@ -59,6 +62,7 @@ abstract class BaseCursosForm extends BaseFormPropel
       'activitat_id'    => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'isEntrada'       => new sfValidatorInteger(array('min' => -128, 'max' => 127)),
       'PDF'             => new sfValidatorString(),
+      'ADescomptes'     => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('cursos[%s]');

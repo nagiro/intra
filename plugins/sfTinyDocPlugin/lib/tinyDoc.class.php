@@ -816,8 +816,8 @@ class tinyDoc extends clsTinyButStrong
    */
   public function setSourcePathname($options = array())
   {
-    $sourcePathname = $options;
-
+    $sourcePathname = $options;    
+    
     // test if file exist
     if (!file_exists($sourcePathname))
     {
